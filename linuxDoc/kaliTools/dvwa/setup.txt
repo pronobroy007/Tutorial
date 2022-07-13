@@ -1,0 +1,32 @@
+Setup web app:
+-----------------
+	>> Use this WVWA web app for testing sql injection.
+	>> Extract this and paste it on /var/www/html
+	>> Now give all parmition to this DVWA folder. chmod -Rv 777 DVWA
+	>> Start apache2 ang goto "localhost/DVWA"
+
+	>> If this error poo 
+		[DVWA System error - config file not found. Copy config/config.inc.php.dist
+		 to config/config.inc.php and configure to your environment.]
+	>> Then goto config folder and rename "config.inc.php.dist" to "config.inc.php"
+
+
+Setup mysql :
+-------------
+	* service mysql start
+
+	>> Create another account in mysql
+	* mysql
+	* use mysql
+	* CREATE USER 'root2' IDENTIFIED BY 'test';
+	* GRANT ALL PRIVILEGES ON *.* TO 'root2';
+	* update user set plugin='' where user='root2';
+	* FLUSH PRIVILEGES;
+
+	>> Configer "config.inc.php" file
+
+
+DVWA APP :
+----------
+	UserName : admin
+	Password : password

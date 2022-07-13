@@ -1,0 +1,6 @@
+Configure Dns :
+---------------
+	* atp install bind9 bind9utis 
+		
+	* vim /etc/bind9/named.conf
+		>> Main configuration file fo dns.

@@ -1,0 +1,50 @@
+Setup Proxy :
+-------------
+	>> In FireFox goto "about:preferences" and search for "netword and proxy" Then 
+ 	>> "setting" >> add Manual proxy >>  Http proxy : 127.0.0.1 >> Port : 8080 >> 
+	>> set "Use this proxy server for all protocol"
+	
+	>> In Burp suite goto Proxy tab >> option >> set "127.0.0.1" proxy running.
+	 
+
+
+
+Create a side map of a target webside:
+---------------------------------------
+	>> In burp suite Proxy tab >> Intercept >> set "Intercept off"
+	>> In browser Goto terget webside
+	>> Goto filter setting >> set "Show only in-scope item"
+	>> In burp suite Target tab >> site Map >> right click target web side >> add to scope
+	>> Again right click target web >> spider this host
+
+
+
+
+Brute Force :
+-------------
+	>> In burp suite "setup proxy" 
+	>> In burp suite Proxy tab >> Intercept >> set "Intercept on"
+
+	>> Goto login page and pass redundent value as user name and password
+	>> burp suite >> proxy >> Intercept >> add this login detail in "Intruder"
+
+	>> burp suite >> Intruder >> position >> clear $
+	>> Then select username value then "add $" and select password and " add $" 
+	>> Attack type = cluster bomb
+
+	>> burp suite >> Intruder >> Payloads >> set "Payload set 1" for userName 
+	>> in "Plyload Option [simple list]" add some user name for brute force 
+	>> same for password "payload set 2" 
+
+	>> Intruder >> option >> Grep - Match section >> Add string when we set any incorrect username and pass.
+
+	>> In top there is another Intruder >> start attack
+
+
+
+
+
+
+
+
+

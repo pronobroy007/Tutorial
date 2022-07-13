@@ -1,0 +1,497 @@
+
+:set complite for kspell(for autocomplition from dictionary)
+ctrl + n for autocomplition.
+(R)ecovery then :e! then (D)elete
+
+setting up vim
+-------------
+	:set shiftwidth=2 softtabstop=2 expandtab   => To control "tab" key space.
+	:set autoindent
+	:set noautoindent :command! Wq :wq      =>    This will work both way ":wq" and "Wq" 
+
+Leader Key : 
+------------
+  by deafult <Leader> is "\"
+
+For Text folding :
+-----------------
+    set fdb         //enable folding.
+    now Select line using visual mode and type "zf"
+    zo => open folding line.
+    zO => opens all folds at the cursor.
+
+    zc => close folding line.
+    zM => closes all open folds.
+
+    zd => delete folding line.
+    zE => deletes all folds.
+
+For Key Mapping :
+-----------------
+    # nmap for normal mode
+    nmap <C-x> x / nnoremap <C-x> x
+
+    # imap for insert mode
+    imap <C-x> x
+
+    # hmap for visual mode Ctrl+c to copy
+    vmap<C-c> "+y
+
+
+Split window :
+--------------
+  :vs  / ctrl + w, v
+    >> For vertical split
+
+  :sp  /  Ctrl + w, s
+    >> For horizontal split
+
+  Ctrl + w h/j/k/l
+    >> split navigation.
+
+  Ctrl + w |        >> Vertically Zoom.
+  Ctrl + w _        >> Horizontally Zoom.
+  Ctrl + w =        >> Make all split equal size.
+
+  :vertical resize 5+  / resize +5
+    >> resize split verticaly and horizontally.
+
+  :vs|:terminal
+    >> open a terminal inside vim. press i to write on terminal for nvim.
+
+
+
+In insert mode :
+---------------- 
+      i			>> Goto insert mode before the current letter.	
+      a         >> Goto insert moder after current current letter.
+
+      I			>> insert mode at beginning of the line.
+      A			>> insert mode at end of the line.
+
+      o		    >> Goto insert move at next line.
+      O		    >> Goto insert move at previous line.
+
+
+In replase mode :
+----------------- 
+    r               >> replace word or visual selected line to a single charecter.
+    shift + r / R   >> Goto replase mode and replese words.
+
+
+In visual mode :
+----------------
+    v           >> Goto visual mode 
+    gU          >> change visual selected item into lower to upper.
+    shift + v   >> To select a line.
+
+    visual block mode :
+    ------------------
+        Ctrl + v 		
+            >> Goto visal block mode.
+            >> use $ to select block for cursor to end of line.
+
+        o   >> In visual block mode press "o"
+            >> To change cursor either lower left or upper left 
+            >> for adjust block independently.
+
+
+In normal mode :
+----------------	
+    Esc           >> To get into command mode.
+	u             >> For undo.
+    ctrl + r      >> For redru.
+	p / P		  >> paste.
+    J             >> join tow line.
+	x/X           >> delete a charecter after/before current letter in command mode press.
+
+	gUU		 	  >> change current line from lower to upper.
+	guu  		  >> change current line from upper to lower.
+	(>>/<<)       >> indent(tab/shift+tab) / (:3,10>) indent line 3 to 10.
+
+	copy			>> "+y to clipboard.
+	peast 			>> "+P peast from clipboard.
+    [NOTE : If there is any problem to copy and peast to / form clipboard then install "vim-gtk"]
+
+
+
+	Navigate :
+	----------
+		w/W			>> move cursor biginig of word by word forward.
+		e/E			>> move cursor end of word by word forward.
+		b/B			>> move cursor biginig of word by word forward.
+
+		gg						>> goto top of the file.
+		shift + g / capital G	>> goto end of the file.
+		0						>> goto bigining of a line.	
+		^						>> goto begining of a line.	
+		$						>> goto end of a line.	
+
+        ~			            >> change caps to Lower 
+        %                       >> Matching bracaket
+
+		zz			            >> move screen so that cursor will stay at center.
+		Shift + h / Capital H  	>> goto top of the file.
+		Shift + l / L	 		>> Goto last line of the file.
+		Shift + m / M			>> Goto middle line of the file.
+        { / }                   >> Move Cursor up / Down quickly.
+
+		mm			=> set a marke to a rigister "m" and `+m will come back this place 
+        mM          => Set a global mark. and `M will got to that mark location.
+
+		ctrl + e 	=> ecroll the window down
+		ctrl + y 	=> scroll the window up
+		ctrl + b	=> scroll up one page
+    
+
+    Jumplist / Changelist :
+    -----------------------
+        ctrl + o    /   ctrl + i    =>  jump cycle through.
+        :jumps                      => lisl all jumps.
+        
+        g;  /   g,          => previous / next change cycle through.
+        :changes            => list all changes.
+
+
+	Motions :
+	---------
+		a			>> select everything inside bracaket and also bracaket or something, like } or ) or ]
+		i			>> select only inside of something, like } or ) or ]
+		t/T			>> use until find something, like [space]
+		f/F			>> find a charecter forward/backward like f[space] find next space.
+        ;           >> repeat find command forward.
+        ,           >> repeat find command backward.
+
+	commands :
+	----------
+		d			        >> delete (also cut)
+        dd				    >> cut current line
+		y			        >> copy 
+        yy				    >> copy current line
+		c			        >> change (delete then place in insert mode)
+        capital (D/C/Y) 	>> delete/Change/copy form cursor to rest line.  
+		v			        >> visual select.
+
+
+
+	using motions :
+	---------------
+		Delete or Change :
+		-------------------
+			daw or caw			=> delete/change word include space.
+			di} or ci}			=> Delete everything inside of "{...}"
+			da} or ca}			=> Delete everything inside of "{...}" and also bracaket.
+            dt[space]	        => delete untile space.
+	
+
+		Select visual mode :
+		--------------------
+            vic         =>  select everything inside a class.
+            vaf         =>  select everything include a function.
+			va"			=>  select everythinginside of coutation " in visual mode.
+			v$			=>  select everything from current cursor location till endfrom 
+							current cursor location till end
+
+
+	for file : 
+    ----------
+        gd                  => Goto defination like function defination of current file.
+        gf					=> #include "hello.h", make cursor in coute and hit "gf" and vim will open this file.
+        sarch 				=> "/" and enter sarch string 
+           *				=> search word that you currently on.
+           n		 		=> To navigate next match.
+        shift + n / N		=> to search previous match.
+
+
+		* :e [file name]
+			>> e = edit file:
+			>> open another file from vim
+
+		* :find [file name]
+			>> open another file from vim
+			>> after ":find" command we can use tab complition but 
+            >> the problem is it will show some other 
+			>> file which is not in present directory for this we can 
+            >> use a relevent path to search only
+			>> current and its subfolder.
+			* set path+=** 
+				>> writer this on .vimrc file.
+
+		* :ls => list all open file or list of buffers.
+		* :b2 => open 2nd buffer.
+		* :bp => open previous buffer.
+		* :bn => open next buffer.
+		* :bd => buffer delete. delete current buffer.
+
+		* :b [file name/het tab]
+			>> after ":b" we can spacify a file name or hit tab to select any file 
+			>> for switch between files.
+		
+
+	record :
+	--------			
+		=> press 'q' and then press any other key like 'q' again.
+		=> then it will record all key press during recording.
+		=> after finish record press 'q' again.
+
+		=> to use recoreded key press "@" then key name
+		=> for this exemple 'q' so "@q" will repeat record key.
+		=> 10@q		this will repeat recorded key for 10 line.
+
+
+    vim Command :
+    --------------
+        args List :
+        ------------
+              :args 
+                >> shos argument list.
+
+              * vim file1 file2 file3
+                >> vim open those three file and argsList have 3 file.
+                >> :e file4   this file is inside buffer list not in argsList.
+
+              :args *.txt
+              :args file1 file2
+                >> If buffer list have 4 file then this command will make those
+                >> two file as argsList.
+
+
+        :argdo normal@qw
+            >> Run recorded key and write change form argument list (argsList).
+
+        :bufdo %s/Hello/world/g   then :wa 
+            >> Run search and replace command in multiple vim buffer list.
+
+        :argdo edit!
+            >> Undo chnages 
+
+        :mksession sessionName.vim
+            >> This will save current session and save as sessionName.vim
+            >> :source sessionName.vim
+
+        :syntax on/off      
+          >> To on/off syntax 	
+
+        :!(command)		  
+          >> Excute any bash command from vim editor.
+
+        add text inside selected line :
+        -------------------------------
+            ctrl + v, I/A   
+                >> Edit Multiple line once. 
+
+            :norm IHello		
+                >> I = insrt begining of line   &&   A = Append End of line
+                >> select multiple line using visual mode then this command will insert "Hello"
+                >> begining of eatch line.
+
+        Output terminal command in vim :
+        --------------------------------	
+            :read !ls -l => read all element that "ls -l" return and save inside vim. 
+
+
+        Use terminal command for Vim :
+        ------------------------------
+            :!sort  => Select all line inside vim you wish to sort, then 
+                    => :!sort      This is called {filter} command.
+            
+        For replace :
+        ------------- 		
+            * :%s/Shift/ctrl/g 
+                >> This will replace Shift to ctrl.
+
+            * :%s/Shift/ctrl/gi
+                >> Here i == case insensitive.
+
+            * :5,12s/foo/bar/g 	
+                >> Change each 'foo' to 'bar' for all lines from line 5 to line 12 (inclusive). 
+
+            * :%s/foo/bar/gc
+                >> Change each 'foo' to 'bar', but ask for confirmation first. 
+
+            * :%s/foo/norm! @a
+                >> Execute vim normal mode record command inside search and replace command.
+
+
+	Spell checker : 
+	---------------
+		set spell
+			>> For activate spell checker. It also deactivate spell checker.
+
+		set spelling=en_us,es
+			>> Set spell checker for English and Spanish.
+
+		* [s
+			>> GOTO previous miss spell.
+		* ]s
+			>> GOTO next miss spell.
+
+		* z=
+			>> Give suggestion
+		* zg
+			>> Add something on dictionary to not show it as miss spell.
+		* zug
+			>> Remove something from dictionary to show it as miss spell.
+
+		* zw & zuw
+			>> Add/Remove something in dictionary to mark as miss spell.
+
+
+
+Tag :
+-----
+    * apt install ctags
+    >> To use ctags first we need to create tag file.
+    >> Goto project directory then use this command.
+    * ctags -R .
+
+    >> Now we can use ctags.
+    * ctrl + ]      => To goto a function defination.
+
+
+Programming :
+---------------
+    \rn                  => rename function name / variable. This will also change function name inside class.
+    shift + k / K       => view class function defination of function detailes.
+
+    gy                  => Type defination.
+    gd                  => Go defination either thpe / function
+    
+    Omnisharp :
+    ------------
+      \fu               => find usages (class function).
+
+
+rename / bulkrename file in vim using vifm :
+----------------------------------------------	
+  * apt install vifm
+    >> Goto any file directory
+    >> then selece file. "v" to select. All vim key is avalable.
+    >> then "cw" to rename files inside vim. 
+
+
+
+Python:
+-------
+	https://raw.githubusercontent.com/fisadev/fisa-vim-config/master/.vimrc
+
+
+Plugin :
+--------
+	coc-nvim(Code Complition) :
+	----------------------------
+		Install git 
+			* apt-get install gi
+			* apt-get install build-essential cmake
+			* apt-get install python-dev python-3
+
+			***********************************************************************
+			*  Plugin 'neoclide/coc.nvim'	
+			*  … then run the following in Vim:
+			*  :source %
+			*  :PluginInstal
+			*
+			*  Now goto ~/.vim/bundle/coc.nvim then install using "./install.sh" command
+			*
+			*  After install coc.nvim also copy everything form 
+            *  https://vimawesome.com/plugin/coc-nvim 
+            *
+			*  to .vimrc file.
+			***********************************************************************
+			*  Now install "ccls" by "apt install ccls"
+			***********************************************************************
+			*
+			***********************************************************************
+			*  Open config file with command :CocConfig
+			***********************************************************************
+			
+            {
+              "languageserver": {
+                "ccls": {
+                  "command": "ccls",
+                  "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+                  "rootPatterns": [".ccls-root", "compile_commands.json"],
+                  "initializationOptions": {
+                     "cache": {
+                       "directory": ".ccls-cache"
+                     }
+                   }
+                }
+              }
+            }	
+
+            {
+                "languageserver": 
+                {
+                    "clangd": 
+                    {
+                      "command": "clangd",
+                      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+                      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+                    }
+                }
+            }
+    
+
+
+
+
+	For code Highliting and theam :
+	-------------------------------	
+		Install base16-shell
+		--------------------
+			git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell	
+
+		In .vimrc file
+		---------------
+			"For Code highlight.
+			Plugin 'octol/vim-cpp-enhanced-highlight'
+			"For theam.
+			Plugin 'chriskempson/base16-vim'
+
+			if filereadable(expand("~/.vimrc_background"))
+			  let base16colorspace=256
+			  source ~/.vimrc_background
+			endif
+		
+		In .bashrc file
+		----------------
+			# For autocompletion of base16-shel. 
+			BASE16_SHELL=$HOME/.config/base16-shell/
+			[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
+		Example :
+		---------
+			In terminal type : base16_dracula / base16_default_dark /  
+								base16_atelier-forest / base16_google-dark /
+								base16_onedark 
+ 
+Uninstall Plugin :
+------------------
+	In your _vimrc delete the Plugin 'blabla' line you want to uninstall.
+	Execute :PluginClean in vim.
+
+
+
+
+
+
+
+Create a ".vimre" in root folder and put command what you want to run when vim start.
+Example : vim ~/.vimrc	=> to create a .vimrc file.
+
+
+
+Error :
+------
+    Ctrl + quit     => unfreeze vim.
+
+
+
+
+For command plugin :
+--------------------
+    let extension = expand('%:e')
+    g ctrl+g        //count total number of line in visual mode.
+    4:norm A//      //Edit multiple line once. 
+

@@ -1,0 +1,117 @@
+Starting a program :
+--------------------
+    Foreground process
+    ------------------
+        * firefox
+            >> This command will fire up firefox and make this a froeground process.
+
+        * fg [process id]
+            >> "jobs" command gives all background process with ID
+            >> With that ID we can make any program foreground using "fg"
+
+
+    Background process
+    ------------------
+        * jobs
+            >> This will show all background process.
+            >> To close any background process we can 
+            >> make that program foreground using "fg [id]" and "ctrl + c"
+            >> Or by using "kill" command.
+        
+        * firefox&
+            >> This will fire up firefox and make this a background process.
+        
+        * bg
+            >> we also can make a foreground process to background by pressing 
+            >> "ctrl + z" this will pause the process. Now use "bg"
+
+
+    Give priorities to process :
+    ----------------------------
+        * nice -n 19 process_name
+            >> We can assignn nice value to a process to use proper cpu
+            >> circle to run it. Nice value is between -19 to 19.
+            >> -19 is highest priorities for maximux cpu circle
+            >> and 19 is lowest priorities for lower cpu circle.
+
+            >> To see nice value for any process use "ps -l"
+
+        * renice -10 process_id
+            >> To change nice value currently running process.
+
+
+
+List all process
+-----------------
+	In "/proc" forder there are folders which have number on it current 
+    those numbers are current running process. Those number are process 
+    id number. To see what process is this goto any folder and run "readline exe"
+
+
+	ps :
+	----
+         # -a   = list all process that run on terminal.
+         # -x   = list all process that do not run on terminal.
+         # -e   = list all demons process.
+         # -u	= format the result with additional information like cpu%, mem%
+         # -l	= list more information on process like nice value.
+         # -f	= list process with full option
+
+		* ps
+			>> Show all process created by current shell 
+
+		* ps -exu
+		* ps  -axu
+			>> Listing all runnin process.
+
+		* pstree
+			>> Show tree of process
+
+	top :
+	------
+		* top
+			>> show all current process running.
+			>> "shift + F" we can sort process depending either 
+            >> cpu or memory uses or something else.
+			>> "u" we can search process running by a particular user.
+
+			>> "shift + P" list all process according to cpu usage.
+			>> "shift + M" list all process according to memory usage.
+			>> "shift + W" for save top output inside "/etc/toprc".
+			
+			>> "1" show detail of indivisual cpu.
+			>> "k" then "pid" to kill a process.
+			>> "d" Change refresh time by default it is 3s.
+			>> "c" list running process absulate path.	
+
+			>> "n" reduce the number of process listed
+
+
+    See GPU Usages for AMD Radeon :
+    -------------------------------
+        * radeontop
+            >> If not install then install.
+
+
+
+Kill a process
+--------------
+	* kill -l 
+		>> List all signal to kill a prosess.
+        >> we can use that name or id
+        >> kill -2  =   ctrl + c option.
+        >> kill -9  =   kill -KILL force to stop program.
+        >> kill -15 =   default kill.
+
+	* kill [PID]
+	* kill -kill [PID]
+		>> End a process.
+
+	* killall -s 9 -u linux bash
+		>> When we need to kill multiple same process we use killall.
+		>> "-s" singnal to see all signal use "kill -l"
+		>> "-u" user name and then name of process. 
+
+
+
+

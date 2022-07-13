@@ -1,0 +1,11 @@
+service postgresql start 	=> start sql server
+service metasploit start	=> start metasploit
+
+msfconsole			=> open metasploit
+msfupdate			=> update metasploit
+help 				=> open all avalable option
+back				=> this is like cd option in terminal
+
+search name:meterpreter
+	>> This is how we can search payload.
+

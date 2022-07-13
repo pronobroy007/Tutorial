@@ -1,0 +1,15 @@
+https://inteltechniques.com/
+
+
+PhoneInfoGa :
+-------------
+    ./PhoneInfoGa scan -n "NUMBER WITH COUNTRY CODE"
+
+    Launching the server :
+    -----------------------
+        phoneinfoga serve -p 8080 
+
+
+SherLock :
+----------
+    python3 sherlock --timeout 1 USER-NAME

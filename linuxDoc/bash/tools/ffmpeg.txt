@@ -1,0 +1,46 @@
+ffmpeg -i video.avi video.mp4
+    >> -i      => Spacify input file
+
+    Codec Specification
+    It is also possible to manually determine the codecs that FFmpeg will 
+    use to perform the actions. Check out the official FFmpeg documentation 
+    on supported codecs here. If you are not sure, then using “copy” as the 
+    codec is probably the best option. This tells FFmpeg to copy the audio and 
+    video stream directly into the new file format without performing any 
+    actual conversion. For most file conversions, this is the recommended method.
+
+   * ffmpeg -hide_banner -i dummy.mkv -c copy dummy.mp4
+
+
+ffmpeg -i video.mp4 -q 23 video.avi
+    >> -q => quality for .avi
+    >> -crf => quality for .mp4
+    >> bigger number lower quality.
+
+
+ffmpeg -i InputFile -filter:a "volume=2" OutputFile 
+    >> -filter:a for audio file
+    >> Volume=2 => multiply current volume by 2
+
+
+Crop :
+------
+    ffmpeg -i InputFile -filter:v "crop=w=640:h=480:x=100:y=200" OutputFile 
+        >> x and y cordinate of video
+
+Scale :
+-------
+    ffmpeg -i InputFile -filter:v "scale=w=640:h=480" OutputFile 
+
+Rotate :
+--------
+    ffmpeg -i InputFile -filter:v "rotate=54*PI/180" OutputFile 
+
+
+Remove Video :
+--------------
+    ffmpeg -i InputFile -vn -acodec copy OutputFile
+        >> -vn => remove video
+
+
+ffmpeg -i video.mkv -c copy video_fixed.mkv

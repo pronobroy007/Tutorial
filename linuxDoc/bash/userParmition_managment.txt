@@ -1,0 +1,139 @@
+Managing User
+--------------
+	All User account store in "/etc/passwd" file.
+
+	su
+	--
+		* su userName 
+			=> To login as another user
+			=> If we only use "su" and hit enter then it mean we want to login as root
+
+
+	Add user
+	----------
+		* useradd -m userName.
+			>> This will add user. 
+			>> -m 	= create home directory
+
+		* passwd userName	
+			>> To set password   
+
+		* passwd -d userName. 	
+			>> To delete password
+
+
+	Delete user
+	------------
+		* userdel userName
+			=> delete a user EX: 
+
+		* userdel -r userName.  
+			=> This will delete user and also home directory create by this user
+
+
+
+
+
+Managing Group
+---------------
+	IN /etc/group file have all group define by the system Or in command type "groups" 
+    to see all group
+
+	Add Group
+	---------
+		* groupadd [group name]
+			>> This will create a new group.
+
+
+	Add User to a Group
+	-------------------
+		* adduser [user name] [group name]
+		
+		* useradd -G [group name] [new user name]
+			>> Add to a group when create a new user.
+
+
+	Delete User to a Group
+	-----------------------
+		* deluser [user name] [group name]
+
+
+	Delete Group 
+	------------
+		* groupdel [group name]
+			>> Delete a group.
+
+
+
+
+Managing Files
+---------------
+	stat
+	------
+	 	* stat [file/foldername]	
+			>> shwo detail about file of folder.Like there permition
+
+	chmod
+	-----
+		# This will change file permition. +x for executabel, +r for read, +w for write or
+		# 4 -> Readable, 2 -> Writable, 1 -> Executable,  
+
+		* chmod +x file.sh  or  chmod 1 file.sh
+
+		* chmod 777 file.sh  
+			=> This mean root user, group user, other user have all parmition.
+
+
+
+	chown
+	-----
+		* chown [user name] [file/folder name]
+			=> Change only user ownershif of a file.
+
+		* chown -R [user name] [folder name]	 
+			=> This will effect subfolder and file.
+
+		* chown [user name:group name] [file/folder name]	
+			=> Chang user and group owner
+
+		* chgrp [goup name] [file/folder name]		
+			=> Change only group user.
+
+
+
+
+SUID/SGID/Sticky Bit
+--------------------
+	# In chmod command there is an extra bit infornt of 777, that bit use to set SUID/SGID/Sticky Bit
+	# SUID = 4, SGID = 2, Sticky Bit = 1
+
+	SUID : 
+	------
+		# This SUID allow the process to have the same rights as the owner of the file being executed.
+		# For example: passwd command have SUID bit enabled. When a normal user changes his password this 
+		# script update few system files like /etc/passwd and /etc/shadow which can’t be updated by non-root 
+		# account. So that passwd command process always run with root user rights.
+
+		* chmod 4777 tecadmin.sh
+		* chmod u+s file
+
+	SGID :
+	------
+		* chmod 2777 tecadmin.sh
+		
+
+	Sticky Bit :
+	-------------
+		# If a directory with sticky bit enabled will restrict deletion of the file inside it. It can be removed 
+		# by the root, owner of the file or who have to write permission on it. This is useful for 
+		# publically accessible directories like /tmp.
+
+		* chmod 1777 tecadmin.sh
+
+
+
+
+
+
+
+

