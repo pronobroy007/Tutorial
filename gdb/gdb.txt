@@ -1,0 +1,237 @@
+Open GDB :
+----------
+	* gdb a.out
+	* gdb --args a.out arg1 arg2
+		>> command line argument.
+
+		* run hello
+			>> set command line argumet inside gdb.
+
+	* show args
+		>> list all args.
+
+
+C/C++ :
+------
+	* r/run
+		>> start running program form begging. if there is any break point then program will stop al that point.
+		>> now program is in debugger mode.
+	
+	* start
+		>> This will start the program and make a break point in begining of program or in main function.
+
+
+
+	breakpoint :
+	------------
+		* b/break main
+			>> Create a break point in main function.
+			>> we also can create break point using line number.EX : b 22
+
+		* b filename.cpp:lineNumber
+			>> This is better way to create a break point. 
+			>> Here we use fileNme(there could be multiple file) and line number of that file or function name.
+			>> Ex : b file.cpp:43
+
+		* b if(x==4)
+			>> This is a conditional breakpoint.
+			>> If value of x == 4 then gdb will make a break pont at that line.
+			
+		* info break
+			>> List of all breakpoint. 
+
+		* d [number of break point]
+			>> To Delete a particuler break point.
+			>> To see number of break point use "info b/break"
+			>> list all break point and there number.
+
+		* command
+			>> the command command lets you specify commands to be run every time you hit a breakpoint.
+			* command 1
+				>> 1 = for breakpoint 1
+				>> Then set may be print some value and last "end" to exit command.
+
+		* disable
+			>> To disable all break point.
+
+		* save breakpoints <File Name>
+			>> Save list of all break points.
+			
+		* source <File Name>
+			>> To restore all save break point.
+
+
+
+
+	* bt/backtrace
+		>> A backtrace is a summary of how your program got where it is
+		>> starting with the currently executing frame (frame zero), followed 
+		>> by its caller (frame one), and on up the stack. 
+
+
+	* c/continue
+		>> This is use for goto next break point.
+
+	* n/next
+		>> when program stop in any break point this command will execute next line.
+
+	* s/step
+		>> step into. Goto inside a function.
+
+	* hit enter
+		>> when we hit enter gdb will execute previous command.
+
+
+
+	* layout next
+		>> src = Show code in terminal
+		>> "ctrl + x" then press "a"  to close layout display
+
+	* refresh
+		>> refress display.
+
+	* l/line 
+		>> In debugger mode "l" will list out source code.
+
+		* l [line number]
+			>> line number = list out some source code starting from that line number. 
+			>> Ex : l 1,44		This will print line 1 to 44
+
+		* l [function name]
+			>> show that function defination 
+			>> also work in "layout src"
+
+
+
+	* p/print [variable]
+		>> print out value of any variable.
+
+	* p variable = 1
+		>> we can modify a variable using p/print command.
+
+	* set var [variable] = 3
+		>> set a value to a variable.
+
+	* info local/break
+		>> local = This will print all local variable.
+		>> break = list all breakpoint.
+
+	* watch [variable]
+
+
+
+	* show directories 
+		>> Print the source path: show which directories it contains.
+		>> $cdir refer to the compilation directory and ‘$cwd’ refer to the current working directory.
+
+	* directory
+		>> Reset the source path to its default value
+		
+		* directory [path]
+			>> set that path to source path.
+
+	* set directories [path]
+		>> Add new path for source path.
+
+
+
+Assemble :
+-----------
+	* starti
+
+	* b *[memory addredd]
+		>> Create a breakpoint using instruction address.
+
+	* disas/disassemble
+		>> show assembley code.
+
+		* disas main
+			>> Show assemble code for main function
+
+	* layout asm
+		>> asm = show assembly comde 
+		>> "ctrl + x" then press "a"  to close layout display
+		
+
+	* info reg/registers
+		>> show details of eatch resgister.
+
+	* ni 
+		>> for execute next instruction.
+
+	* si
+		>> step into an instruction.
+
+
+
+	* x/2i [addr]	
+		>> This will show two instruction from that address.
+
+	* x/x [memory address]
+		>> x = decode as hex number
+		>> d = decode as decimal number.
+		>> c = decode as charecter.
+		>> s = decode as string 
+		>> i = decode as instruction.
+
+		>> bx/bd = decode as byte hex number / byte dec number.
+		>> wx/wd = decode as word hex number / word dec number.
+		
+	
+
+Reverse Debug :
+---------------
+	* break main
+	* run
+	* record
+		>> The record command turns on recording. It must be issued after the program has 
+		>> started running, so the beginning of main is a good place to use it.
+	
+	* record save filename
+		>> Save the execution log to a file filename. Default filename is gdb_record.process_id
+
+	* record restore filename
+		>> Restore the execution log from a file filename. File must have been created with record save. 
+
+	* record stop
+		>> Stop the process record and replay target
+
+	
+
+	* continue
+		>> Once recording is enabled, we run the program until the segmentation fault occurs
+		>> or hit another breakpoint.
+
+
+
+	* set can-use-hw-watchpoints 0
+	* watch p
+		>> 
+
+
+
+	* rs/reverse-step 
+	* rn/reverse-next 
+	* rf/reverse-finish 
+	* rc/reverse-continue 
+		>> just like the normal versions of the commands,
+		>> but in the opposite direction	
+
+
+
+	* reverse-stepi
+	* reverse-nexti
+		>> For reverse instruction execute.
+
+
+	* set exec-direction reverse
+		>> witches the program execution direction to reverse. 
+
+
+
+
+
+
+
+
+

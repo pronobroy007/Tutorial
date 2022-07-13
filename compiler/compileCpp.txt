@@ -1,0 +1,82 @@
+If there is any compiler error like flowing Then install "Pthread" 
+------------------------------------------------------------------
+	>> pthread_mutexattr_destroy || pthread_create 
+	>> pthread_mutexattr_settype || pthread_mutexattr_init
+
+
+Install Pthread 	
+----------------
+	* apt-get install libpthread-stubs0-dev
+		>> In Code::Blocks >> built option >> linker setting >> Other Linker Option >> write "-pthread"
+		>> In Code::Blocks >> built option >> compiler >> other option >> then write "-pthread"	
+
+
+
+
+
+
+
+
+Compile simple C++ program :
+----------------------------
+	* g++ --version
+
+	* g++ main.cpp -o main.exe
+		>> -o = This is use to spacify an output file name.
+		>> So after compile this code we will have an executable file called "main.exe"
+
+	* g++ -c main.cpp
+		>> -c = This option will compile main.cpp and create an executable called "main.o"
+
+	* g++ -g -c main.cpp
+		>> -g = will create debug flug. With this we can debug our code using "GDB"
+	
+	* g++ -Wall main.cpp
+		>> -Wall = This will gives us warning message.
+
+	* g++ main.cpp -o main -I deps/include -L deps/lib 
+		>> -I 	=  specify an include directory
+		>> -L	=  specify a lib directory 
+		>> see Compile irrklang library in C++ blew.
+
+	* g++ -S hello.cpp
+		>> -S = is used to only compile the file_name and not assembling or linking. 
+		>> It will generate a file_name.s assembly source file. 
+
+    Optimization :
+    --------------
+        * -O0   => For no optimization, godd for debuging mode.
+        * -O1   => For no optimization.
+        * -O2   => This good for like release mode.
+        * -O3   => For all optimization.
+
+
+Compile irrklang library in c++:
+---------------------------------
+	* g++ main.cpp -o mian -I deps/include/ -L deps/lib/ deps/lib/libIrrKlang.so -pthread
+		>> Here -I == include folder
+		>> -L == Lib folder
+		>> deps/lib/libIrrklang.so == is nessesary to compile.
+		>> If we are plaing "mp3" file then make sure "ikpMP3.so" and executable file in same folder.
+
+		[NOTE : Code in irrklang folder]	
+
+
+
+
+
+
+
+
+Compiler using make :
+---------------------
+	* g++ main.cpp fun1.h func2.h func.h -o bin/main.o
+		>> This is how we compile when we have multiple cpp file
+
+		>> Better way when we compile multiple file is to use "make"
+		>> and also "make" will not compile unchange cpp file. It mean if we have multiple file and change
+		>> some of cpp file then this will detect change file and compile only those file.
+	
+
+
+
