@@ -1,0 +1,48 @@
+Install font 
+-------------
+	>> Goto "Windows/Fonts" and copy all font and peste it on "/usr/share/fonts"
+
+Calibre
+--------
+    >> For epub file reader.
+
+Install office doc.
+-------------------
+	>> https://www.libreoffice.org/download/download/
+	>> Download deb for kali
+	>> install all "dpkg --install *.deb" file
+
+
+Install bluetooth
+-----------------
+	* apt-get install bluetooth
+
+	* /etc/init.d/bluetooth status
+	>> Give status of bluetooth.
+
+	* /etc/init.d/bluetooth start
+	>> start bluetooth. 
+	
+	* /etc/init.d/blutooth stop
+	>> Stop service.
+
+
+Rambox 	=> Chat app.
+kodi	=> media app.
+
+
+
+
+
+
+natcat
+Fishing............
+
+
+exiftool
+golink scanner
+siteDigger
+GmapCatcher
+SearchDiggity
+Gooscan
+

@@ -1,0 +1,195 @@
+.                               => focus object/ move privot back to middle of screen
+Alt + Z                         => X-Ray Mode.
+
+Blender Setting :
+-----------------
+    File >> Preference >> Interface >> Resulationo = 1.2
+    Edit >> Preference >> KeyMap >> 3d view >> 3d view (Global) >> Change (Rotate, Pane, Zoom)
+    Edit >> Preference >> KeyMap >> 3d view >> Mesh >> Mesh (Global) >> Loop Select >> change (left + double click)
+
+Backface Culling :
+------------------
+    Face Orientation >> Enable to check Backface culling
+    Mesh >> Goto edit mode >> Overlays >> Normals >> enable eny normal to check current face
+
+
+Quad View :
+-----------
+    Ctrl + Alt + Q              => To Open Quad view.
+
+Local view :
+------------
+    /       => Hide everything except what we select
+
+Mode :
+------
+    Tab             => Toggle between Object/Edit Mode.
+    1/2/3           => Vertex/Edeg/Face mode in Edit Mode.
+
+Transform :
+-----------
+    G                                   => To select Move mode.
+    R                                   => To select Rotate mode.
+    S >> Shift + Z                      => S to goto Scale mode and ignore Z axis scale.
+
+Secect :
+--------
+    AA                          => Deselect all.
+    B                           => Box Select mode.
+    C                           => Circle Select mode. Change size of circle using mouse scroll. Middle mouse for deselect.
+    W                           => Change Select Mode.
+
+    Ctrl + L                    => Linked Select.
+    alt + click                 => Loop Select. Modify Version : Alt + double click.
+    Ctrl + Plus                 => Grow Select.
+
+    F3                          => First select some faces and then press F3 and search SELECT SIMILER.
+    F3                          => First select some faces and then press F3 and search SELECT CIRCLE.
+
+
+Sculpting :
+-----------
+    F                           => Press F and then drag mouse for change brush size.
+    Shift + F                   => Press Shift + F and then drag mouse for change brush Strength size.
+
+Hide :
+------
+    H                           => Hide object or selected object.
+    Atl + H                     => get back to that object.
+
+Delete :
+-------
+    ctrl + x                    => Select vertecis and delete.
+
+
+
+
+
+Extrude :
+---------
+    E                           => Select face and press e to extrude.
+    alt + E                     => Open Extrude option for like (Extrude along normal).
+    ctrl + Right click          => Extrude any point in 3d space.
+
+Loop Cut :
+----------
+    Ctrl + r                    => Select loop cut and mouse while will increse loop cut.
+
+Bavel :
+-------
+    Ctrl + b                    => For edge bavel 
+    Ctrl + shift + b            => For vertex bavel. round around vertex not edges.
+
+Knife :
+-------
+    K                           => Then select some cut and to exit hit "Enter / Space"
+
+Marge :
+-------
+    m                           => Select all vertex and M to marge object
+                                => Then select vertex and extrude or ctrl + left click.
+
+Inset :
+------
+    I                           => Inset.
+
+Proportional Editing :
+----------------------
+    O                           => Open proportional editing.
+    G                           => Then use scroll while to change proportional editing circle.
+
+Flaten serface : 
+-----------------
+    F3                          => Select some faces then F3 and type flatten
+
+Normals :
+---------
+    Mesh tab >> Normals / Alt + n           => Select wrong face and flip normal.
+
+
+Triangle :
+----------
+    ctrl + f                => Trianglur faces.
+
+
+Modifire :
+----------
+    Remash                  => Keep object as it is and add subdivision.
+
+
+
+
+Unrap UV Map :
+---------------
+    Select Object >> goto edit mode >> select all vertex / select all >> uv tab >> select "smart uv project" or something else
+
+
+
+
+Add tow texture into one mesh :
+-------------------------------
+    Edit >> Preference >> Add-ons >> Import image on plane
+    File >> Import >> image as plane
+    Add modifer >> Shrinkwarp
+    Shrinkwarp :
+    ------------
+        Wrape mode >> project
+        Target >> select target object where to put current plane image
+        Set Ofset
+
+    Use Texture Paint to Drow sticker  :
+    ------------------------------------
+        Select Texture >> Mapping "Stencil" [Alt for rotate and shift for scale]
+
+    
+
+Texture Paint : 
+---------------
+    ctrl + tab              => Select "Texture Paint"
+    alt + s                 => save image
+
+    UV :
+    ---
+        Select mesh >> goto edit mode >> select al vertex >> Unwrap UV Map
+
+    Create Texture :
+    ----------------
+        Active Tool and workspace setting Tab >> Texture Slot >> Set "Mode" to "Single Texture" >> New >> Cteate new texture
+
+    Create Material :
+    -----------------
+        Material Tab >> Create new material
+        Click Base color >> Select Image Texture >> Assaign texture which we create avobe
+
+    Add Texture to paint :
+    ----------------------
+        Texture Tab >> New texture >> assign texture as much as need
+
+    For Paint :
+    -----------
+        Active Tool and workspace setting Tab >> Set color tot white
+        Active Tool and workspace setting Tab >> Open texture >> select texture to paint
+    
+    Mask Paintaing :
+    ----------------
+        Mask use only certain part of model to paint
+        Enable Paint mask >> select model >> Edit mode >> select face for plaint
+
+
+Export FBX :
+------------
+    File >> External Data >> Unpack All Into File >> Chose current file path
+    [This will create "Texture" folder and put all texter into this folder]
+    
+    File >> Export as >> FBX >> [Select Current object, Apply Transform, chose mesh] >> Export
+
+    Then Take "Texture" folder and fbx file into unity.
+
+
+
+Flat shade for Low poly model : 
+-------------------------------
+    Select Object >> left Click >> Flat shade
+
+
+IF UV editor or material not showing then select all vertex and UV tab >> reset.

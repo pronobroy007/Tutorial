@@ -1,0 +1,53 @@
+Install Composer:
+-----------------
+	curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+	>> Goto composer downloader page and see the instruction to install.
+
+
+Install all php packages
+------------------------
+	>> Install all requirement php packages. For this goto laravel installation page
+
+	 install php7.4
+	----------------
+        apt install php7.4-mbstring php7.4-xml php7.4-curl php7.4-zip
+
+
+Install Laravel :
+------------------
+    composer global require laravel/installer
+
+    $HOME/.config/composer/vendor/bin
+        >> Place in .zshrc and source the file
+
+
+Create Porject :
+-----------------
+    Laravel new application-name
+
+
+
+
+exception :
+------------
+    php artisan key:generate
+        >> No application encryption key has been specified.
+
+    composer global require "laravel/installer:^4.0"
+        >> laravel new project command is using php@7.3 in place of php@7.4
+
+	>> If there are some exception for parmission denied give those folder parmition.
+	>> It may need parmition for "logs" and "framework" folder.	
+
+
+
+
+Create hostname :
+-----------------
+	vim /etc/hosts
+		>> local Domains in linux.
+
+
+
+
+

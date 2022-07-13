@@ -1,0 +1,7 @@
+To change Default desktop to another one :
+-------------------------------------------
+	* update-alternatives --config x-session-manager
+
+XFCE :
+------
+	apt install xfce4-goodies
