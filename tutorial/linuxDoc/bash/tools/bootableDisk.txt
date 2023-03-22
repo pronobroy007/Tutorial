@@ -1,0 +1,16 @@
+* sudo fdisk -l
+    >> Lisk all disk and see disk for pendirve
+
+* dd bs=4m if=*.iso of=/dev/sdN status=progress oflag=sync
+    >> For windwos
+
+* dd if=*.iso of=/dev/sdN status=progress
+    >> Goto image file (ISO) location
+    >> Find out usb device
+    >> Don't need to change any type to NTFS/exFat/ext3 
+
+
+>> After this try 
+* sudo fdisk /dev/sdN 
+    >> to create new partition on unallocated partition
+

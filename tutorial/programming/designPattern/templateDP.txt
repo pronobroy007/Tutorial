@@ -1,0 +1,176 @@
+/***********************************************************************************
+* With this pattern, you define a method (algorithm) in an abstract class. 
+* It contains both abstract methods and non-abstract methods. 
+* The subclasses that extend this abstract class then override 
+* those methods that don’t make sense for them to use in the default way.
+***********************************************************************************/
+
+
+// --------------------------------------------------------------------------- //
+//                      TEMPLATE CLASS
+// --------------------------------------------------------------------------- //
+// A Template Method Pattern contains a method that provides
+// the steps of the algorithm. It allows subclasses to override 
+// some of the methods
+
+public abstract class Hoagie 
+{
+	// This is the Template Method
+	// Declare this method final to keep subclasses from
+	// changing the algorithm
+	
+	final void makeSandwich()
+    {
+		cutBun();
+		
+		if(customerWantsMeat())
+        {
+			addMeat();
+		}
+		
+		if(customerWantsCheese())
+        {
+			addCheese();
+		}
+		
+		if(customerWantsVegetables())
+        {
+			addVegetables();
+		}
+		
+		if(customerWantsCondiments())
+        {
+			addCondiments();
+		}
+		wrapTheHoagie();
+	}
+	
+	public void cutBun()
+    {
+		System.out.println("The Hoagie is Cut");
+	}
+	
+	// These methods must be overridden by the extending subclasses
+	abstract void addMeat();
+	abstract void addCheese();
+	abstract void addVegetables();
+	abstract void addCondiments();
+	
+	// These are called hooks
+	// If the user wants to override these they can
+	// Use abstract methods when you want to force the user
+	// to override and use a hook when you want it to be optional
+	boolean customerWantsMeat() { return true; }
+	boolean customerWantsCheese() { return true; }
+	boolean customerWantsVegetables() { return true; }
+	boolean customerWantsCondiments() { return true; }
+	
+	public void wrapTheHoagie()
+    {
+		System.out.println("\nWrap the Hoagie");
+	}
+}
+
+
+// --------------------------------------------------------------------------- //
+//                      DRIVEN CLASS
+// --------------------------------------------------------------------------- //
+public class ItalianHoagie extends Hoagie
+{
+	String[] meatUsed = { "Salami", "Pepperoni", "Capicola Ham" };
+	String[] cheeseUsed = { "Provolone" };
+	String[] veggiesUsed = { "Lettuce", "Tomatoes", "Onions", "Sweet Peppers" };
+	String[] condimentsUsed = { "Oil", "Vinegar" };
+	
+	public void addMeat()
+    {
+		System.out.print("Adding the Meat: ");
+		
+		for (String meat : meatUsed)
+			System.out.print(meat + " ");
+	}
+	
+	public void addCheese()
+    {
+		System.out.print("Adding the Cheese: ");
+		
+		for (String cheese : cheeseUsed)
+			System.out.print(cheese + " ");
+	}
+	
+	public void addVegetables()
+    {
+		System.out.print("Adding the Vegetables: ");
+		
+		for (String vegetable : veggiesUsed)
+			System.out.print(vegetable + " ");
+	}
+	
+	public void addCondiments()
+    {
+		System.out.print("Adding the Condiments: ");
+		
+		for (String condiment : condimentsUsed)
+			System.out.print(condiment + " ");
+	}
+	
+}
+
+
+// --------------------------------------------------------------------------- //
+//                      DRIVEN CLASS
+// --------------------------------------------------------------------------- //
+	public class VeggieHoagie extends Hoagie{
+
+	String[] veggiesUsed = { "Lettuce", "Tomatoes", "Onions", "Sweet Peppers" };
+	String[] condimentsUsed = { "Oil", "Vinegar" };
+	
+	boolean customerWantsMeat() { return false; }
+	boolean customerWantsCheese() { return false; }
+	
+	public void addVegetables()
+    {
+		System.out.print("Adding the Vegetables: ");
+		
+		for (String vegetable : veggiesUsed)
+			System.out.print(vegetable + " ");
+	}
+	
+	public void addCondiments()
+    {
+		System.out.print("Adding the Condiments: ");
+		
+		for (String condiment : condimentsUsed)
+			System.out.print(condiment + " ");
+	}
+
+	void addMeat() {}
+	void addCheese() {}
+}
+
+
+// --------------------------------------------------------------------------- //
+//                      MAIN CLASS
+// --------------------------------------------------------------------------- //
+public class SandwichSculptor 
+{
+	public static void main(String[] args)
+    {
+		ItalianHoagie cust12Hoagie = new ItalianHoagie();
+		cust12Hoagie.makeSandwich();
+		
+		VeggieHoagie cust13Hoagie = new VeggieHoagie();
+		cust13Hoagie.makeSandwich();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

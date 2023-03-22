@@ -1,0 +1,339 @@
+"Db" is a model we create in laravel and table name is "dbs"
+
+	*  Db::all(); 
+	>> return all data from "dbs" table because "Db" model is for "dbs" table
+
+	*  Db::orderBy('title', 'asc')->get(); 
+	>> return data "asc" or "desc" order.
+	
+	*  Db::orderBy('title', 'asc')->take(23)->get(); 
+	>> This will give only 23 row form "dbs" table Here we limit our queary
+	
+	*  $data = Db::orderBy('title', 'asc')->paginate(23); 
+	>> suppose we have 100 entries in "dbs" table and we want to show 23 entries eatch page.
+		 In that case we use "paginate()" function. "{{ $data->links() }}" = will make all pages number.
+
+	*  Db::find($id);
+	>> This will return one row from database.
+	
+	*  Db::where('title', 'Assembly')->get(); 
+	>> This will return that one which have "title" "Assembly" from "dbs" model table
+	
+	*  Db::count();
+	>> Return total number of entry in Db.
+ 
+	
+
+	
+	
+					****** Database Relation ********
+
+					
+					
+#hasOne():				One To One
+--------------		   ----------------
+	Suppose we have a "User" table and another table "Address" where we store user address
+	In this case one user have one address so in User model we create a "hasOne()" 
+	relation 
+	
+		User
+		-------
+			id 		-> 	integer
+			name 	-> 	string
+			
+		Address
+		----------
+			id			-> 		integer
+			user_id		->		integer
+			name		-> 		string
+	
+	
+	
+		In "User" model
+		*****************************************
+		*  public function address()
+		*  {
+		*  	return $this->hasOne('App\Address');
+		*  }
+		*****************************************
+		>> "App\User::findoffail($id)->address->name"  This is how we call this function.
+
+
+		Reverse of this operation
+		--------------------------
+		In "Address" model.
+		**********************************************************
+		*   public function user()
+		*   {
+		*   	return $this->belongsTo('App\User', 'user_id');
+		*   }
+		**********************************************************
+		
+		
+		
+	
+	
+	
+	
+	
+# hasMany():					One To Many
+----------------		   	-------------------
+	suppose we have a user and this user can make many post and in his profile we 
+	want to show all of his post. To do this create a "hasMany" relation with posts database
+	
+	User
+	------
+		id		-> 	integer
+		name 	->	string
+	
+	Posts
+	--------
+		id			-> 		integer
+		user_id		->		integer
+		body		->		string
+		title		->		string
+		
+		
+	
+	In User.php we write this function. In "User" model
+		*****************************************
+		*  public function posts()
+		*  {
+		*  	return $this->hasMany('App\Posts');
+		*  }
+		***************************************** 
+							
+		
+		We can call this like:
+		**************************************************
+		*  Route::get('/res/{db}',function($db){
+		*		$user = App\User::where('id', $db)->first();
+		*		return $user->posts;    
+		*	});
+		**************************************************
+		
+		
+		
+		
+
+
+# belongsTo():
+--------------------		
+	This relation invers of "One To Many" and "One To One"
+
+	Suppose we have a post and In "User" model we want to see who's post is this.
+	We assign a "user_id" in post table to track who's post it is.
+		********************************************************
+		*  public function username()
+		*  {
+		*      return User::where('id', $this->user_id)->first()->name;
+		*  }	
+		********************************************************
+		>>$this->user_id => This gives user id for a particular post
+		>> here "first()" mean give 1st match row from "user" table
+		>> "first()->name" return name of 1st match row.
+		
+	We can call this like 
+		*  {{ $db->username() }}
+		
+		..................................................................................................................
+		
+	Another way to do same thing. In "posts" table.
+		*****************************************
+		*  public function user()
+		*  {
+		*      return $this->belongsTo('app\User');
+		*  }
+		*****************************************
+		
+	We can call this like 
+		*  {{ $db->user->name }}
+		>> name => in "user" table where column name is "name"
+
+		
+
+		
+		
+		
+# belongsToMany():					Many To Many
+--------------------------	   	-------------------
+	A user with many roles, where the roles are also shared by other users and many users 
+	may have the role of "Admin" and also many role may have same user.
+	To define this relationship, three database tables are needed:  users, roles, and role_user.
+	The role_user table is derived from the alphabetical order of the related model names.
+	
+	User
+	-------
+		id 		-> 	integer
+		name 	-> 	string
+		
+	Role
+	-------
+		id		-> 	integer
+		name 	-> 	string
+		
+	User_role
+	-------------
+		id 			-> 		integer
+		user_id 	->		integer
+		role_id		->		integer
+	 
+	
+	
+	Here we make relation In "User" modle
+		*********************************************************
+		*  public function role()
+		*	{
+		*		return $this->belongsToMany('App\Role', 'User_role');
+		*	}
+		*********************************************************
+		>> "User_Role" => modle name only not full path
+		
+		
+		We call like this.
+		*******************************************
+		*  Route::get('/res/{db}',function($db){
+		*  	$user = App\User::where('id', $db)->first();
+		*  	return $user->roll[0]->name;    
+		*  });
+		*******************************************
+		>> first(); => It mean give 1st element which is matched
+
+
+
+
+
+		
+#hasManyThrough():
+-------------------------
+	a Country model might have many Post models through an intermediate User model.
+	
+	countries
+	-------------
+		id - integer
+		name - string
+
+	users
+	-------
+		id - integer
+		country_id - integer
+		name - string
+
+	posts
+	-------
+		id - integer
+		user_id - integer
+		title - string
+		body - string
+		
+		
+		
+			*************************************************
+			*  class Country extends Model
+			*  {
+			*  	public function posts()
+			*  	{
+			*  		return $this->hasManyThrough(
+			*  			'App\Post',
+			*  			'App\User',
+			*  			'country_id',
+			*  			'user_id', 
+			*  		);
+			*  	}
+			*  }
+			*************************************************
+			>> The first argument is the name of the posts or final model we wish to access
+			>> 2nd argument  is the name of the user or intermediate model.
+			>> 'country_id'   =>   Foreign key on users table or intermediate model...
+			>> 'user_id', 		=>  Foreign key on posts table or final table... 
+			
+			
+			************************************************
+			*  Route::get('/res/{db}',function($db){
+			*  	$address_id = App\Address::findorfail($db);
+			*  	return $address_id->posts;    
+			*  });
+			************************************************
+
+
+
+
+
+			
+# Polymorphic Relations:
+------------------------------
+	 users of your application can "comment" on both posts and videos. Using 
+	 polymorphic relationships, you can use a single  comments table for both
+	 of these scenarios.
+	 
+	posts
+	-------
+		id - integer
+		title - string
+		body - text
+
+	videos
+	--------
+		id - integer
+		title - string
+		url - string
+
+	comments
+	-------------
+		id - integer
+		body - text
+		commentable_id - integer
+		commentable_type - string
+		
+		
+		Two important columns to note are the "commentable_id" and "commentable_type"
+		columns on the comments table. The "commentable_id" column will contain the ID 
+		value of the post or video, while the commentable_type column will contain the 
+		class name of the owning model. 
+		Example for "commentable_type" => "App\videos", for video comment.
+		
+		**************************************************************
+		*  class Comment extends Model
+		*  { 
+		*  	public function commentable()
+		*  	{
+		*  		return $this->morphTo();
+		*  	}
+		*  }
+        *  
+		*		
+		*  class Post extends Model
+		*  { 
+		*  	public function comments()
+		*  	{
+		*  		return $this->morphMany('App\Comment', 'commentable');
+		*  	}
+		*  }
+        *  
+		*
+		*  class Video extends Model
+		*  {  
+		*  	public function comments()
+		*  	{
+		*  		return $this->morphMany('App\Comment', 'commentable');
+		*  	}
+		*  }
+		**************************************************************
+		
+		
+		This is use for post comments.
+		*******************************************
+		*  Route::get('/res/{db}',function($db){
+		*  	$db = App\Db::findorfail($db);
+		*  	return $db->comments;    
+		*  });
+		*******************************************
+		
+		
+		
+		
+			
+If we want to use stander database queary like "select * from "dbs" then we need to include 
+"DB" and queary will be 
+>> DB::select("SELECT * FORM dbs");
+																

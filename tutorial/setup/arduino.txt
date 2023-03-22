@@ -1,0 +1,51 @@
+Serial monitor :
+----------------
+    * minicom
+
+    * minicom -D /dev/ttyACM0 -b 9600
+        >> Start minicom 
+
+    * Ctrl-a x
+        >> Exit minicom 
+
+
+arduino-cli :
+-------------
+    * arduino cli -h
+
+    * aruino-cli board list 
+        >> list all borad which is connected with this device 
+
+    Install Board :
+    ---------------
+        * arduino-cli board listall
+            >> All board can be install 
+
+        * aruino-cli core list 
+            >> List all install board
+
+        * arduino-cli core search board-name
+            >> search a particuler board
+            >> If any board not present then open /home/kali/.arduino15/arduino-cli.yaml
+            >> add that board url into board_manager:  additinoal_urls:
+            >> after adding board url search again that board 
+
+        * arduino-cli core insall board-name
+            >> board-name for arduino uno = arduino:ave:uno
+
+
+    Install Board :
+    ---------------
+        * arduino-cli lib list
+            >> List install library
+
+        * arduino-cli lib srarch lib-name
+            >> search a particuler library
+
+        * arduino-cli lib install lib-name
+
+            
+
+
+
+

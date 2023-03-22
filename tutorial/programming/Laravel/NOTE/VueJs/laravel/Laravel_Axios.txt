@@ -1,0 +1,144 @@
+api.php => "routes\api.php"
+
+
+# Create a Route api
+---------------------
+    In "api.php" create a route 
+        *********************************************************************
+        *  Route::get('posts/{post}/comments', function(){
+        *      return  response()->json("hello world");
+        *  });
+        *
+        *
+        *  //If we want we also can use middleware group.   
+        *  Route::middleware('auth:api')->group(function () {
+        *      Route::post('posts/{post}/comment', function(Request $req){
+        *           $data = $req->body;
+        *
+        *           return response()->json($data);
+        *       });
+        *  });
+        *********************************************************************
+        >> Here we ruturn a rosponse() to a "json" file format
+        >> Instate of use "function()" we can use controller 
+
+        >> In middleware we use "auth:api" for this make sure that user table  has "api_token"
+        >> column and in "axios.post()" function send this for authentication "api_token = user.api_token"
+
+
+
+
+# Overall Vue structure
+--------------------------
+    ************************************************************************************
+    *  const app = new Vue({
+    *      el: '#app',
+    *      data:{ 
+               commentBox: "";
+    *          user: {!! Auth::check() ? Auth::user()->toJson() : "null" !!}
+    *      },
+    *      methods:{
+    *          getRequest()
+    *          { },
+    *          
+    *          postRequest()
+    *          { }
+    *      }
+    *  });
+    ************************************************************************************
+
+
+
+
+
+
+
+# Call Get request api using Axios
+-----------------------------------
+    In blade.php we create a vue and in that vue we create a methods call 
+    "getRequest()"
+        ******************************************************************
+        *  getRequest()
+        *  { 
+        *      axios.get("/api/posts/"+this.post.id+"/comments")
+        *          .then((response) => 
+        *          {
+        *               this.commentBox = response.data
+        *          })
+        *  }
+        ******************************************************************
+        >> response => This data come from api::route in json format.
+
+
+
+
+
+
+# Call Post request api using Axios
+-----------------------------------
+    **************************************************************************
+    *  postRequest()
+    *  {
+    *      axios.post("/api/posts/"+this.post.id+"/comment", {
+    *      api_token: this.user.api_token,
+    *      body: this.commentBox
+    *      })
+    *      .then((response) => {
+    *      console.log(response.data);
+    *      })
+    *      .catch(function (error) 
+    *      {
+    *      console.log(error);
+    *      });
+    *  }
+    **************************************************************************
+    >> In avobe/[# Create a Route api] we create an "auth:api" middleware for "POST" request 
+    >> that's why we need "api_token" in "data" section in "Vue" we defin "user" data.
+
+    >> "body" => data is send by Axios, this data received by avobe "Route::post" n "#Create a Route api"
+
+    [NOTE : "This.user.api_token" is not created by default]
+
+
+
+#############################################################################################################
+    "This.user.api_token" is not created by default so when we migrate database we will make 
+    "api_token" collumn in User table which is "$table->string('api_token', 60)->unique();"
+    now migrate.         
+
+
+    Goto "App/User.php" file and in that file 
+        ********************************************************************
+        *   protected $fillable = [
+        *          'name', 'email', 'password', 'api_token'
+        *      ];
+        ********************************************************************
+        >> 'api_token' => add this to fillable.
+
+
+
+    Goto "App/Http/Controllers/Auth/RegisterController.php" file and in Here
+        *******************************************************************
+        *  protected function create(array $data)
+        *  {
+        *      return User::create([
+        *          'name' => $data['name'],
+        *          'email' => $data['email'],
+        *          'password' => bcrypt($data['password']),
+        *          'api_token' => bin2hex(openssl_random_pseudo_bytes(30)),
+        *      ]);
+        *  }
+        *******************************************************************
+        >> 'api_token' => bin2hex(openssl_random_pseudo_bytes(30)) => Add this line.
+
+
+For auth:api authentication get request
+    ********************************************
+    *  axios.get("/api/"+this.user.id, {
+    *      params:
+    *      {
+    *          api_token: this.user.api_token
+    *      }
+    *  })
+    ********************************************
+

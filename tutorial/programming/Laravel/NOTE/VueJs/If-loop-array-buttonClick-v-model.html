@@ -1,0 +1,101 @@
+                            <!-- If Else stetment -->
+                                <!-- For Loop -->
+                        <!-- Creating array or lists -->
+                    <!-- Assign a Variable to a Text Box -->
+                <!--********* Triger Button click *********-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <title>Directive 0</title>
+</head>
+<body>
+
+    <div class="container">
+        <div id="app">
+            <!-- 1st -->
+            <h3>{{ massage }}</h3><br>
+
+            <!-- 2nd -->
+            <!-- if else stetment -->
+            <!-- if "show" data is true then show ths massage. "v-if" = Vue if -->
+            <h3 v-if="show == '1st'" class="arert alert-success"> Show is 1st </h3>
+            <h3 v-else-if="show == '2nd'" class="arert alert-danger">Show id 2nd</h3>
+            <h3 v-else="show">Show</h3>
+            <br>
+
+
+            <!-- 3nd -->
+            <!-- For Loop -->
+            <!-- Echo out list/array using for loop -->
+            <ol>
+                <li v-for='list in lists'>{{ list }}</li></h3>
+            </ol>
+            <br> 
+
+
+            <!-- 4th -->
+            <ol>
+                <li v-for='list in lists2'>{{ list.Name }}</li></h3>
+            </ol><br>     
+            
+            
+            <!-- 5th -->
+            <!-- v-model is assign value for this input field whatever in massise data in Vue-->
+            <!-- Here in textfile if we add data then in "Vue" "massage" data will also change -->
+            <!-- Because we assign "value=massage" -->
+            <input type="text" v-model="massage" class="form-control"><br>
+
+
+            <!-- 6th -->
+            <!-- When we click a button we want to call a function "showList-->
+            <button v-on:click="showList">Show list</button><br>
+
+
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            //Any div which have id "app" can access this Vue
+            el: "#app",     
+            //This data can be access by "{{ name of data }}"
+            data:
+            {
+                //1st
+                massage: "This is Vue",
+
+                //2nd..............................
+                show: '1st',
+
+                //3rd..............................
+                lists: ["Pronab", "Pronab@email.com", "password"], 
+
+                //4th..............................
+                lists2: [
+                        {Name: "Pronab"}, {Email: "Pronab@email.com"}, {Passowrd: "password"}
+                       ],
+            },
+
+            //5th.............................
+            methods:
+            {
+                //This function will make 2nd element of "data:" which is "show" ture
+                //We can call this function like "{{ showList() }}"
+                showList()
+                {
+                    this.show = true;
+                }
+            }
+            
+        });
+    </script>
+
+</body>
+</html>

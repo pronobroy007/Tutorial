@@ -1,0 +1,50 @@
+Open tarminal and check if any internet connection is avabalable or not 
+>> ping google.com
+ 
+Update Root password :
+----------------------
+    * sudo -i
+        >> Type this and enter
+    * passwd 
+        >> set Root password
+ 
+Configure sources.lilt	
+----------------------
+	>> Search "kali linux repository" and go to repository page in kali linux
+	>> Copy "Regular repositories" and "Source repositories"
+	>> Paste it in /etc/apt/sources.list
+
+Update & Upgrade
+----------------
+	* apt-get update 
+	* apt --fix-broken install
+	* apt full-upgrade/apt-get upgrade/apt-get dist-upgrade -y
+		>> full-upgrade and dist-upgrade is pretty much semiller.	
+	
+	* apt autoremove
+		>> After upgrade there are some unnessery package remain which will not used any more
+		>> To delete those use this command.
+
+
+	[NOTE : If there is some problem to upgrade like  
+		"Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)"
+		Then remove those files.]
+
+
+Add 32bit architecture To install 32bit application
+---------------------------------------------------
+	>> dpkg --add-architecture i386
+	>> sudo apt-get update 
+
+
+Nano
+-----
+	>> Ctrl + o then Enter	(To save a file)
+	>> Ctrl + x				(To exit nano)
+
+
+Swich between terminal tab:
+----------------------------
+    ALT + 1/2
+
+

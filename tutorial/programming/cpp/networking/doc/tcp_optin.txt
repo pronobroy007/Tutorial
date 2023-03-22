@@ -1,0 +1,62 @@
+Three-Way Handshake
+********************
+	The following scenario occurs when a TCP connection is established
+
+	1.
+		The server must be prepared to accept an incoming connection. This is normally done by
+		callin socket, bind and listen and is called a passive open.
+
+	2.
+		The client issues and active open by calling connect. This causes the client TCP to send a 
+		"Synchronize" (SYN) segment, which tells the server the client's initial sequence nubmer
+		for the dataa that hte client will send on the connection. Normally,, there is no data sent 
+		with the SYN; it just contins an IP header, a TCP header, and possible TCP optins.
+
+	3.
+		The server must acknowledge (ACK)  the client's SYN and the server must also send its own
+		SYN containing the initial sequende number for the data that the server will send on 
+		the connection. The server sends its SYN and the ACK of client's SYN in a single segment.
+
+	4.
+		The client must acknowledg the server's SYN.
+
+
+
+
+
+
+TCP Options
+***********
+	Each SYN can contain TCP options. Commonly used options include the following
+
+	MSS option
+	-----------
+		With this option, the TCP sending the SYN announces its maximum segment
+		size, the maximum amount of data that it is willing to accept in each TCP segment, on
+		this connection. The sending TCP uses the receiver's MSS value as the maximum size of a
+		segment that it sends. We will see how to fetch and set this TCP option with the
+		"TCP_MAXSEG" socket option.
+
+	Window scale option
+	-------------------
+		The maximum window that either TCP can advertise to the other
+		TCP is 65,535, because the corresponding field in the TCP header occupies 16 bits. But,
+		high-speed connections, common in today's Internet (45 Mbits/sec and faster) or long delay paths
+		require a larger window to obtain the maximum throughput possible. This
+		newer option specifies that the advertised window in the TCP header must be scaled (left-Shifted)
+		by 0–14 bits, providing a maximum window of almost one gigabyte (65,535 x 2pow14)
+		Both end-systems must support this option for the window scale to be used on a
+		connection. We will see how to affect this option with the "SO_RCVBUF" socket option
+
+	Timestamp option
+	-----------------
+		This option s needed for high-speed connections to prevent possible
+		data corruption caused by old, delayed, or duplicated segments. Since it is a newer
+		option, it is negotiated similarly to the window scale option
+
+
+
+
+
+
+

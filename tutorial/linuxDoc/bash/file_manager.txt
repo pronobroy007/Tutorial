@@ -1,0 +1,414 @@
+ln :
+------ 
+    hadr Link :
+    -----------
+        * ln orginalFileName copyFileName. 
+            >> For hadr link if we change one file this will effect another file. 
+            >> If we delete one of them or delete original file then rest files
+            >> which is created by hard link will remain.
+            >> Also we can't create hard link for directory.
+            >> For hard link inode of eatch files is same.
+
+    soft link : 
+    -----------
+        * ln -s originalFileName ShortCutFileName
+            >> This is same as shotcut files in windows.
+            >> For soft link inode of eatch files is different.
+    
+head :
+------	
+	* head filename
+		>> This will give first 10 line in that file. 
+		>> We can change line number by using "-n 20"
+
+tail :
+------	
+	* tail filename
+		>> This will give last 10 line in that file 
+		>> We can change line number by using "-n 20"
+
+
+dos2unix :
+-----------
+	* dos2unix [fileName]
+		>> This will convart a windows file into linux.
+
+
+touch :
+-------
+	* touch	[fileName]
+		>> To create a file. 
+
+	* touch file1 file2 file3
+		>> Create multiple files.
+
+	* touch .file  
+		>> Here "." mean this is a hidden file
+
+
+diff :
+------
+	* diff firstFile secondFile
+		>> This will show what are the changes between two file. 
+
+wc :
+----
+	* wc [fileName]
+		>> This will give number or line, word, charecter, and file name
+		>> wc -l fileName == will give only number of line.	
+		>> -c = bytes
+
+
+grep :
+------
+	* cat file.txt | grep hello
+		>> This will print only that line which have hello on it.
+		>> -i = Ignore case
+
+    OR :
+    ----
+        * egrep "foo|bar" tile.txt	
+        * grep -E "foo|bar" tile.txt	
+            >> -E = use for regular expresion
+            >> This is how we can check multiple patterns.	
+    And :
+    ------
+        * grep -E "foo.bar" tile.txt	
+
+    NOT :
+    -----
+        * grep -v "bar" tile.txt	
+            >> -v is use for not command
+            >> This will return all resuld except bar
+
+cat	:
+-----	
+	* cat fileName
+		>> This will print that file line by line so we can use it on loop.
+		>> This will open a file in console not in another editor.
+
+	* cat > filename  
+		>> ">" use to redirect a file.
+		>> create a file using cat commend and write this 
+        >> file (ctrl + d_) to save the file.  
+
+
+ls :
+----
+	* ls		   
+		=> Show file and directory
+	* ls -l		
+		=> This will give all details for any folder
+	* ls -la		
+		=> This wll give extra hidden folder and file  
+	*ls -lh		
+		=> This eill give file size of eatch file
+
+
+
+
+
+
+tr	:		
+-----
+	* echo "hello world" | tr h w 
+		>> This 'tr' will translate all "h" to "w"
+
+	* tr -d "\r" < windows.py > linux.py
+		>> This will convart windows to linux.
+        >> To make a new line windows use carage return which is "\n" 
+		>> "-d" use to delete that.
+
+
+sort    	
+------
+	* sort fileName 
+		>> Example : sort animals.txt
+		>> This will sort animals.txt file.
+
+
+cut :
+-----	
+	* echo "hello world" | cut -d" " -f 2    
+		>> here "-d" is delimiter. -d" " mean delemeter is space. 
+        >> It mean we separate hole text by there space.
+		>> -f is field spacify what we want as output.
+		>> -f 1, 2  = 1 mean 1st word which is "hello". 2 = 2nd word which is "world"
+
+	* echo "hello world" | cut -c1-5
+		>> -c = to charecter. output = hello
+		>> -c1- = From 1 to end. end mean where it find next 
+        >> tab which is default deelimiter.
+
+		>> We have a "vcf" file. We want to extrect this file 
+        >> and only show name and number
+		>> cut -d":" -f 2 | grep -E "+88|;"
+
+
+sed :
+-----
+	#Sed use for Replace and also Find word
+
+	* sed s/regexp/replace/g fileName
+		>> regexp	= reguler expresion to find text
+		>> replace 	= replace text
+		>> fileName = which file we want to replace.
+		>> g 		= globaly mean replace all.
+
+	* sed 's!regexp!replace!g fileName'
+		>> This is also valid
+
+	* echo "this is sed command" | sed s/"this is"/The/g
+		>> This will change "this is" to "The"
+
+	* echo "hello world" | sed s/l/L/2
+		>> This wll chenge only 2nd match of "l" to "L"
+		>> output : helLo world
+
+	* sed -i s/hello/HELLO/g fileName
+		>> This will replace "hello" word and also seve changes on that file.
+
+
+dd :	
+----    	
+	* dd if=Input_file_name of=Output_File_Name conv=ucase
+		>> Here we copy input file and create an output file which 
+        >> have all upper case latter.
+		>> we also can change file type like assci to another format.
+
+
+hexdump:
+--------
+	* hexdump fileName
+		>> Give hex number.
+
+	* hexdump -c fileName
+	* hexdump -C fileName
+
+
+
+less :
+------	
+	* less fileName
+		>> This is like cat but open a file in new tab
+		>> Press "q" to exit new tab
+
+
+	##############################################################################
+
+split :
+-------
+	* split bigfile	small.f
+        >> "split" command make some smaller file and eatch 
+        >>file contain only 1000 line by default.
+		>> "bigfile" is any file which hvae over 1000 line of text. 
+		>> "small.f" eatch smaller file name start with "small.f" then some letter. 
+
+	* split -l 2000 bigfile
+		=> This command make eatch file contain 2000 line.
+
+	* split -b 1m [any exe / tar / zip file]
+		=> -b for byte size file and size of eatch file is 1m.
+
+
+Join after split :
+------------------
+	* split -b 1m video.mp4 file.mp4
+		>> This will split a video file make smaller file name start with "file.mp4"
+
+	* cat file.mp4* > video.mp4
+		>> file.mp4* mean all file which have file.mp4 
+        >> on there name it mean all our small file
+		>> and redirect to video1.mp4
+		>> This will join back and make original file.
+
+
+	##############################################################################
+							SEARCHING FILE
+						************************ 
+
+locate :	
+-------
+	* locate *.nse 
+		>> This will give location of .nse(nmap script) file.
+
+find :
+------
+	# Find use to search a file depending on it's name/size/time/permition and 
+	# also can execute command on result.
+
+	* find -type d
+		>> list all directory 
+		>> d = directory, f = file
+	
+	* find . ! -name "*.txt"
+        >> This will ignore all file which type is .txt.
+
+	* find -name "*.txt"
+		>> Find all .txt file inside current and subdirectory.
+		>> -name is case sencitive
+		>> -iname is not case sensetive.
+
+	* find -name "*.txt" -maxdepth 1
+		>> -maxdepth == use to search how many subfolder it search
+		>> 1 == only current dir not any of its sub dir.
+
+	* find -mmin -10
+		>> Thiw will give all file which update/create last then 10 minute
+		>> -10 == less then 10 minute
+		>> +10 == more then 10 minute
+
+	* find -mtime -10
+		>> This will give all file which update/create last then 10 days ago
+
+	* find -size +4k
+		>> This will list all file in current also it's 
+        >> subdirectory which have size greater then 4k.
+		>> +4k == greater then 4k
+		>> -4k == less then 4k
+
+	* find -size +4k -delete
+		>> This will delete those files.
+	
+	* find -perm 777
+		>> List all file and directory which have those permition.
+
+	* find -size +4k -exec ls -lh {} +
+		>> -exec == To execute a command
+		>> {} == is a place holder. It hold result of "find -size +4k" command
+		>> It mean execute "ls -lh" command only on those which "find" command return.
+
+	* find -name "*.txt" -exec rm {} +
+		>> This will remove all .txt file.
+
+	* find -perm 777 -exec chmod 764 {} +
+		>> This will change permition of file.
+
+
+lsof :
+-------
+	# lsof - list open files. This will list all open file.
+	# Using this we can see which files are open by a particular process/user/group.
+	# Or which process open a particular directory.
+	# This also give which Process is accessing a particular port or socket file.
+	
+	* lsof -u [user name]
+		>> -u = This use to see what files are open by a particular user.
+
+	* lsof -g [group id]
+		>> -g = This use to see what files are open by a particular group.
+
+
+	* lsof -p [process id]
+		>> -p = This use to see what files are open by a particular process id.
+		>> This can helpful when we want to see which log 
+        >> file using a particular process.
+
+	* lsof -c fire
+		>> It will give all files are open by program name 
+        >> start with "fire" like firefox.
+		>> -c is similar to -p except that with c we can give program name.
+		
+
+	* lsof +d [directory path]
+		>> Ex: lsof +d /var/log
+		>> This will show which process open this directory or writing this directory.
+
+	* lsof -i :5555
+		>> This will show all process which is access port "5555"
+		>> More Example :
+			* lsof -i tcp:5555
+			* lsof -i tcp
+
+	* lsof -i tcp -a -u linux
+		>> -a = and operation
+		>> This command will all TCP connection open by linux user process.
+
+
+	##############################################################################
+						COMPRESS FILE
+					*********************
+tar
+----	
+	 * tar -cvf [output tar file name] [file path]
+		>> c = create or overwrite, v = verbose output, f = file name
+		>> "file path" = which file need to make as tar file.
+
+
+	 * tar -czvf [tar file name] [file path]
+		>> z = after create a tar farther comperss to a zip/.gz file.
+	
+	* tar -tvf [tar file name]
+		>> t = To see what is in a tar file.
+
+	* tar -xvf [tar file name]
+		>> x = extrat a tar file.
+	
+
+	Example Tar:
+	------------
+		# We have a folder called "/root/Documents/program" 
+        # in and we want to make a tar file of that folder.
+		* tar -czvf /root/Documents/program program.tar.gz 
+			>> Output file name will be "program.tar.gz" 
+	
+gzip
+-----	
+	* gzip -v [file name]
+		>> To compress a file.
+
+gunzip  
+-------
+	* gunzip -v [file name]
+		>> This will extrat a ".gz" file.
+
+
+zip ;
+-----
+	* zip -r [output zip file name] [file path]
+		>> -r == recursive. If we want to create a zip of any 
+        >> directory then this might need to zip its subfoldere.
+		>> file path == Which file/folder need to make zip
+		>> output zip file name  may be docu.zip
+
+unzip :
+------
+	* unzip [zip file name]
+	* unzip [zip file name] -d [path]
+		>> path == where to put all unzip file.
+			
+
+compress
+--------- 
+	* compress -v fileName.txt	  
+		>> Here -v will output result
+		>> This command will create fileNane.txt.z
+
+	* uncompress fileName.txt.z     
+		>> see zip or unzip man page or help
+
+
+	##############################################################################
+
+
+dev :
+------
+	# In Linux, the /dev directory contains device and other special files. 
+	# Karnal place entry devices inside "/dev" folder.
+	# A device such as a CD-ROM be listed as a file and denoted as /dev/cdrom	
+
+	* cat /home/song.mp3 > /dev/dsp
+		>> This example is the speaker file or /dev/dsp. Music such as an MP3 file can 
+		>> be redirected to this file device  
+		
+
+	* echo "hello tt4" > /dev/tty4	
+		>> This The string “Hello world” is displayed on console 4. 
+		>> alt+ctrl+4 to enter console 4
+
+
+proc :
+------
+	# In "/proc" forder there are folders which have number on it current those 
+	# numbers are current running process. Those number are process id number. 
+	# To see what process is this goto any folder and run "readlink exe"

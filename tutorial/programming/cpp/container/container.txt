@@ -1,0 +1,41 @@
+* container.empty()
+	>> return whethrer the container is empty
+
+
+* container.size()
+	>> return total size of any container type
+
+* container.clear()
+	>> delete all data of any container.
+
+* container.erase(container.begin() + 2)
+	>> delete 3rd data of any container.
+
+
+* container.find()
+	>> Find a praticular value. return an iterator.
+	>> Example :
+		* map<char, int> _map;
+		* map<char, int>::iterator it = _map.find('a')
+
+
+
+***********************************************************
+    bool compairValue(std::string x, std::string y)
+    {
+        int valueX, valueY;
+        ssize_t index = x.rfind(".");
+        std::stringstream ss(std::string(x, index + 1, x.size()));
+        ss >> valueX;
+
+        index = y.rfind(".");
+        ss = std::stringstream(std::string(y, index + 1, y.size()));
+        ss >> valueY;
+
+        return (valueX >= valueY);
+    }
+
+    std::vector<std::string> files;
+    std::sort(files.begin(), files.end(), compairValue);
+***********************************************************
+

@@ -1,0 +1,12 @@
+Create Unity RP :
+-----------------
+    Goto asset folder >> right click >> create >> rendering >> lightweight pipeline asset.
+    Next edit >> project setting >> Graphics >> drag created Unity RP into [Scriptable render pipeline asset] slot
+
+To update all material to use Unity RP :
+-----------------------------------------
+    Goto edit >> Rendering pipelint >> Upgrade project material to Universel / lightweight pipeline
+
+
+If there stil have porblem Then asset >> reimport all.
+

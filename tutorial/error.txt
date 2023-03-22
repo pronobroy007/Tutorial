@@ -1,0 +1,234 @@
+***********************************************************************************
+* ERROR :
+* --------
+*
+*  nvim error 
+***********************************************************************************
+    # if suddenly some error occur then delete /home/death/.local/share/nvim
+
+
+
+***********************************************************************************
+* ERROR :
+* --------
+*
+*  Time error 
+***********************************************************************************
+    # For reverse this operation make 1 to 0
+    timedatectl set-local-rtc 1 --adjust-system-clock
+
+
+
+
+***********************************************************************************
+* ERROR :
+* --------
+*
+*  Git pull error 
+***********************************************************************************
+    * add unstage file to git using "git add"
+    * Then comit again
+    * Now push
+
+
+
+
+***********************************************************************************
+* ERROR :
+* --------
+*
+*  Networking Error 
+***********************************************************************************
+    service Networking restart
+    systemctl restart NetworkManager
+
+    //...................................................................................................................
+    #Find network module
+    * lspci | grep Network
+        >> Output : 02:00.0 Network controller: Qualcomm Atheros QCA9377 802.11ac Wireless Network Adapter (rev 31) 
+
+    * lspci -vv -s 02:00.0
+        >> This will show kernel modules (ath10k_pci)
+        >> Then remove and start module.
+
+    #Remove and load module
+	* rmmod [driver/module name]
+	* insmod [driver/module path] or modprob [driver/module path]
+    //...................................................................................................................
+
+
+
+
+***********************************************************************************
+* ERROR :
+* --------
+*
+*  Command not found 
+***********************************************************************************
+	* ifconfig / reboot / service / ... ... ...
+		>> bash: ifconfig: command not found.
+
+	>> See first "ifconfig" is actually present in "/usr/sbin/" folder or not 	
+	>> if present then see what inside PATH variable by "echo $PATH", 
+    >> if "/usr/sbin/" is not present in "PATH" variable then 
+    >> add "/usr/sbin/" inside "PATH" variable by and add flowing line 
+    >> inside ~/.bashrc file.
+
+	* PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+
+
+
+
+***********************************************************************************
+* ERROR :
+* --------
+*
+*  /var/lib/dpkg/lock 
+***********************************************************************************
+    * rm /var/lib/dpkg/lock
+        >> If there is some problem to upgrade like  
+        >> "Could not get lock /var/lib/dpkg/lock - open 
+        >> (11: Resource temporarily unavailable)"
+        >> Then remove those files. Do this for any kind of lock.
+
+
+
+
+
+***********************************************************************************
+* ERROR :
+* --------
+*
+*  --fix-broken Problem 
+***********************************************************************************
+    * sudo apt-get -f install
+
+
+
+
+
+
+***********************************************************************************
+*  Filesystem error :
+* -------------------
+*  
+*  Read Only flag enable mount problem 
+*  Or some file are present on dirve but not showing 
+***********************************************************************************
+    * unmount if already mounted 
+    * if it is mounted by /etc/fstab for 
+    * running linux then use live mode
+
+    * fsck        >> for ext4 file system
+
+    * ntfsfix /dev/sdXY
+    * mount /dev/sdaXY /media/linux/other
+        >> If there is any mount problem like read-only
+        >> here /dev/sdXY is like /dev/sda7
+
+
+    If Files are present but not showing on dirve then 
+    * chkdsk E: /f
+        >> Here we examining E dirve and after this all files are shown in dirve.
+    
+
+
+
+
+
+***********************************************************************************
+* ERROR :
+* --------
+*
+*  Unable to load Grup bootloader
+***********************************************************************************
+    Using live system :
+    --------------------
+        # Find out root folder of linux OS. 
+        # sda12 => Kali linux 
+        # sda2  => EFI System
+        mount /dev/sdXN /mnt
+            >> mount that disk.
+
+        mount --bind /dev /mnt/dev/
+        mount --bind /dev/pts /mnt/dev/pts
+        mount --bind /proc /mnt/proc
+        mount --bind /sys /mnt/sys
+        chroot /mnt
+        grub-install /dev/sda
+            >> Install grub on disk.
+            [ 
+                NOTE : 
+                    grub-install: error "cannot find EFI directory" For this,
+                    mount efi partitions to /mnt/boot/efi or /boot/efi if already chroot 
+                    fdisk -l /dev/sda list all partitions select EFI System 
+                    and mount that to /mnt/boot/efi directory or /boot/efi if already chroot 
+
+            ]
+        update-grub
+
+    Using Grub recovery :
+    ----------------------
+        ls
+            >> This will show all partitions like : (hd0) (hd0, msdos1) ... ...
+
+        ls (hd0)/
+            >> This will list files of that particular partitions.
+            >> Using this we can find out our root pertition of Linux OS.
+
+        set boot=(hd0)
+        set prefix=(hd0)/boot/grub
+        insmod normal
+        normal
+
+    
+    Dual boot Windows not showing :
+    -------------------------------
+        os-prober
+        update-grub
+
+
+
+***********************************************************************************
+* ERROR :
+* --------
+*
+* Welcome to emergency mode! After logging in, type "journalctl -xb"... ... ...   
+* Press Enter for maintenance (or press control-D to continue)                    
+***********************************************************************************
+
+    Check Everything mount properly :
+    ----------------------------------
+        df -h 
+        lsblk
+            >> This will show all mount point
+        
+        blkid
+            >> This will show UUID number is we needed
+
+        ls -l /dev/disk/by-uuid 
+            >> also show UUID number
+
+
+        mount -a
+            >> This will show if there is any mounting problem or not
+            >> If there is any mountin problem then see /etc/fstab 
+
+
+    Error might be inside filesystem :
+    ----------------------------------
+        fsck /dev/sdaN -y
+            >> Find out which partitions have file system error and fix
+
+
+***********************************************************************************
+* ERROR :
+* --------
+*
+*  Remove Bad Block form hard disk
+***********************************************************************************
+    sudo badblock -v /dev/sdb2 >> badblock.txt
+        >> This command will chek and add all bad block sector into badblock.txt file
+
+    fsck -f badblock.txt /dev/sdb2
+        >> Read all those badblock and mark as not RW

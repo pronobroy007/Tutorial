@@ -1,0 +1,36 @@
+Universel PBR
+
+Setting 2D light :
+-------------------
+    Edit -> Project Setting -> Graphics  
+    # and there is a slote for Render Pipeline Assets
+    # Create Pipeline Asset and add here.
+
+    Create Pipeline Asset :
+    -----------------------
+        Goto Project -> Create -> Rendering -> LightWeit Render Pipeline -> Pipeline Assets
+        Add this to Project Setting and that's it for 3D project. Now just Upgrade the sceene.
+
+
+        For 2D : 
+        --------
+            Click This Asset -> Render Type -> Custom. [Forward for 3D]
+
+            Create 2D Render :
+            ------------------
+                Goto Project -> Create -> Rendering -> LightWeit Render Pipeline -> 2D Renderer
+                And add this to Pipeline Asset
+
+
+
+Upgrade Currently project to use this Renderer :
+------------------------------------------------
+    Edit -> Render Pipeline -> LightWeit Render Pipeline 
+    -> 2D Renderer -> Upgrade Sceene in 2D Renderer
+
+
+Now this project is ready to add 2D Light.
+
+
+Shader Graph :
+--------------

@@ -1,0 +1,19 @@
+Animator.SetIKPositionWeight();
+Animator.SetIKPosition();
+
+Animator.SetIKRotationWeight();
+Animator.SetLookAtPosition();
+
+
+SetLookAtPosition :
+-------------------
+    float lookIKWeight;
+    float bodyIKWeight;
+    float headIKWeight;
+    float eyesIKWeight;
+    //This clamp will not make any weird rotation.
+    float clampIKWeight;
+
+    Vector3 lookATDir;
+    Animator.SetLookAtWeight(lookIKWeight, bodyIKWeight, headIKWeight, eyesIKWeight, clampIKWeight);
+    Animator.SetLookAtPosition(lookATDir);

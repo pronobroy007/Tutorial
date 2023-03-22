@@ -1,0 +1,33 @@
+ifconfig eth0 
+    >> Here eth0 is newtork interface name this is not same for eatch.
+
+MacChanger
+-----------
+    macchanger -s eth0          =>  Show Mac Address.
+
+
+Change Mac Address
+-------------------
+    macchanger -r eth0          
+        >> if this not work then
+		>> stop network-manager 
+		>> make that interface down
+		>> change mac and make interface up and start service.
+
+    sudo service network-manager stop
+    sudo ifconfig wlan0 down
+    sudo macchanger -m XX:XX:XX:XX:XX:XX wlan0
+    sudo ifconfig wlan0 up
+    sudo service network-manager start
+
+
+
+Make a script to run everytime whan reboot computer
+----------------------------------------------------
+    crontab -h     	        	=> crontab use to create a task in a particualr time
+
+    crontab -e                  => This will open a file which we can edit to perform any task.
+
+    @reboot echo "Wellcome"     => This command will execute every time we reboot our computer.
+    or
+    @erboot sh ~/MaccChangerProg.sh

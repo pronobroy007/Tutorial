@@ -1,0 +1,121 @@
+HTTPS overview :
+-----------------
+    HTTPS secures HTTP by using TLS over TCP on port 443. TLS is a protocol that can provide security to any TCP connection.
+
+    TLS is the successor to Secure Socket Layer (SSL), an earlier protocol also used by HTTPS.
+    TLS and SSL are compatible, and most of the information in this chapter also applies to SSL.
+    Generally, establishing an HTTPS connection involves the client and server negotiating which protocol to use.
+
+    When we talk about protocol security, we are generally looking for the following three things:
+
+    Authentication: 
+    ---------------
+        We need a way to prevent impostors from posing as legitimate communication partners.
+        TLS provides peer authentication methods for this reason.
+
+    Encryption:
+    -----------
+        TLS uses encryption to obfuscate transmitted data.
+        This prevents an eavesdropper from correctly interpreting intercepted data.
+
+    Integrity: 
+    ----------
+        TLS also ensures that received data has not been tampered with or otherwise forged.
+
+    HTTP is most commonly used to transmit web pages. The text on a web page is first encoded as 
+    Hypertext Markup Language (HTML). HTML provides formatting, layout, and styling to web pages.
+    HTTP is then used to transmit the HTML, and HTTP itself is transmitted over a TCP connection.
+    TLS works inside TCP to provide a secure communication channel. HTTPS is then basically the 
+    same as the HTTP protocol, but it is sent inside a TLS channel
+
+    Although TLS is most commonly used for HTTPS security, TLS is also used to secure many other TCP-based protocols.
+    The email protocol, SMTP, Making Your Program Send Email, is also commonly secured by TLS.
+
+
+
+Encryption basics :
+-------------------
+    Encryption algorithms are called ciphers. An encryption cipher takes unencrypted data as input,
+    referred to as plaintext. The cipher produces encrypted data, called ciphertext, as its output.
+    The act of converting plaintext into ciphertext is called encryption, and the act of reversing 
+    it back is called decryption.
+
+    Modern ciphers use keys to control the encryption and decryption of data. Keys are typically relatively short,
+    pseudo-random data sequences. Ciphertext encrypted with a given key cannot be decrypted without the proper key.
+
+    Broadly, there are two categories of ciphers—symmetric and asymmetric.
+    A symmetric cipher uses the same key for both encryption and decryption,
+    while an asymmetric cipher uses two different keys.
+
+
+
+How TLS uses ciphers :
+-----------------------
+    Digital signatures are essential in TLS; they are used to authenticate servers.
+    Without digital signatures, a TLS client wouldn't be able to differentiate between 
+    an authentic server and an impostor.
+
+    TLS can also use digital signatures to authenticate the client, although this is much 
+    less common in practice. Most web applications either don't care about client authentication,
+    or use other simpler methods, such as passwords.
+
+    Vulnerabilities are found for encryption algorithms all the time. It is, therefore,
+    imperative that TLS connections are able to select the best algorithms that are mutually 
+    supported by both parties. This is done using cipher suites. A cipher suite is a list of algorithms,
+    generally a key exchange algorithm, a bulk encryption algorithm, and a message authentication algorithm (MAC).
+
+
+
+The TLS protocol :
+------------------
+    After a TCP connection is established, the TLS handshake is initiated by the client.
+    The client sends a number of specifications to the server, including which versions 
+    of SSL/TLS it is running, which cipher suites it supports, and which compression methods it would like to use.
+
+    The server selects the highest mutually supported version of SSL/TLS to use.
+    It also chooses a cipher suite and compression method from the choices given by the client.
+
+    If the client and server do not support any cipher suite in common, then no TLS connection can be established.
+    This is not uncommon when using very old browsers with newer servers.
+
+    After the basic setup is done, the server sends the client its certificate.
+    This is used by the client to verify that it's connected to a legitimate server.
+    Certificates are used to verify server identities with digital signatures.
+
+    Once the client has verified that the server really is who it claims to be,
+    a key exchange is initiated. After key exchange completes, both the client and server have a shared secret key.
+    All further communication is encrypted using this key and their chosen symmetric cipher.
+
+
+Certificates :
+--------------
+    Each HTTPS server uses one or more certificates to verify their identity.
+    This certificate must either be trusted by the client itself or trusted by a third party that the client trusts.
+
+    How certificate varification work For example, a popular digital certificate authority is DigiCert Inc.
+    Suppose that you trust DigiCert Inc. and have stored a certificate from them locally; you then connect to a website,
+    example.com. You may not trust example.com, because you haven't seen their certificate before. However,
+    example.com shows you that their certificate has been digitally signed by the DigiCert Inc. certificate you do trust.
+    Therefore, you trust example.com website's certificate too.
+
+    It is also possible to self-sign a certificate. In this case, no certificate authority is used.
+    In these cases, a client needs to somehow reliably obtain and verify a copy of your certificate before it can be trusted.
+
+
+Server name identification :
+----------------------------
+    herefore, TLS must provide a method for the client to specify which domain it's connecting to.
+    You may recall that the HTTP Host header servers this purpose. The problem is that the TLS connection 
+    should be established before the HTTP data is sent. Therefore, the server must decide which certificate
+    to transmit before the HTTP Host header is received.
+
+    This is accomplished using Server Name Indication (SNI). SNI is a technique that, when used by TLS,
+    requires the client to indicate to the server which domain it is attempting to connect to.
+    The server can then find a matching certificate to use for the TLS connection.
+
+
+
+
+
+
+

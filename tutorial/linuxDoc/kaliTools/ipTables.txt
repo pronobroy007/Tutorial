@@ -1,0 +1,66 @@
+Intro :
+--------
+	# There are three built in rules/chain INPUT OUTPUT FORWA
+	# INPUT  	= trific which is comming form internet 
+	# OUTPUT 	= trafic which is going form internet
+	# FORWARD	= Packets passing through pc(like router)
+
+	# Order of rules for eatch chain matter.
+	# Make catch-all rule lase. catch-all rulr mean what happen when avobe all rule fail.
+	# Make a catch-all rule : iptable -A FORWARD -J DROP -p tcp -i eth0
+
+
+
+iptables options
+----------------
+	-s = source address.
+	-d = destination address.
+	-i = interface name.
+	-p = protoclo (tcp, udp, smtp ...).
+	-j = action(ACCEPT/DROP).
+	-P = specify default policy for chain.
+	-D = delete a rule for a chain.
+	-R = relace a rule for a chain.
+	-F = remove all rules for spacific chain.
+	-L = list chain rules.
+	-I = add rule top of chain.
+	-A = append/add rule to end of chain.
+
+
+
+Example :
+----------
+	* iptables -L				
+		>> Show all rules
+
+	* iptables -P FORWARD DROP 				
+		>> change default policy ACCEPT to DROP for FORWARD CHAIN
+
+	iptables -P FORWARD DROP -i eth0		
+		>> -i which interface. you may have multiple eth.	
+
+	* iptalbes -A INPUT -s 192.168.1.32 -j DROP	
+		>> -A append a new rule.INPUT for which chain.  -s select an ip. -j DORP or ACCEPT
+		>> Any request comming from that address will drop.
+
+	* iptables -D INPUT 1				
+		>> Delete 1st INPUT CHAIN rule.
+
+	* iptables -I INPUT -s 192.168.1.32 -j ACCEPT	
+		>> -I add top of chain and -A add last.
+
+	* iptables -A INPUT -s 192.168.1.0/24 -p tcp --distination-port 25 -j DROP
+		>> -p for protocol. prot 25 use for mail. So we block all mail. For ssl "--distination-port 443"
+		>> This is how we can create rule for spacific protocol.
+	 
+	* iptables -A INPUT -p icmp --icmp-type echo-reply -j DROP	
+		>> This will dorp all ping request.
+
+	* iptables -A INPUT -p icmp -j DORP		
+		>>  This will drop all icmp request.
+
+
+
+
+
+

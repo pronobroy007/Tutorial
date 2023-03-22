@@ -1,0 +1,51 @@
+Add git bash as an option for termenal
+	>> Goto File >> Preference >> Setting >> In right side window add 
+	>> "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe"
+	
+	
+
+To use npm, install "note js"
+
+
+VSCode Extension
+------------------
+	*  Visual Studio keymap
+	*  Laravel Extension Pack
+	*  Vatur
+	*  PHP Namespace Resolver
+	*  laravel Vue
+	*  vim
+
+
+User setting
+---------------
+	{
+		"editor.snippetSuggestions": "top",
+	}
+	Manage File Extension
+	-----------------------
+	{
+		"files.associations": {
+			"*.vert": "glsl",
+			"*.frag": "glsl"
+		},
+	}
+
+
+
+
+ShortCut keys
+-------------
+	ctrl + k + s => ShortCut keys
+	ctrl + p 	=>	enter any file name To open. 
+	ctrl + ,  	=>	Open user setting.
+	
+	Move line	=> Goto ShortCut keys and edit as "Ctrl + shift + up/down"
+	import class => Customize it to "shift + f1", if this is not exists then install "PHP Namespace Resolver"
+
+
+
+Custom snippetSuggestions
+--------------------------
+	File >> preference >> Use Snippets
+

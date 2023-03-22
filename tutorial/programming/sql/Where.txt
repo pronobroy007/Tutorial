@@ -1,0 +1,126 @@
+WHERE Syntax:
+--------------
+    SELECT column1, column2, ...
+    FROM table_name
+    WHERE condition;
+
+
+    Operator	    Description
+    ---------      --------------
+        =	        Equal
+        <>	        Not equal. Note: In some versions of SQL this operator may be written as !=
+        >	        Greater than
+        <	        Less than
+        >=	        Greater than or equal
+        <=	        Less than or equal
+        BETWEEN	    Between a certain range
+        LIKE	    Search for a pattern in string operation.
+        IN	        To specify multiple possible values for a column
+
+
+
+
+    Example:
+    --------
+        SELECT * FROM Customers WHERE Country='Mexico';
+
+        SELECT * FROM Customers WHERE CustomerID=1;
+
+
+
+
+            #############################################################     
+    BETWEEN/NOT BETWEEN Example:
+    ---------------------------- 
+        SELECT * FROM Products
+        WHERE Price BETWEEN 10 AND 20; 
+
+        
+        SELECT * FROM Products
+        WHERE Price NOT BETWEEN 10 AND 20;
+         
+
+
+        The following SQL statement selects all orders with an OrderDate BETWEEN '01-July-1996' and '31-July-1996':
+
+        SELECT * FROM Orders
+        WHERE OrderDate BETWEEN #01/07/1996# AND #31/07/1996#;
+        
+
+        OR
+
+        
+        SELECT * FROM Orders
+        WHERE OrderDate BETWEEN '1996-07-01' AND '1996-07-31';
+        
+
+    
+
+    Like Example:
+    --------------
+            LIKE Operator	                    Description
+        ----------------                   ---------------
+        WHERE CustomerName LIKE 'a%'	Finds any values that start with "a"
+        WHERE CustomerName LIKE '%a'	Finds any values that end with "a"
+        WHERE CustomerName LIKE '%or%'	Finds any values that have "or" in any position
+        WHERE CustomerName LIKE '_r%'	Finds any values that have "r" in the second position
+        WHERE CustomerName LIKE 'a_%_%'	Finds any values that start with "a" and are at least 3 characters in length
+        WHERE ContactName LIKE 'a%o'	Finds any values that start with "a" and ends with "o"
+
+
+        Example:
+        ---------       
+            SELECT * FROM Customers
+            WHERE CustomerName LIKE '%or%'; 
+
+            >> CustomerName that have "or" in any position
+
+
+
+    SQL IN/NOT IN Operator:
+    ------------------------
+        The IN operator is a shorthand for multiple OR conditions.
+        The IN operator allows you to specify multiple values in a WHERE clause.
+
+
+
+        Example:
+        ----------
+            SELECT * FROM Customers
+            WHERE Country NOT IN ('Germany', 'France', 'UK');
+
+
+            SELECT * FROM Customers
+            WHERE Country IN (SELECT Country FROM Suppliers);
+
+
+
+            #############################################################
+
+
+    AND Example:
+    ------------
+        SELECT * FROM Customers WHERE Country='Germany' AND City='Berlin';
+
+    OR Example:
+    ------------
+        SELECT * FROM Customers WHERE City='Berlin' OR City='München';
+
+    NOT Example:
+    ------------
+        SELECT * FROM Customers WHERE NOT Country='Germany';
+
+
+
+
+    IS NULL/ IS NOT NULL Example:
+    -----------------------------
+        SELECT * FROM Customers WHERE Country IS NULL;
+			>> Show only those column where Country column is null
+
+
+
+
+
+
+

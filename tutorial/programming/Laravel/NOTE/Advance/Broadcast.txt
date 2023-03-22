@@ -1,0 +1,374 @@
+*  In "VueJs/laravel/"=>>"Larvel_Vue.txt" and "Laravel_Axios.text"
+>> Form here we can make Vue and use this Vue for get or send data to database 
+
+*  require "Basic/DB_SendMultipleModel.txt" 
+>> For data relation. like how "Post", "comment", "User" model define.
+
+
+
+
+
+# Install Pusher:
+---------------------
+	In Terminal
+	--------------
+		*  composer require pusher/pusher-php-server
+
+		* npm install
+		>> To install npm you must install note js.
+
+		* npm install --save pusher-js
+	
+		* npm install --save laravel-echo
+		>> This is cline side library
+			
+		 		
+				
+				
+				
+		
+	>> In "config/app.php" uncomment in "provider"
+		*   App\Providers\BroadcastServiceProvider::class,
+		
+	>> Then "config/broadcasting.php" in 'connection' =>
+			***********************************	
+			*	'options' => 
+			*	[
+			*		'cluster' => env('PUSHER_APP_CLUSTER'),
+			*		'encrypted' => true
+			*	]
+			***********************************
+			
+	>> In laravel open ".env"
+			BROADCAST_DRIVER=pusher
+			
+
+	>> Then create an accout in "pusher.com" or sign in with googel accout.
+	>> Next create an app
+	>> Goto "app keys"
+			
+	Fill this whatever in "app keys"
+	--------------------------------------
+		PUSHER_APP_ID= 
+		PUSHER_APP_KEY=
+		PUSHER_APP_SECRET=
+		PUSHER_APP_CLUSTER=
+			
+[NOTE : Every event is send by web server is get "queue" by default so make sure that
+ "queue" is setup properly]
+					
+		
+		
+Now Setup laravel echo		
+-------------------------------
+	In "resources/assets/js/bootstrap.js" uncomment this
+		***************************************
+		*  import Echo from 'laravel-echo'
+		*  
+		*  window.Pusher = require('pusher-js');
+		*  
+		*  window.Echo = new Echo({
+		*  	broadcaster: 'pusher',
+		*  	key: 'your-pusher-key'
+		*		cluster: 'yout-pusher-cluster',
+		*		encrypted: true
+		*  });
+		***************************************
+		>> If there is any exception like "no massage" make encrypted = false;
+		
+
+
+	And lastly run this commend
+		*  npm run dev
+		or
+		*	npm run watch
+
+
+										END SETUP	
+***********************************************************************************************************
+
+
+
+
+
+
+# Defining Broadcast Events
+----------------------------
+	* php artisan make:event NewComment
+	>> Here we create only event because for Broadcast we dont need any listener
+
+
+	Create an event and this class must use  "implements ShouldBroadcast" class for broadcast.
+		***************************************************************
+		*  class NewComment implements ShouldBroadcast
+		*  {
+		*  	use Dispatchable, InteractsWithSockets, SerializesModels;
+        *  
+		*
+		*  	public $comment;
+		*  	
+		*  	
+		*  	public function __construct(comment $comment)
+		*  	{
+		*  		$this->comment = $comment;
+		*  	}
+        *  
+        *  
+		*  	public function broadcastOn()
+		*  	{
+		*  		return new PrivateChannel('channel-name');
+		*  	}
+		*  }
+		***************************************************************
+		>> in broadcastOn() channel is private to make this channel public 
+		>> use only "Channel". For public channel dosen't need to authencation 
+
+
+		>> "comment" "Post" "User" model is define in "Basic/DB_SendMultipleModel.txt" file.
+
+
+
+
+
+
+# Creating a dynamic channel
+------------------------------
+	Here we creating a broadcast channel for blogs and we have page posts. So for eatch
+	post we create different channel and for this We need to create dynamic channel 
+	
+	For post 1  channel name => post.1 | post 2  channel name => post.2..
+		*************************************************************************
+		*  public function broadcastOn()
+		*  {
+		*      return new Channel('post.'.$comment->post->id);
+		*  }
+		*  
+		*  public function broadcastWith()
+		*  {
+		*  	return [
+		*  		'body' => $this->comment->body,
+		*  		'user' => 
+		*			[
+		*				'name' => $this->comment->user->name
+		*			]
+		*  	];
+		*  }
+		*************************************************************************
+		>> broadcastWith() will send only that information to the websocket 
+		>> whet we return.
+		
+
+			
+	
+# Now Triger the event
+----------------------
+	When we create a new comment for a post or after we insert data to database we triger this event
+	and pass this new created data/$commend as parameter for event.
+		***************************************************************************
+		*  $comment = comment::where('id', $comment->id)->with('user')->get(); 
+		*  event(new App\Events\NewComment($comment[0]));
+		*
+		*
+		*	//OR
+		*  $comment = comment::where('id', $comment->id)->with('user')->first(); 
+		*  event(new App\Events\NewComment($comment));
+		***************************************************************************
+		
+		[NOTE : If any error occur like this
+			"Type error: Argument 1 passed to App\Events\NewComment::__construct() must be an instance of App\comment"
+			It mean we are not passing an object we are passing an array in __construct. Make sure that
+			we are passing one object like avobe not an array of object 
+		] 
+
+
+		* broadcast(new NewComment($comment))->toOthers();
+		>> This will send all except who is commented.
+
+
+
+
+
+
+#listen Broadcast
+---------------------
+	************************************************************************************
+	*   const app = new Vue({
+	*      el: '#app',
+	*      mounted()
+	*      { 
+	*          this.listen();
+	*      },
+	*      data:
+	*      { 
+	*        commentBox: "",
+	*        comments: {},
+	*        post: {!! $post->toJson() !!},
+	*        user: {!! Auth::check() ? Auth::user()->toJson() : "null" !!}
+	*      },
+	*      methods:
+	*      { 
+	*          listen()
+	*          {
+	*            //This will listen a particular channel
+	*            Echo.channel('post.'+this.post.id)
+	*              .listen('NewComment', (comment) =>
+	*                {
+	*                    this.comments.unshift(comment);
+	*                })
+	*          }
+	*      }
+	*  });
+	************************************************************************************
+	>> listen() => this will listen a particular channel.
+	>> 'NewComment' => event name which is broadcast to websocket.
+	>> (comment) => This can be anything. This value is come form "broadcastWith()" form event
+	>> in json format.
+
+	>> In mounted function we assign this listen() function so that when page is load
+	>> listener will listen a particular channel.
+
+
+
+
+
+############################################################################################################
+										Private Channel
+									------------------------
+# 1st
+------
+	In "app\Events\NewComment.php" file there is a functin "broadcastOn()"
+
+		*  return new PrivateChannel('post.'.$this->comment->post->id);
+		>> maek sure use "PrivateChannel()"
+
+
+# 2nd
+------
+	In cline side we need to tell laravel eco that we are listening a private channel.
+	So in "#listen broadcast"/Vue where we define methods call "listen()" in that function 
+
+		*   Echo.private(... ...){ ... ... ...}
+		>> if we want to say that this is public channel then we use "Echo.channel()"
+
+
+
+# 3nd
+------
+	Now register this channel. For this goto "routes\channels.php" file.
+	****************************************************************************************
+	*   Broadcast::channel('post.{id}', function ($user, $id) {
+	*   	return (int) $user->id === (int) $id;
+	*   });
+	****************************************************************************************
+	>> 'post.{id} => Broadcast channel name, which is define in broadcastOn() methods.
+	>> function() => Depending on our logic this will either return "ture" or "false"
+	>> $user => This is current use who want to authencate.
+
+	>> If we simpley return "true" form this function it mean all authencate user will allow
+	   to access thsis channel.
+
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+			*************************************************************
+								Typing
+							-------------
+	Confige pusher
+	----------------
+	>> In pusher goto "app setting" and check "Enable clint event"
+	
+	
+	
+	
+	***********************************************				
+	* watch:
+	* {
+	*    message()
+	*    {
+	*        Echo.private("channel-name")
+	*        .whisper('typing', {
+	*            name: this.message
+	*        });
+	*    }
+	* },							
+	***********************************************
+	>> When ever any change happen in text box this ".whisper" will send "name" to websocket.
+	>> "name" => This data will pass to websocket.
+		
+		
+	****************************************************
+	* .listenForWhisper('typing', (e) => {
+	* 	console.log(name);
+	* });
+	****************************************************
+	>> This will listen that "whisper" in cline side.
+	
+	
+	
+	
+	
+	
+	
+	
+			*************************************************************
+								Joining Presence Channels
+							--------------------------------
+	
+	In listen() function we add this.
+	*****************************************
+	*   Echo.join(`channel-name`)
+	*   .here((users) => {
+	*   	console.log(users);
+	*   })
+	*   .joining((user) => {
+	*   	console.log(user.name + " enter this room!");
+	*   })
+	*   .leaving((user) => {
+	*   	console.log(user.name + " leave this room!");
+	*   });				
+	*****************************************
+	>> 	Here "users" or "user" will have only that information which we will 
+		return form "routes\channels.php"(or 3rd part of private channel) 
+		file so make sure that this file will return name of user so that we can 
+		use user name in here.
+		
+		For example "routes\channels.php" were we register this private channel
+		------------------------------------------------------------------------
+			******************************************************************
+			*  	Broadcast::channel('channel-name', function ($user) 
+			*  	{
+			*  		return 
+			*  		[
+			*  			'name' => $user->name,
+			*  			'ID' => $user->id
+			*  		];
+			*  	});
+			******************************************************************
+			>> Here we can say like this => user.id or user.name 
+		
+		
+	
+
+
+			*************************************************************
+								Notification
+							-------------------	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

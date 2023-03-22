@@ -1,0 +1,40 @@
+1st:  Create laravel project.
+
+2nd:	Install npm by "npm install" 
+
+3rd:	Now run "npm run watch"	
+		if any error occor the check bulma in app.scss file. 
+
+
+
+
+
+
+We can write vue code in "resources\assets\js\app.js" file and for this we 
+need to run this => npm run watch
+
+
+
+
+
+We also can write Vue code in ".blade.php" template
+	***********************************************************
+	*  <script src="{{ asset('js/app.js') }}"></script>
+	*      <script>
+	*          
+	*          const app = new Vue({
+	*              el: '#app', 
+	*          });
+	*      </script>
+	***********************************************************
+
+
+
+
+
+We also can use "@section" so that in any page we can write js code and for this we 
+need to define this
+	****************************************************************
+	*  <script src="{{ asset('js/app.js') }}"></script>
+	*  @yield('scripts')
+	****************************************************************

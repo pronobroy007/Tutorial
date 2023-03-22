@@ -1,0 +1,53 @@
+The SQL UNION Operator:
+-----------------------
+    The UNION operator is used to combine the result-set of two or more SELECT statements.
+
+    * Each SELECT statement within UNION must have the same number of The columns must also 
+    * have similar data typescolumns The columns in each SELECT statement must also be in the same order
+    Example:
+    --------
+        SELECT d1, d2, d3 FORM t1
+        UNION
+        SELECT d1, d2, d3 FORM t2
+
+        >> Here in two select statement we have same number of column and order also same
+
+
+    Note: UNION selects only distinct values. Use UNION ALL to also select duplicate values!
+          UNION is slower than UNION ALL because UNION make a distinct sort.
+
+
+Database:
+---------
+Customers:
+-----------
+    CustomerID	CustomerName	            ContactName	        City	     PostalCode	    Country
+    ----------  -------------              -------------       ------       -----------    -----------
+      1         Alfreds Futterkiste	        Maria Anders		Berlin	        12209	    Germany
+      2	        Ana Trujillo Emparedado     Ana Trujillo		México D.F.	    05021	    Mexico
+      3	        Antonio Moreno Taquería	    Antonio Moreno		México D.F.	    05023	    Mexico
+
+
+
+supplires:
+-----------
+    SupplierID	SupplierName	            ContactName	          City	      PostalCode	Country
+    ----------  ------------               -------------         -------     ------------  ----------
+      1	        Exotic Liquid	            Charlotte Cooper	  London	    EC1 4SD	        UK
+      2	        New Orleans Cajun Delights	Shelley Burke	      New Orleans	70117	        USA
+      3	        Grandma Kelly's Homestead	Regina Murphy	      Ann Arbor	    48104	        USA
+
+
+
+
+Example:
+--------
+    SELECT City, Country FROM Customers
+    WHERE Country='Germany'
+    UNION ALL
+    SELECT City, Country FROM Suppliers
+    WHERE Country='Germany'
+    ORDER BY City;
+
+    >> SQL statement returns the German cities (duplicate values also) 
+        from both the "Customers" and the "Suppliers" table

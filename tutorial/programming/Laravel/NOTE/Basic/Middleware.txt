@@ -1,0 +1,82 @@
+# Introduction:
+------------------
+	Middleware provide a convenient mechanism for filtering HTTP requests entering 
+	your application. For example, Laravel includes a middleware that verifies the user
+	of your application is authenticated. If the user is not authenticated, the middleware 
+	will redirect the user to the login screen. However, if the user is authenticated, 
+	the middleware will allow the request to proceed further into the application
+	
+	
+	
+
+
+# Defining Middleware:
+---------------------------
+	To create a new middleware, use the make:middleware Artisan command:
+
+	*  php artisan make:middleware CheckPostId
+	
+	This command will place a new CheckPostId class within your app/Http/Middleware directory. 
+	In this middleware, we will only allow access to the route if the supplied PostId is greater
+	than 1. Otherwise, we will redirect the users back to the Index URI.
+		*****************************************	
+		*  class CheckPostId
+		*  {
+		*      public function handle($request, Closure $next)
+		*      {   
+		*          if($request->route('db') > 1)
+		*          {
+		*              return redirect('db');
+		*          }
+		*          return $next($request);
+		*      }
+		*  }
+		*****************************************
+		>> $request->route('db') > 1 => This vale is come form "Route". In "4.0.Database.txt"
+			 we create "DbController" in there we assign route "url('db') => db.index" to index page and route
+			 "url('db/{db}') => db.show" for show.blade.php page so when we want to show any particular 
+			 page which have "{db}" value is greater then "1" we redirct to "index.blade.php" page.
+			  
+
+
+
+
+
+# Registering Middleware:
+-------------------------------
+	 you would like to assign middleware to specific routes, you should first assign 
+	 the middleware a key in your app/Http/Kernel.php file. By default, the $routeMiddleware 
+	 property of this class contains entries for the middleware included with Laravel. 
+	 To add your own, append it to this list and assign it a key. 
+	 For example: key = "CheckPostId"
+	 
+		**********************************************************************
+		*   protected $routeMiddleware = [
+		*  	'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+		*  	'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+		*  	'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+		*  	'can' => \Illuminate\Auth\Middleware\Authorize::class,
+		*  	'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+		*  	'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+		*	'CheckPostId' => \App\Http\Middleware\CheckPostId::class,
+		*  ];
+		*********************************************************************
+	
+	
+
+
+
+
+#Use Middleware:
+---------------------
+	*  Route::resource('db', 'DbController')->middleware('CheckPostId');
+	
+	
+	Or we can use this middleware in "construct" of any controller class.
+		*  $this->middleware('CheckPostId');
+	
+	
+	*  $this->middleware('CheckPostId', ['except' => ['show']]);
+	>> ['except' => ['show']] => Here middleware will not check for "show.blade.php" file.
+		 If we want to add more page not to check then we can add here like this
+		 ['except' => ['show', 'index']]

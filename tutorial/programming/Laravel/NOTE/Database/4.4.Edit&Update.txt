@@ -1,0 +1,72 @@
+IN "4.Database.txt" we create "DbController" and in there we create a function called
+"edit()" Url for this edit() : "leravelapp/{{id}}/edit"
+
+In show() we call "show.blade.php" here we create a button call "edit" and when we presss this
+button it will call "edit()" function which is in "DbController". The way we call edit() is put a
+link to button as "leravelapp/{{id}}/edit".
+
+edit($id):
+-----------
+Takes No Request
+Url => "leravelapp/{{id}}/edit"
+
+	**********************************************
+    *  public function edit($id)
+    *  {
+    *      return view('Db.edit')->with('db', Db::find($id));
+    *  }
+	**********************************************
+	>> we send a particular row from table to edit.blade.php template
+	
+	
+	
+edit.blade.php:
+-------------------
+This is same as store.blade.php with slidly change.
+
+	*******************************************************************
+	*  @extends('layout.base')
+	*  
+	*  @section('body')
+	*  <form method="post" action="{{action('DbController@update', $db->id)}}">
+	*      {{csrf_field()}}
+	*      <label> Title </label> <br/><br/>
+	*      <input type="text" name="title" placeholder="Title" id="title" value="{{$db->title}}"require/><br/><br/>
+	*      <label> Body </label> <br/><br/>
+	*      <input type="text" name="body" placeholder="Body" id="body" value="{{$db->body}}" require/><br/><br/>
+	*  
+	*      <input type="hidden" name="_method" value="put" /> 
+	*      <input type="submit" value="Update" class="btn btn-default" id="login"></input>
+	*  </form>
+	*  @endsection
+	*******************************************************************
+	>> Here we add "value" to "title" and "body" input field so that we can put what ever
+		 value is set previous.
+	>> This form call "DbController@update" function.
+	>> action="{{action('DbController@update', $db->id)}}" => It mean we call "update"
+		 function and in update function we pass another value "id". "update" will take two 
+		 argument 1st response by "post" method we set that and to set another argument 
+		 which is "$id" we use that.
+	>> <input type="hidden" name="_method" value="put" /> 	This line is importent 
+		 because "update()" function take "PUT" request not "GET / POST".
+
+		 
+Uptate(Request $request, $id):
+------------------------------------
+Request => PUT/PATCH
+Url => "leravelapp/{{id}}
+
+This function is same as "store()" function only different is here we use "Db::find($id)" 
+instance of "new Db".
+
+	***********************************************
+    *  public function update(Request $request, $id)
+    *  {
+    *      $db = Db::find($id);
+    *      $db->title = $request->input('title');
+    *      $db->body = $request->input('body');
+    *      $db->save();
+    *  
+    *      return redirect('/db/'.(string)$db->id);
+    *  }
+	***********************************************

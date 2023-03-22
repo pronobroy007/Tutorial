@@ -1,0 +1,8 @@
+Open Animator file like(Project folder >> Assets >> Animation >> NormalZombi.controller)
+Then search and replece
+:%s/m_ObjectHideFlags: 3/m_ObjectHideFlags: 1/g
+
+
+Delete ShaderCache.db : 
+------------------------
+    Zombi(Project folder)/Library/ShaderCache.db

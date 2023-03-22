@@ -1,0 +1,7 @@
+* install con.vim 
+* open coc-settings.json by open nvim and type ":CocConfig"
+* and put clangd setting 
+
+Enable C++17 support in coc.nvim :
+----------------------------------
+    Create "compile_flags.txt" file where all ".cpp" files live and just put "-std=c++17" on it 

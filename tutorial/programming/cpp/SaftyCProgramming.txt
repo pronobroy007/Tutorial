@@ -1,0 +1,35 @@
+Application security and safty c language :
+-------------------------------------------
+	*	With C, it is vital to ensure that allocated memory buffers aren't written past the end.
+		That is, whenever you copy data from the network into memory, you must ensure that 
+		enough memory was allocated to store the data.	
+
+	*	When implementing any network protocol, you should never assume that the data 
+		your program receives will adhere to the protocol specification. 
+
+	*	defense in depth approach. That is, you should set up your program in such a 
+		manner that multiple defenses must be overcome before an attacker could cause damage.
+
+		>>	The first layer of defense is writing your program without bugs. 
+			Whenever dealing with received network data, carefully consider what 
+			would happen if the received data was not at all what you're expecting. 	
+
+		>> 	don't run your program with any more privileges than needed for its functionality. 
+			If your program doesn't need access to a sensitive set of files, make sure your 
+			operating system doesn't allow it to access those files. Never run server software as root. 
+
+		>> 	If you're implementing an HTTP or HTTPS server, consider not connecting your program 
+			directly to the internet. Instead, use a reverse proxy server
+
+
+
+
+
+
+
+
+
+
+
+
+

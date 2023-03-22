@@ -1,0 +1,147 @@
+						***************************************
+						*	use Illuminate\Support\Facades\Mail;		   *
+						***************************************
+
+
+# Generating Mailables
+-----------------------------
+	Each type of email sent by your application is represented as a "mailable" class. 
+	These classes are stored in the "app/Mail" directory. To create a Mailables use this 
+	
+		*  php artisan make:mail SendMail
+		
+
+		
+
+# Writing Mailables
+------------------------
+	All of a mailable class' configuration is done in the build method.
+	Within this method, you may call various methods such as from, subject, view, and 
+	attach to configure the email's presentation and delivery.
+		
+		******************************************************
+		*	class SendMail extends Mailable
+		*	{
+		*		use Queueable, SerializesModels;
+		*	 
+		*		public $data;
+		*
+		*		public function __construct($data)
+		*		{
+		*			$this->data = $data;
+		*		}
+		*	 
+		*  	public function build()
+		*  	{
+		*  		return $this->from('example@example.com')
+		*  						->view('emails.SendMail');
+		*  	}
+		*	}
+		******************************************************
+		>> from() => Sender of the email.
+		>> view() => Return a template in "view/emails/SendMail.blade.php"
+		>> public $data => This data is avalable in "SendMail.blade.php" file.
+
+			For Example in "SendMail.blade.php" we can use this "$data"
+			 -----------------------------------------------------------------------
+				<p>{{ $data }}</p>
+				
+		>> To send data to any template/.blade.php file we can also use "with()"
+		
+		
+		
+		
+		
+		
+# Configure dirver
+----------------------
+	In ".env" file:
+		**************************************
+		*  MAIL_DRIVER=smtp
+		*  MAIL_HOST=smtp.mailtrap.io
+		*  MAIL_PORT=2525 
+		*  MAIL_USERNAME=f92b08770fbdbc
+		*  MAIL_PASSWORD=519d061c278cef
+		*  MAIL_ENCRYPTION=null
+		**************************************
+		Here we use "mailtrap" for driver.
+		
+		
+		
+		
+		
+# Send Mail:
+---------------
+	*************************************************************************
+	*  Route::get('res', function(){
+	*  	Mail::to("pronob.roy07@gmail.com")->send(new App\Mail\SendMail("hello Mail"));
+	*  	return redirect('/');
+	*  });
+	*************************************************************************
+		
+		
+		
+		
+		
+		
+# Queues Mail
+-------------------
+		For Queues we use database.So 1st create a table in database 
+			
+			*  php artisan queue:table
+			*  php artisan migrate
+			
+			
+		In .evn
+		---------
+			QUEUE_DRIVER=database
+				
+			
+		When we try to send mail it takes some time to send. Now what we want is to 
+		make mail sending process as background process. To do this we use queues 
+		which referes as "Job". Cereate a job:
+		
+			*  php artisan make:job SendMailJob.php
+			
+			
+			
+		In SendMailJob.php
+		-----------------------		
+			**********************************************************************
+			*	use  App\Mail\SendMail;
+			*	use Illuminate\Support\Facades\Mail;
+			*	
+			*	
+			*  public function handle()
+			*	{
+			*		Mail::to("pronob.roy07@gmail.com")->send(new SendMail("hello Mail"));
+			*	}
+			**********************************************************************	
+		
+	
+	
+		
+		
+# Dispatch "SendMailJob"
+-------------------------------
+	***************************************************
+	*  Route::get('res', function(){
+	*  	App\Jobs\SendMailJob::dispatch()->delay(now()->addSeconds(3));
+	*  	return redirect('/');
+	*  });
+	***************************************************
+	
+	
+	
+	
+	
+	
+#Running The Queue Worker
+------------------------------------
+	*	php artisan queue:work
+
+		
+		
+		
+		
+		

@@ -1,0 +1,46 @@
+# Creating a Vue component
+----------------------------
+    Inside "resources\assets\js\components" folder create you custome component 
+    for example "notifications.vue".
+
+
+
+# Register component
+---------------------
+    In app.js file 
+    ---------------
+        Vue.component('c-notification', require('./components/notification.vue'));
+        >> <c-notification></c-notification>  => we use like this.
+		
+		[NOTE: cNotification is == <c-notification>]
+
+
+
+
+# notifications.vue
+---------------------
+    *******************************************************
+    *  <template>
+    *      <div>
+    *  
+    *          <!-- Write HTML here -->
+    *  
+    *      </div>
+    *  </template>
+    *  
+    *  <script>
+    *      export default{
+	*			
+    *          props:
+    *          [
+    *              'user',
+    *              'notifications'
+    *          ],
+    *      }
+    *  </script>
+    *******************************************************
+    >> Here we can assign props value in blade file and also NOTE that 
+       we don't need convart it to json file.
+
+    >> <c-notification :user="{{ Auth::check() ? Auth::user() : "null" }}"
+        :notifications="{{auth()->user()->notifications}}"> </c-notification>   

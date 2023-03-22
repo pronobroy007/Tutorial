@@ -1,0 +1,21 @@
+* search google "MD5 hash gererator" 
+
+Actual text			    Hash
+-----------			   --------
+12345678 		=> 	    25d55ad283aa400af464c76d713c07ad
+
+
+
+
+FindMyhash :
+-----------
+	* findmyhash MD5 -h 25d55ad283aa400af464c76d713c07ad
+	>> Here MD5 is type of hash. There are many type of hash
+	>> -h == hash
+
+
+
+
+webside to decript hash
+--------------------------
+	https://hashkiller.co.uk/Cracker/MD5

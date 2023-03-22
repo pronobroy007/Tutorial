@@ -1,0 +1,41 @@
+Package :
+---------
+	openssh-client 	openssh-server
+
+Start SSH server :
+------------------
+    * sudo systemctl start ssh.service
+
+login :
+-------
+	* ssh user_name@server_ip
+
+ssh key :
+---------
+	* ssh-keygen -t rsa
+		>> Make everything default 
+		>> It will create public and private key for ssh connectio.
+
+
+
+Downlod file from server to local_matchine :
+--------------------------------------------
+	* scp [file_name] [local_matchine_ip/file_path]
+		>> After login to server. use this command to download file.
+		>> Secure copy a file from login/server matchine to local matchine.
+		>> file_name = server file name
+		>> local_matchine_ip = our matchine ip and file_path where to save.
+
+Upload file from local_matchine to server :
+-------------------------------------------
+	* scp [local_matchine_ip/file_path] [file_path]
+		>> local_matchine_ip = our matchine ip and file_path where to save.
+		>> file_path = where we upload file from local matchine to server.
+		 
+scp options :
+-------------
+	-r for recursive copy.
+
+
+
+

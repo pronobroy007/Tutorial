@@ -1,0 +1,82 @@
+
+1.
+	To work with database 1st create a database in mysql. 
+	Example : create a database called "laravelapp"
+
+2.
+	Now connect database with leravel:
+		goto ".env" file >> configer database.
+
+3.
+	Let's create a controller for database.
+			*  php artisan make:controller DbController --resource
+			>> This will create some extra functin in "DbController" class
+			>> those function are : index(), create(), store(), show(), edit() etc.
+	
+	After create this controller we need to make Route for all those function like : 
+			*  Route::get('post/index', 'DbController@index'); 
+			>> this is for index and we also need to create all route for rest of function
+			
+			*  Route::resource('db', 'DbController');
+			>>  This will create all functin that "DbController" have
+
+	To see all route in terminal comment this
+			*  php artisan route:list
+		
+4.
+	Also crate a model for our app
+			*   php artisan make:model Db -m
+			>> Here "-m" mean we migrate this model. 
+
+	This model is create in "app" folder "Db.php" and it also create a migrate in 
+	"database/migration" and thier is a file "..create_dbs_table.php". Table name will be
+	"dbs". If we want to change table name then open "db.php" and in 
+	"class Db extends Model" use this	
+		*  protected $table = 'language';
+
+5.
+	Then open this migration file and create some row in here:
+	
+		***********************************************
+	    *  public function up()
+		*  {
+        *  	Schema::create('dbs', function (Blueprint $table) {
+        *     		$table->increments('id');
+        *     		$table->string('title');
+        *     		$table->mediumText('body');
+        *     		$table->timestamps();
+        *  	});
+		*  }
+		***********************************************
+
+6.
+	Now migrate model using this comment:
+			* php artisan migrate
+		
+	[NOTE: If there is any problem to migrate close mysql workbench and start again or create 
+	database again and then migrate ]
+ 
+		
+*********************** 	Access Database ****************************
+To insert, update or delete data we use "tinker"
+
+In Terminal open "tinker" shell by this comment :
+	*  php artisan tinker
+	
+Now we can interect with database/model :
+	*  app\Db::count()
+	
+	>> Here "app\Db" mean in app folder Db.php file. It return total number of element
+	>> Another importent think is we use '\' not forword slash
+	
+	
+Now insert an element to the table "dbs"
+	
+	**************************************************
+	*  $row = new app\Db();
+	*  $row->title = "Assembly";
+	*  $row->body = "This is Assembly language page";
+	*  $row->save();
+	**************************************************
+	
+>> In "laravelapp" database we create two row one "title" and one "body"

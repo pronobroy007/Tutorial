@@ -1,0 +1,85 @@
+In "App\Providers" folder there is a file call "EventServiceProvider.php" file in here we have 
+
+	*************************************
+    *  protected $listen = [
+    *      'App\Events\Event' => [
+    *          'App\Listeners\EventListener',
+    *      ],
+	*************************************
+	>> 'App\Events\Event' => This is Event and name of this event is "Event"
+	>> 'App\Listeners\EventListener' => This is listener of this event and name of this 
+		 listener is "EventListener". We can make as many listener as we want for one 
+		 Event.
+		 
+		 
+		 
+		 
+		 
+# Generating Events & Listeners
+---------------------------------------
+	*  php artisan event:generate
+	>> This comment will make an event and listener what we define avobe. Event file 
+		 will be in "App\Events" and listener will be in "App\Listeners".
+
+
+	Or we can create an event like this, now this will not create any listener
+		*  php artisan make:event NewEvent
+		 
+		 
+		 
+		 
+		 
+		 
+# Write an Event and Listeners:
+----------------------------------------
+	
+	In "Event.php" 
+	-----------------
+		*************************************
+		*  public $massage;
+		*
+		*	public function __construct($massage)
+		*	{
+		*		$this->massage = $massage;
+		*	}
+		*************************************
+		>> In "construct" we simple pass a massage and store that.
+		>> This event pass everything to Listeners
+		
+		
+		
+	In "EventListener.php"
+	---------------------------
+	In hande function we simple return the "Event"
+		********************************************
+	    *  public function handle(Event $event)
+		*  {
+		*  		return $event;
+		*  }
+		********************************************
+		
+		
+		
+		
+		
+# Dispatching Events Or Use That Event
+-------------------------------------------------
+	****************************************************
+	*  Route::get('res', function(){
+	*  	return event(new App\Events\Event("New Event!"));
+	*  });
+	****************************************************
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

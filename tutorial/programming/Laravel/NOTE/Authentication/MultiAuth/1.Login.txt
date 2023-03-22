@@ -1,0 +1,45 @@
+# Creating route
+-----------------
+    ****************************************************************************************
+    *  Route::prefix('admin')->group(function(){
+    *      Route::get('/login', 'Admin\LoginController@showLoginForm')->name('admin.login');
+    *      Route::post('/login', 'Admin\LoginController@login')->name('admin.login.submit');
+    *      Route::get('/', 'AdminController@index')->name('admin.home');
+    *  });
+    ****************************************************************************************
+
+
+# Controller => Admin\LoginController.php
+-------------------------------------------
+    ***********************************************************************************************************
+	*  public function __construct()
+    *  {
+    *      $this->middleware('guest:admin')->except('logout');
+    *  }
+    *
+	*
+    *  public function showLoginForm()
+    *  {
+    *      return view('admin\admin-login');
+	*  }
+	*
+	*
+    *  public function login()
+    *  {
+    *      $this->validate($req, [
+    *       'email' => 'required|email',
+    *       'password' => 'required|min:6'
+    *      ]);
+    *
+    *      if(Auth::guard('admin')->attempt(['email' => $req->email, 'password' => $req->password],  
+    *                                                                                   $req->remember))
+    *      {
+    *          return redirect()->intended(route('admin.home'));
+    *      }
+    *
+    *      return ridirect()->back()->withInput($req->only('email', 'remember'));
+    *  }
+    ***********************************************************************************************************
+    >> attempt() => this function will try to login in 
+                    1st paramete => It will take an array 
+                    2nd paramete => This use to remember only for session or else.  

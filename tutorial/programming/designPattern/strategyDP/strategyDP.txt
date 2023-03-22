@@ -1,0 +1,1 @@
+This Design Pattern use to change Algorithem at run time.

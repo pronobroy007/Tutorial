@@ -1,0 +1,80 @@
+|-------------------------------------------------------------------------------------| 
+|	 Minute       |      Hour        |    Date      |    Month       |  Day of week   |
+|	--------      |     ------       |   ------     |   -------      | ---------------|
+|	0 to 59       |     0 to 23      |   0 to 31    |   1 to 12      |    0 to 7      |
+|                 |                  |              |                | (sat, sun etc) |
+|			      |                  |              |                |                |
+|-------------------------------------------------------------------------------------| 
+|				  |                  |              |                |                | 
+|	  *           |       *          |     *        |      *         |    *           | 
+|(Every Minute)   |  (Every Hour)    | (Every day)  | (Every Month)  | (Every DOW)    |
+|			      | 		     	 |   	        | 				 | 	              |
+|-------------------------------------------------------------------------------------| 
+|				  |                  |              |                |                |
+|	12,23         |      2,3,4       |     3,5      |       3,5      | 	 5,3          |
+|(Only this time) | (Only this hour) |              |                |                |
+|                 |                  |              |                |                |
+|-------------------------------------------------------------------------------------| 
+|                 |                  |              |                |                |
+|	3-34/3        |                  |              |                |                |
+|(only 3 to 34    |                                                                   |
+|but 3 Minute gap)|                                                                   |
+|-------------------------------------------------------------------------------------| 
+
+
+List all crontab : 
+------------------
+    * crontab -l 
+
+
+System spacifig corntab
+------------------------
+	System cron file reside on "/etc/crontab".To create a system crontab
+
+	* vim /etc/crontab
+		=> Open crontab file to edit.
+
+	* [* * * * * user_name command]
+		>> In "user_name" field put user name and then use which command 
+        >> need to execute.
+
+
+
+User spacifig crontab
+-----------------------
+	User CronTabs reside in "/var/spool/cron/crontabs" directory.
+
+	Creating a crontab for a particular user
+	-----------------------------------------
+		* crontab -u [user name] -e
+			=> This will open a file which we can edit to perform any task.
+			=> -u use to select a particular user.
+
+        * crontab -e 
+            >> this will open a file to create crontab for current user.
+
+		* @reboot echo "Wellcome"      
+			=> This command will execute every time we reboot our computer.
+	 
+
+
+
+
+
+Create a crontab which run every 5 Minute.
+--------------------------------------------
+    */5 * * * *	/full/path/to/script.sh 
+
+
+This will run every last day of Month at 11:30
+-----------------------------------------------
+    # Here the problem is every mounth don't have same days.
+    # some mounth have 28 some have 29 days.
+    # so we make a crontab which test if this is last day and if so thne run
+
+    30  23  28-31   *   *   test $(date -d tomorrow +%d) -eq 1 $$ sh ~/script.sh
+        >> Here if today is 28 and next day is 1 then run script.sh else not.
+
+
+
+

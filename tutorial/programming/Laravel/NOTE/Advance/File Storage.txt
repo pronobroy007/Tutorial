@@ -1,0 +1,91 @@
+use Illuminate\Support\Facades\Storage;
+
+
+
+# Create a View For Retrive image 
+-------------------------------------------
+	In "http://laravelapp/db/create", This view will shown.
+		***************************************************************************************
+		*  <form method="post" action="{{action('DbController@store')}}">
+		*  	<input type="file" name="image" placeholder="image" id="image"/><br/><br/>
+		*  
+		*  	<input  type="submit" name="submit" class="btn btn-default" id="login"></input>
+		*  </form>
+		****************************************************************************************
+		>> When we submit this page "DbController@store" funciton will call.
+	
+	
+	
+	
+# action('DbController@store'):
+--------------------------------------
+	In this function we want to store file in "Storage/public/images" folder and this storage 
+	file path will store in database.
+		************************************************************************************************
+		*  public function store(Request $request)
+		*  { 
+		*       $db = new Db; 
+		*       $db->body = $request->input('body');
+		*		$db->title =  $request->input('title');
+		*
+		*		$img_path = '';
+		*		if($request->hasFile('image'))
+		*		{
+		*			$img_path = storage::putFile('public/images', $request->file('image'));
+		*		}else
+		*			$img_path = ''; 
+		*
+		*		$db->image = $img_path;    		//Uploaded file path.
+		*
+		*      	$db->save();					//Save file path to database
+		*  
+		*       return redirect('/db/'.(string)$db->id);
+		*  }
+		**************************************************************************************************
+		>> putFile() => 
+		>> 	1st argument upload file path in this case "Storage/app/public/images"
+		>> 	2nd agrument actual file path in computer
+		
+		>> $request->file('image')->store('images'); => This will also store file.
+		
+		
+		
+		
+# Display In Browser:
+---------------------------
+	1st link "storage/app/public" folder with "public" folder
+		*  php artisan storage:link;
+		
+	This For display 
+		*   <img src ="/storage/images/gZyJInFeLPgyhNf6P5mLreyEwzJgYiXMKnunEHIm.png" height="150"/>
+		>> Actual file path is : "storage/app/public/images"
+		
+				
+******************************************************************************************************
+
+
+	
+# Url for image:
+-------------------
+		* storage::url('File name');
+				
+		
+
+# Delete file:
+-----------------
+	*  Storage::delete(file.jpf);
+	>> In "Storage/app/public/file.jpf"
+	
+	
+		
+	
+# Directory
+---------------
+	***********************************
+	*  $files = Storage::files($directory);
+	*  
+	*  $files = Storage::allFiles($directory);
+	***********************************
+	>> This will return all file in "$directory" folder.
+	
+	

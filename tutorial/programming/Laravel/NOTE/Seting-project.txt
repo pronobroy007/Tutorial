@@ -1,0 +1,49 @@
+goto "wamp/www" open cmd and put 
+
+	* composer create-project --prefer-dist laravel/laravel laravelapp
+ this commend to create a project folder named "laravelapp".
+ 
+ 
+ Now open browser and goto "localhost/laravelapp" then browser will show all file and folder
+ in that project folder which is not good. If we goto "localhost/laravelapp/public" this is 
+ home page 
+ 
+ 
+ In AppServiceProvider.php
+ --------------------------
+	use Illuminate\Support\Facades\Schema; //Import Schema
+
+	function boot()
+	{
+		Schema::defaultStringLength(191); //Solved by increasing StringLength
+	}
+ 
+ 
+ 
+ 
+ Virtual Host :
+ ---------------
+ Now create a virtual host for our localsystem wich will point at "localhost/laravelapp/public"
+ To do that we need added two file:
+ 
+	>> Goto "localhost"
+	>> right clidk wamp server >> Tools >> add a Virtual Host 
+	>> in "name of the virtual host" : "Leravelapp"
+	>> in "Complete absolute path of the VirtualHost folder" : C:\wamp\www\Laravel\LaravelApps\public
+	>> start the ... .... ...
+	>> lastly right clidk wamp >> Restart all servides
+	
+	
+	
+	
+	
+	
+Laravel on Linux
+-----------------
+	>> Goto Composer Download page and copy command to instal with tarminal
+	
+	
+	
+	 
+	
+	

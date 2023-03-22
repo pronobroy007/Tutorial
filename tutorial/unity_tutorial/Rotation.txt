@@ -1,0 +1,69 @@
+Rotation : 
+-----------
+    //Transform.eulerAngles is used to rotate object using vector3.
+    //Transform.rotation is using to rotate object using Quaternion.
+
+    //Transform.eularAngles :
+    //-----------------------
+        # Transform.eularAngles always rotate object around world coordinate.
+        # If This object have a parent object and parent is rotate by 30Deg
+        # on any axix then this object's any axis let say z axis is not same
+        # as world z axis. Now if we rotate around z axis using eularAngles 
+        # then it will rotate world z axis not it's local z axis.
+
+    //Transform.locaalEularAngles :
+    //------------------------------
+        # It's used to rotate object relative to the parent coordinate system
+        # instead of World coordinate system. If there is no parent the world
+        # is consider as parent.
+
+    [NOTE : Transform.rotation and Transform.loralRotation is same as 
+            eularAngles and locaalEularAngles]
+
+
+
+
+
+    //Rotate from forward to normal.
+        transform.rotation = Quaternion.FromToRotation(transform.forward, normal);
+
+
+    //Looking to a particular direction.
+        Vector3 direction = targetObj.position - transform.position;
+        transform.rotation = Quaternion.LookRoattiaon(direction, Vector3.Up);
+
+
+    //Rotate Based on terget object. This will rotate current object same as 
+    // terget object.
+        transform targetObj;
+        transform.rotation = Quaternion.RotateToWards(transform.rotation, targetObj.rotation, speed * Time.deltatime);
+
+
+    //This is a free type rotation. Here we rotate 20 deg on Y axis.
+        Vector3 rotation = new Vector3(0, 20, 0);
+        transform.rotation = Quaternion.Euler(rotation);
+
+
+
+
+    This is For firstPersonShotter :
+    --------------------------------
+        tergetObj = Camera rotate around object
+        mainCamera = Camera.main;
+        Vector2 rotation;  //This is input axis * sensitivity
+
+        Quaternion desRotation = Quaternion.Euler(rotation.x, rotation.y, 0); 
+        Vector3 desPosition = tergetObj.transform.position + desRotation * desoffset;
+        transform.position = Vector3.SmoothDamp(transform.position, desPosition, ref velocity, damping);
+        mainCamera.LookAt(tergetObj.position);
+
+
+    //For place foot rotation same as surface 
+    Quaternion.LookRoattiaon(transform.forward, hit.normal);
+
+
+
+
+Transform :
+-----------
+    transform.tag == "Name of gameobject tag"

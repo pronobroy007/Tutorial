@@ -1,0 +1,3 @@
+date	size'/'remotesize	flags(request:Update,Range state:File response:Modified,Chunked,gZipped)	statuscode	status ('servermsg')	MIME	Etag|Date	URL	localfile	(from URL)
+01:22:30	0/0	---M--	301	error ('Moved%20Permanently')	text/html	date:Tue,%2009%20Aug%202022%2019:22:28%20GMT	https://www.gamedev-resources.com/robots.txt		(from )
+01:22:31	0/0	---M--	301	error ('Moved%20Permanently')	text/html	date:Tue,%2009%20Aug%202022%2019:22:29%20GMT	https://www.gamedev-resources.com/	/home/kali/Documents/tutorial/unity_tutorial/touch/hello/www.gamedev-resources.com/index.html	(from )

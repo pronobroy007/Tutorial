@@ -1,0 +1,131 @@
+// ------------------------------------------------------------------------ //
+//                          THIS IS RECEIVER
+// ------------------------------------------------------------------------ //
+//This is like a receiver which is attatch with eletronic device.
+public interface ElectronicDevice 
+{
+	public void on();
+	public void off();
+	public void volumeUp();
+	public void volumenDown();
+}
+
+
+//Here we attatch receiver(ElectronicDevice) with Television.
+//Here we difine how this receiver behave when signal come.
+public class Television implements ElectronicDevice 
+{
+	private int volume = 0;
+	
+	public void on() 
+    {
+		System.out.println("TV is on");
+	}
+
+	public void off() 
+    {
+		System.out.println("TV is off");
+	}
+
+	public void volumeUp() 
+    {
+		volume++;
+		System.out.println("TV Volume is at: " + volume);
+	}
+
+	public void volumenDown() 
+    {
+		volume--;
+		System.out.println("TV Volume is at: " + volume);
+	}
+}
+
+// ------------------------------------------------------------------------ //
+//                          THIS IS REMOTE
+// ------------------------------------------------------------------------ //
+public interface Command 
+{
+	public void execute();
+	
+	// You may want to offer the option to undo a command
+	public void undo();
+	
+}
+
+//For every button of remote we create seperate class
+//This class define where and what signal we want to transmit using "TRANSMITTER".
+//We difine TRANSMITTER next.
+public class TurnTVOn implements Command 
+{
+	ElectronicDevice theDevice;
+	
+	public TurnTVOn(ElectronicDevice newDevice)
+    {
+		theDevice = newDevice;
+	}
+	
+	public void execute() 
+    {
+		theDevice.on();
+	}
+
+	public void undo() 
+    {
+		theDevice.off();
+	}
+}
+
+public class TurnTVUp implements Command 
+{
+	ElectronicDevice theDevice;
+	
+	public TurnTVUp(ElectronicDevice newDevice)
+    {
+		theDevice = newDevice;
+	}
+	
+	public void execute() 
+    {
+		
+		theDevice.volumeUp();
+	}
+
+	public void undo() 
+    {
+		
+		theDevice.volumenDown();
+	}
+	
+}
+
+
+// ------------------------------------------------------------------------ //
+//                          THIS IS TRANSMITTER
+// ------------------------------------------------------------------------ //
+// This will take command and execute.
+public class DeviceButton
+{
+	Command theCommand;
+	
+	public DeviceButton(Command newCommand)
+    {
+		theCommand = newCommand;
+	}
+	
+	public void press()
+    {
+		theCommand.execute();
+	}
+	
+	// Now the remote can undo past commands
+	public void pressUndo()
+    {
+		theCommand.undo();
+	}
+	
+}
+
+
+// ------------------------------------------------------------------------ //
+//                              MAIN 
+// ------------------------------------------------------------------------ //

@@ -1,0 +1,30 @@
+Package to download :
+---------------------
+	nsf-kernel-server nfs-connom rpcbind rpmbind
+
+Server :
+--------
+	* vim /etc/exports
+	* /nfs_share 192.168.0.0/255.255.255.0(ro,synk)
+		>> /nfs_share  =  folder path, this folder we want to share.
+		>> ro = read only, rw = read and write.
+	
+	* service nfs-kernel-server start
+	* service rpcbind start
+
+
+
+
+Client :
+--------
+	* showmount -e ip
+		>> With this we can check if server is up and running or not.
+
+	* mount server_ip:/folder_path /client_mount_location
+
+
+
+
+
+
+

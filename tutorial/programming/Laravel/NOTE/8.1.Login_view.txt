@@ -1,0 +1,6 @@
+login.blade.php:
+-------------------
+Loc => resources/views/auth
+
+This page is exdends "layouts.app" file. This is base file here we add "Header", "Footer", 
+"Nav-bar" etc. 

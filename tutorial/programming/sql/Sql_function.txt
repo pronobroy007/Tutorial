@@ -1,0 +1,32 @@
+MIN() Example:
+--------------
+    SELECT MIN(Price) AS SmallestPrice FROM Products;
+    >> finds the price of the cheapest product.
+
+
+
+MAX() Example:
+--------------
+    SELECT MAX(Price) AS LargestPrice FROM Products;
+    >> finds the price of the most expensive product
+
+
+
+COUNT() Example:
+-----------------
+    SELECT COUNT(ProductID) FROM Products;
+    >> finds the number of products
+
+
+
+AVG() Example:
+--------------
+    SELECT AVG(Price) FROM Products;
+    >>  finds the average price of all products
+
+
+
+SUM() Example:
+---------------
+    SELECT SUM(Quantity) FROM OrderDetails;
+    >> finds the sum of the "Quantity" fields in the "OrderDetails" table

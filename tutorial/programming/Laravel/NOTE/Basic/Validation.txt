@@ -1,0 +1,99 @@
+# Introduction:
+-------------------
+
+
+# Writing The Validation Logic:
+-------------------------------------
+	In "DbController@store" function we retrive data  and store in database.
+	Here we write validation logic.
+		*******************************************
+		*      $validatedData = $request->validate([
+		*      	'title' => 'required|unique:posts|max:255',
+		*      	'body' => 'required',
+		*  	]);
+		*
+		*	 $db = new Db;
+		*	 $db->title = $validatedData['title'];  
+		*	 $db->body = $validatedData['body'];
+		*	 $db->save();
+		*
+		*******************************************
+		>> $validatedData['title'];  => We can retrive data like this.
+
+
+		
+		
+
+
+		
+# Displaying The Validation Errors:
+------------------------------------------
+	laravel will automatically redirect the user back to their previous location. 
+	In addition, all of the validation errors will automatically be flashed to the session.
+	All error message bind to a variable "$errors"
+	
+	Example:
+	--------------
+		********************************************
+		*  @if ($errors->any())
+		*      <div class="alert alert-danger">
+		*          <ul>
+		*              @foreach ($errors->all() as $error)
+		*                  <li>{{ $error }}</li>
+		*              @endforeach
+		*          </ul>
+		*      </div>
+		*  @endif
+		********************************************
+		
+		
+		
+		
+
+		
+
+# Make a custome validation rule:
+-----------------------------------------
+	*  php artisan make:rule ValidNum
+	>> This commend will make a new folder in "app" called "Rule" and in here a new file 
+		  is created in "ValidNum.php". In this file we create our own custom rule.
+		  
+		  
+ValidNum.php:
+------------------
+	In "pass()" we create our custom rule. Here our rule is if "$value" has "lenth > 10"
+	we pass this validation else we don't.
+		
+		********************************************
+		*  public function passes($attribute, $value)
+		*  { 
+		*  	if(strlen($value) > 0)
+		*  	{
+		*  		return true;
+		*  	}
+		*  	
+		*  	return false;
+		*  }
+		*********************************************
+	In this "ValidNum.php" file there is a function called "message()", this function return 
+	error message to the user.
+		
+		
+		
+	For validation check we make rule like this:
+		***************************************
+		*  $validatedData = $request->validate([
+        *      'title' => ['required', new ValidNum]
+		*  ]);
+		***************************************
+		>> "$attribute" = "title" and "$value" = value of "title"
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

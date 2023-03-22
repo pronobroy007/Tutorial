@@ -1,0 +1,95 @@
+DNS message format :
+--------------------
+	--------------
+	|  Header    |   
+	--------------
+	|  Question  |
+	--------------
+	|  Answer 	 |
+	--------------
+	|  Additional|
+	--------------
+
+
+	>> Every DNS message follows that format, although a query would leave 
+	>> the Answer, Authority, and Additional sections blank. 
+
+
+DNS Header format :
+-------------------
+
+		--------------------------------------------
+		|					ID						|
+		--------------------------------------------
+		| QR | Opcode |AA|TC|RD|RA|	Z  |   RCODE    |
+		--------------------------------------------
+		|				QDCOUNT						|
+		--------------------------------------------
+		|				ANCOUNT						|
+		--------------------------------------------
+		|				NSCOUNT						|
+		--------------------------------------------
+		|				ARCOUNT						|
+		--------------------------------------------
+
+	* 	ID   is any 16-bit value that is used to identify the DNS message. 
+		The client is allowed to put any 16 bits into the DNS query, and the 
+		DNS server copies those same 16 bits into the DNS response ID. This is useful 
+		to allow the client to match up which response is in reply to which query, in 
+		cases where the client is sending multiple queries 
+
+	* 	QR 	is a 1-bit field. It is set to 0 to indicate a DNS query or 1 to indicate a DNS response.
+
+	*	Opcode 	is a 4-bit field, which specifies the type of query. 0 indicates a standard query. 
+		1 indicates a reverse query to resolve an IP address into a name. 
+		2 indicates a server status request. Other value	
+
+	*	AA 	indicates an authoritative answer.
+	*	TC 	indicates that the message was truncated. In this case, it should be re-sent using TCP.
+
+	*	RD 	should be set if recursion is desired. We leave this bit set to indicate that we want 
+		the DNS server to contact additional servers until it can complete our request.
+
+	*	RA indicates in a response whether the DNS server supports recursion.
+	*	Z	Shouls set to zero.
+
+	* 	RCODE is set in a DNS response to indicate the error condition. Its possible values are as follows:
+		
+		0	No error
+		1	Format error
+		2	Server failure
+		3	Name error
+		4	Not implemented
+		5	Refused
+
+
+	*	QDCOUNT, ANCOUNT, NSCOUNT, and ARCOUNT indicate the number of records in their corresponding 
+		sections. QDCOUNT indicates the number of questions in a DNS query. It is interesting that 
+		QDCOUNT is a 16-bit value capable of storing large numbers, and yet no real-world DNS server 
+		allows more than one question per message. ANCOUNT indicates the number of answers, 
+		and it is common for a DNS server to return multiple answers in one message.
+
+
+
+DNS Question format :
+---------------------
+
+		--------------------------------------------
+		|				NAME						|
+		--------------------------------------------
+		|				QTYPE						|
+		--------------------------------------------
+		|				QCLASS						|
+		--------------------------------------------
+
+
+		*	The name field involves a special encoding. First, a hostname should be broken up 
+			into its individual labels. For example, www.example.com would be broken up into 
+			www, example, and com. Then, each label should be prepended with 1 byte, 
+			indicating the label length. Finally, the entire name ends with a 0 byte.
+	
+
+
+
+
+

@@ -1,0 +1,357 @@
+Restart netwok service
+------------------------
+	* /etc/init.d/networking start/stop/restart
+	or 
+	* service networking start/stop/restart
+
+	* service network-manager start/stop/restart
+    or
+    * systemctl restart NetworkManager
+
+
+Create a local domain name
+--------------------------
+	* vin /etc/hosts
+		>> Here we can create a local domain name and assign an ip on it.
+
+
+Network configuration file
+---------------------------
+    * nm-connection-editor
+        >> On kali or install pppoeconfig
+    * pppoeconf
+        >> Configur pppoe connection
+
+	* vin /etc/network/interfaces
+	 	>> Here we can make a static ip for our matchine.
+
+		*********************************
+		*	Make a static ip 
+		*********************************
+		*	auto eth0
+		*	iface eth0 inet static
+		*	address 10.1.10.54
+		*	netmask 255.255.255.0
+		*	network 10.1.10.0
+		*	broadcast 10.1.10.255
+		*	getway 10.1.10.1
+		***********************************
+			
+
+		*********************************
+		*	Make a dynamic ip 
+		*********************************
+		*	auto eth0
+		*	iface eth0 inet dhcp
+		**********************************	
+
+
+Detail about network card/interface
+------------------------------------
+	* iwconfig
+	* netstat -ie
+	* ifconfig
+	* ip a
+		>> It will show detail all interface/network card on 
+        >> this matchine like eth0, lo, wlan0
+
+	* ifconfig [interface name] 
+		>> Ex : ifconfig wlan0 
+		>> It will show detail only about wlan0 interface.
+	
+	
+
+Down/up an interface
+---------------------
+	* ifconfig [interface name] down/up
+
+	* ip link set down/up [interface name]
+		>> with this we can down/up only one interface
+		>> This is usefull when we have multiple interface/network card
+
+
+Changing IP 
+------------
+	* ifconfig [interface name] [new ip] [subnet mask] [broadcast]
+		>> "interface name" = eth0 network card name
+		>> "new ip"	= 192.168.1.105  
+		>> newmask = 255.255.255.0
+		>> broadcast = 192.168.1.255  
+
+
+Configur DNS
+------------
+	* vim /etc/resolv.conf
+		>> In this file we have this "nameserver ip". 
+		>> In the place of ip we can use our own dns server
+		>> open browser search "opendnd" and copy there dns server address 
+		>> and use that ip as our dns ip
+		>> You can use more than one dns.
+	[NOTE : if we restart our network then we will get our default ISP DNS]
+
+	* nslookup google.com
+		>> To quary dns server. This will give ip of google.com
+
+
+Netstat
+-------
+	# Chacking all Local Connection.
+	# It is often useful to know what connections are being made on your 
+    # local machine. The netstat command can help with that.It is often 
+    # useful to know what connections are being made on your local machine. 
+    # The netstat command can help with that.
+
+	# -t / -u all tcp / udp connection.
+	#   >> "Proto" mean protocol 
+
+	# -l will show all LISTEN state.
+    # -a will show all LISTEN and EXTABLISHED state.
+    #   >> LISTEN mean program which is listening some port.
+
+	# -p will show program name for connection.
+	#   >> "PID/Program name" is ID/program name 
+
+	# -n prevents reverts-dns lookup.
+	# -r list routing tabe.
+
+
+
+	* netstat -ie
+		>> similar ifconfig.
+
+	* netstat -c 
+		>> This will for continuous listen .
+
+	* netstat -ntp
+
+	* nestat -atp
+	* netstat -ntlp
+
+
+lsof :
+-------
+	# lsof - list open files. This will list all open file.
+	# Using this we can see which files are open by a particular process/user/group.
+	# Or which process open a particular directory.
+	# This also give which Process is accessing a particular port or socket file.
+	
+	* lsof -u [user name]
+		>> -u = This use to see what files are open by a particular user.
+
+	* lsof -g [group id]
+		>> -g = This use to see what files are open by a particular group.
+
+
+	* lsof -p [process id]
+		>> -p = This use to see what files are open by a particular process id.
+		>> This can helpful when we want to see which log file using 
+        >> a particular process.  * lsof -c fire
+		>> It will give all files are open by program name start 
+        >> with "fire" like firefox.
+		>> -c is similar to -p except that with c we can give program name.
+		
+
+	* lsof +d [directory path]
+		>> Ex: lsof +d /var/log
+		>> This will show which process open this directory or writing this directory.
+
+	* lsof -i :5555
+		>> This will show all process which is access port "5555"
+		>> More Example :
+			* lsof -i tcp:5555 
+			* lsof -i -P    // -P = port
+
+	* lsof -i tcp -a -u linux
+		>> -a = and operation
+		>> This command will all TCP connection open by linux user process.
+
+
+
+
+
+
+netdiscovar :	
+-------------
+	* netdiscover
+		>> This will discover devices connected to the network that 
+        >> this matchine connected to.
+
+	* netdiscovar -r ip-range.
+		>> Exm : netdiscovar -r 192.168.1.1/24
+		>> show all ip and mac address.
+
+	* netdiscover -i [interface] 
+		>> "interface" may wlan0/eth0. 
+		>> -i mean interfade
+
+
+nmap :
+-------
+	* nmap 
+		>> -O ip 	= OS dictection only.
+		>> -sV ip 	= Get Service version for wulnerabilities.
+
+		>> -p- ip			= scan hole port.
+		>> -p 20 ip 		= scan one port. 
+		>> -p 20,80 ip 		= scan multiple port.
+		>> -p 20-40 ip 		= scan range of port. 
+		>> -p 20, 8-90 ip 	= scan mixer avobe.
+
+
+	* nmap -v -A [ip]
+		>> -v = print version
+		>> -A = OS, version ditection, script scanning, 
+        >> traceroute(al hub/route from src to dist).
+
+	* nmap ip1 ip2 ip3
+		>> Scan multiple ip
+
+	* nmap 192.168.1.0-255
+		>> 192.168.1.0-40 = We scan 192.168.1.0 to 192.168.0.255
+		>> And list all Hosts which is Up for this renge of ip.
+
+	* nmap -iL targetIP.txt
+		>> Create a text and fill with tergate ip address
+		>> -iL = use to read from an input file.
+
+
+	* nmap -oG - 192.168.1.0-255 -p 22 -vv > Desktop/Scan
+		>> This is how save output. 
+		>> -oG = output Grip
+		>> -vv = vervose output
+		>> -p 22 = We only scan port 22
+		>> ">" = This will redirect all output in "Desktop/Scan" file.
+		
+
+traceroute :
+------------
+	* traceroute -n google.com
+        >> Traceroute use UDP protocol.
+		>> It can be useful to know the exact path an IP packet takes 
+        >> through the network. The traceroute utility provides this information.
+
+		>> Traceroute also shows the round-trip time 
+        >> to each intermediate router. 
+		>> here -n flag tells traceroute not to perform reverse-DNS 
+        >> lookups for each hop
+
+
+
+Ping :
+------
+	* ping google.com
+        >> Ping use ICMP protoclo.
+		>> Ping uses the Internet Control Message Protocol (ICMP) to 
+        >> check whether a host is reachable
+
+	* ping ip/address -s 1000
+		>> On Linux and macOS, the -s flag specifies packet size. On Windows, 
+        >> the -l flag is used. Here ping will send 1000 byte of ping message.
+
+* route -n
+	>> Show routing table
+
+* dhclient
+	>> Renew ip address
+
+
+
+##########################################################################################################  	
+Snooping on connections :
+-------------------------
+	# In addition to seeing which sockets are open on our computer, 
+	# we can also capture the exact data being sent and received.	
+	# tcpdump 	&	Wireshark / Tshark (command line tool)
+
+
+
+	options : 
+	---------
+		-D :
+		----- 
+			tshark -D   	 Listing all avalable interface.
+
+		-i :
+		----	
+			* tshark -i wlan0
+                >> To start Tshark first need to decide which network interface(s) 
+                >> you want to use to capture traffic. The desired interface or interfaces 
+                >> are passed to tshark with the -i flag. On Linux, you 
+                >> can listen to all interfaces by passing -i any.
+
+                >> If you want to monitor local traffic (that is., where the communication 
+                >> is between two programs on the same computer), you will want to use the Loopback adapter.
+                >> * tshark -i lo
+
+                >> To listen on multiple interfaces -i 1 -i 2 -i 3. Here interface number will display
+                >> using -D option.
+
+                >> Once you've identified the network interface you would like to monitor,
+                >> you can start Tshark with the -i flag and begin capturing traffic
+
+		-x :
+		----
+			* tshark -i wlan0 -x host www.youtube.com and port 443
+                >> If we pass tshark the -x flag, it displays an ASCII and hex 
+                >> dump of every packet captured.
+
+
+	As you can see, there is a lot of traffic into and out of an even relatively idle system.
+	To cut down on the noise, we need to use a capture filter.
+
+
+	Filters :
+	---------
+		Host :
+		------
+			* tshark -i wlan0 host ip/address
+                >> For example, if we want to capture only traffic to or from the IP address 8.8.8.8,
+                >> we will use the host 8.8.8.8 filter.
+
+
+		Boolean Operator :
+		-------------------
+			* tshark -i wlan0 host www.youtube.com and www.facebook.com
+                >> Tshark filters also support the Boolean operators and, or, and not.
+
+
+		port :
+		------
+			* tshark -i wlan0 host www.youtube.com and port 443
+                >> Filtering by port number is also very useful and can be done with port. 
+
+
+		src and dst :
+		-------------
+			# We also can spacigy source(src) or destinatin(dst) ip address.
+
+	Save capture package to a file :
+	--------------------------------
+		# The -w option is used with tshark to capture packets to a file. 
+		# You may also want to use the -c option to limit the number of packets captured.
+		# Follwing command will capture 50 packets to a file named capture.pcap.
+		* tshark -i wlan0 -w capture.pcap -c 50 host www.youtube.com and port 443
+
+##################################################### x #####################################################  
+
+External resources:
+--------------------
+	curl ipinfo.io/[ip]
+		>> Example : curl ipinfo.io/102.77.18.102
+		>> This will show country, division etc.
+
+	Search "Major ip block"
+		>> you can find the list of all major IP address blocks 
+        >> allocated for each country
+	
+	Search "who is [ip]" using any search engine like duckduckgo.com
+		>> This will give information about that ip.
+
+	https://nmap.org/nsedoc/
+	https://nmap.org/nsedoc/scripts/ftp-vsftpd-backdoor.html
+
+	Example for "Vuln" >> "File firewall-bypass"
+		>> nmap --script firewall-bypass <target>
+		>> Here target mean IP.
+
+

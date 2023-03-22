@@ -1,0 +1,105 @@
+app.js => "resources\assets\js\app.js"
+
+
+# Vue Code
+-----------
+    In "app.js" This is simple vue code 
+        *****************************************
+        *    const app = new Vue({
+        *        el: '#app',
+        *        data:
+        *        {
+        *            commentBox: "Hello world"
+        *        }
+        *    });
+        *******************************************
+        >> In Balde.php we can use this "commentBox" data like this
+        >> <h2> @{{ commentBox }} </h2>
+
+
+
+
+
+
+# Define Vue in Blade
+----------------------
+    To Write This Vue in any blade.php Template 
+        *******************************************************
+        *  @section('scripts')
+        *  <script>
+        *      const app = new Vue({
+        *          el: '#app',
+        *          data:
+        *          {
+        *              commentBox: "Hello world"
+        *          }
+        *      });       
+        *  </script>
+        *  @endsection
+        *****************************************************
+
+
+
+
+
+
+
+# Set Vue data 
+--------------
+    If we want to set 
+        ********************************************
+        *  data:
+        *  {
+        *      commentBox: "",
+        *      comments: {!! $post->toJson() !!}
+        *      title: '{{$title}}'
+        *  },
+        ********************************************
+        >> {!! $post->toJson() !!} => This "$post" is send by "Route" using 
+           "with()" or "compact()" function.
+        
+        >> '{{$title}}' => This will also use to catch data
+
+
+        [NOTE: This work only whene we define Vue in blade]
+
+
+
+
+
+
+# mounted()
+-----------
+    *****************************************
+    *    const app = new Vue({
+    *        el: '#app',
+    *        mounted()
+    *         {
+    *             this.commentBox = "Nothing"
+    *         }
+    *        data:
+    *        {
+    *            commentBox: "Hello world"
+    *        }, 
+    *       mehods:
+    *       {
+    *           fun() { this.commentBox = "Function Call" }
+    *       }
+    *    });
+    *******************************************
+    >> Here "mounted()" is triger before any page render.
+
+
+
+
+
+
+# Cal a methods/function
+-------------------------
+    Normally cal a method
+        * @{{ fun() }}
+
+    
+    Call a method in some button click
+        *  v-on:click="fun()"
+

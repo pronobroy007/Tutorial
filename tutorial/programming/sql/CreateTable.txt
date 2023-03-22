@@ -1,0 +1,32 @@
+Create table :
+--------------
+	CREATE TABLE Persons (
+		PersonID int auto_increment,
+		LastName varchar(255),
+		FirstName varchar(255),
+		Address varchar(255),
+		City varchar(255)
+	);
+
+
+Create Table if not exist :
+----------------------------
+	CREATE TABLE IF NOT EXISTS User (
+		id INTEGER PRIMARY KEY AUTOINCREMENT, 
+		Firstname varchar(30), 
+		Lastname varchar(30), 
+		Password varchar(20))
+
+
+Create table Multiple primary key :
+-----------------------------------
+	CREATE TABLE Persons (
+		PersonID int auto_increment,
+		LastName varchar(255),
+		FirstName varchar(255),
+		Address varchar(255),
+		City varchar(255),
+        PRIMARY KEY(FirstName, LastName)
+	);
+
+

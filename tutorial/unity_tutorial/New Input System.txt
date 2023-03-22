@@ -1,0 +1,39 @@
+Getting input from user :
+--------------------------
+/********************************************************
+    Vector2 inp;
+    void Awake()
+    {
+        input.Player.Movement.performed += ctx => inp = ctx.ReadValue<Vector2>();
+        input.Player.Movement.started += UpdateMovement;
+        input.Player.Movement.performed += UpdateMovement;
+        input.Player.Movement.cancelled += UpdateMovement;
+    }
+
+    void UpdateMovement () {}
+ ********************************************************/
+
+
+
+/********************************************************
+        Different way to access input for user 
+    ---------------------------------------------
+    public InputManager controls;
+
+    Vector2 movement = controls.Player.Movement.ReadValue<Vector2>();
+
+    //To Check if button press on update.
+    bool jump = controls.Player.Jump.triggered;
+
+    if (controls.Player.Jump.phase == InputActionPhase.Started)
+       Do Something
+
+    public void OnJump(InputAction.CallbackContext ctx)
+    {
+        if(ctx.started){ }
+        if(ctx.performed){ }
+        if(ctx.canceled){ }
+    }
+ ********************************************************/
+
+

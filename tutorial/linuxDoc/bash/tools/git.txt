@@ -1,0 +1,112 @@
+Config username and email :
+--------------------------
+	* git config --global name.name [username]
+	* git config --global name.email [email]
+
+	* git config --list 
+		>> list all setting.
+
+
+
+
+Add someting on github :
+-------------------------
+	* git init
+		>> This create a local git directory in current folder.
+
+	* git add "file"
+        >> This will add file to this local directory 
+
+	* git commit -m "Disciption"
+		>> When we commit git save this point of time.
+		>> So that letter we can come back and restore this.
+
+	* git remote add origin "github repositories address"
+
+	* git push -u origin master
+		>> Push current git directory in remote server or github repositorie.
+
+
+Updatd github repositories :
+----------------------------
+	[No need to init if .git folder exist in local matchine]
+	* git add [file]
+	* git commit -m "Disciption"
+	* git pull
+	* git push
+	
+
+Easy way to commit :
+--------------------
+	* git commit -am "Disciption"
+		>> Here we dont need to add file first.
+		>> All files which are change will add to repositories.
+
+
+Unstage fiel :
+--------------
+	* git reset HEAD ./[filename]
+		>> Get file back from stage area.
+
+
+Getting file form repositories :
+---------------------------------
+	* git checkout -- [filename]
+		>> This will go previous commit and download that file 
+		>> and replace with our one.
+
+	* git checkout [commit number] -- [filename]
+		>> This will go to that commit and download that file 
+		>> and replace with our one.
+
+	* git checkout [commit number] -- . 
+		>> Get entire commit.
+		
+
+
+
+View / log :
+-------------
+ 	* git log
+		>> Show all commit
+
+    * git show --name-only --oneline [commit id]
+        >> show list of files in a commit.
+
+ 	* git log --author="particular_user_name"
+		>> Show all commit by a particular user name.
+
+	* git status
+		>> Show all files which are change.
+
+	* git diff [modified file name]
+		>> See all changes make on a particular file.
+    
+
+
+Delete Move and Rename :
+------------------------
+	Delete :
+	--------
+		* git rm [fileName]
+			>> This will remove file from git also from local matchine.
+		* git commit -m "Disciption"
+
+	Rename / Move :
+	---------------
+		* git add [rename_file_name]
+		* git rm [file_that_rename]
+		* git commit -m "Disciption"
+	
+		or
+
+		* git mv [filename] [rename]
+		* git commit -m "Disciption"
+
+
+
+
+
+
+
+

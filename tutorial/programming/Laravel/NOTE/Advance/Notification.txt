@@ -1,0 +1,146 @@
+TaskComplited.php = "App/Notification/TaskComplited.php"
+Advance/Mail.php = Sell this file for send mail and cofig Queue.
+
+
+
+# Creating Notification
+------------------------
+    *  php artisan make:notification TaskComplited
+    >> "App/Notification/TaskComplited.php"
+
+
+
+
+# Sending Notification
+------------------------
+    ************************************************************************
+    *  Route::get('res', function (){
+    *      App\User::find(1)->notify(new App\Notifications\TaskComplited);
+    *      return "hello world";
+    *  });
+    ************************************************************************
+    >> App\User::find(1) => which user belongs to this notification. 
+
+
+
+    another way to notify
+       * Notification::send($users, new App\Notifications\TaskComplited());
+       >> $users => This is "users" so we can pass multiple user.
+
+
+
+    Sometimes you may need to send a notification to someone who is not stored as a "user" of your application.
+    Using the Notification::route method,
+        **********************************************************************
+        *  Notification::route('mail', 'taylor@example.com') 
+        *              ->notify(new App\Notifications\TaskComplited());
+        ***********************************************************************
+        >>  'mail'  => It mean we sending a mail we can use 'database' also
+        >>  'taylor@example.com' => Whome you want to send maill.
+
+
+
+
+# Use Queue 
+------------
+    In "TaskComplited.php" file use "implements ShouldQueue"
+        *  class TaskComplited extends Notification implements ShouldQueue{... ...}
+
+
+
+
+
+
+
+###################################################################################################
+                                Database Notification
+                            -----------------------------
+    *  php artisan notifications:table
+    *  php artisan migrate
+
+Create and migrate notification table. Then a notifications table will create in database 
+
+
+
+notifications
+---------------
+    *  id
+    *  type
+    *  notifiable_id
+    *  notifiable_type
+    *  data
+    *  read_at
+    *  timestamps
+-----------------------
+>> notifiable_id => Which user id belongs to this notification.
+>> notifiable_type => Model name of user "App\User"
+
+
+
+
+
+In TaskComplited.php file
+---------------------------
+    To use database for notifications we need to say that this notification is use 
+    for database not sending mail and we say this in "public function via($notifiable)"
+        ***************************************************
+        *  public function via($notifiable)
+        *  {
+        *      return ['database'];
+        *  }
+        ***************************************************
+        >> return ['database', 'mail'] => This will configar for mail and database.
+
+
+    To Save data in database in "toArray()" funciton 
+        *****************************************************
+        *  public function toArray($notifiable)
+        *  {
+        *      return [
+        *          'data' => "Notification received"
+        *      ];
+        *  }
+        *****************************************************
+        >> return => In data Collumn notifications table saved this return value.
+
+
+
+
+# Create a Notification Bell icon in htlm
+------------------------------------------
+    In "HTML/Bell_Icon.html" we create bell icon 
+    
+    Bell_Icon line 14 :
+    --------------------
+        *  auth()->user()->unreadnotifications->count()
+        >>  unreadnotifications->count() => In database "notifications" table
+        >>  Total number of unread rows
+
+
+
+
+    Bell_Icon Line 70:
+    -------------------
+        ********************************************************************
+        *  @foreach(auth()->user()->notifications as $notify)
+        *      <li><a href="#">{{$notify->data['data']}}</a></li>
+        *  @endforeach
+        ********************************************************************
+        >>  auth()->user()->notifications => "notifications", "User" built in function 
+            to retrive all notifications.
+            
+        >>  $notify->data['data'] => 1st "data" is "notifications" table collumn name.
+            
+        >>  ['data'] => In "notifications" talbe "data" collumn what element we want.
+            In this case we want data element
+
+
+
+
+
+Make all notifications as read
+------------------------------
+    $user = App\User::find(1);
+    $user->unreadNotifications->markAsRead();
+
+

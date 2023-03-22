@@ -1,0 +1,106 @@
+P  	Pause / Playback
+
+F 	Toggle fullscreen
+	
+M 	Mute
+	
+V 	Toggle subtitles
+	
+S 	Take a screenshot
+	
+↑ Shift + S 	Take a screenshot without subtitles (may or may not work depending on display driver)
+	
+Ctrl + S 	Take a scaled screenshot with subtitles and OSD
+	
+Alt + S 	Automatically take screenshot of every frame
+	
+Q 	Quit, save current position
+	
+O 	Show progress
+	
+↑ Shift + O 	Toggle show progress
+	
+↑ Shift + T 	Toggle video window on top
+	
+Page Up / Down 	Next / previous chapter
+	
+. 	Next frame
+	
+, 	Previous frame
+	
+←  → 	Seek 5 seconds
+	
+↑ Shift + ←  → 	Exact seek 1 seconds (don't show on the OSD)
+	
+↑  ↓ 	Seek 60 seconds
+	
+↑ Shift + ↑  ↓ 	Exact seek 5 seconds (don't show on the OSD)
+	
+Shift + Page Up / Down 	Seek 600 seconds
+	
+Ctrl + + 	Increase audio delay
+	
+Ctrl + - 	Decrease audio delay
+	
+[ 	Decrease speed
+	
+] 	Increase speed
+	
+M 	Mute / unmute audio
+	
+↑ Shift + A 	Cycle aspect ratio ("16:9", "4:3", "2.35:1", "-1")
+	
+1 	Decrease contrast
+	
+2 	Increase contrast
+	
+3 	Decrease brightness
+	
+4 	Increase brightness
+	
+5 	Decrease gamma
+	
+6 	Increase gamma
+	
+7 	Decrease saturation
+	
+8 	Increase saturation
+	
+9 	Decrease audio volume
+	
+0 	Increase audio volume
+	
+W 	Zoom out
+	
+E 	Zoom in
+	
+V 	Show / hide subtitles
+	
+J 	Next subtitle
+	
+↑ Shift + J 	Previous subtitle
+	
+Z 	Increase subtitle delay
+	
+X 	Decrease subitle delay
+	
+R 	Move subtitles up
+	
+T 	Move subitles down
+	
+Ctrl + ←  → 	Skip to previous / next subtitle
+	
+Ctrl + ↑ Shift + ← 	Adjust timing to previous subtitle
+	
+Ctrl + ↑ Shift + → 	Adjust timing to next subtitle
+	
+Alt + ← 	Add video pan-x 0.1
+	
+Alt + → 	Add video pan-x -0.1
+	
+Alt + ↑ 	Add video pan-y 0.1
+	
+Alt + ↓ 	Add video pan-y -0.1
+	
+Alt + Backspace 	Reset video zoom, video pan-x and video pan-y to 0
+	

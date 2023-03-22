@@ -1,0 +1,5 @@
+getaddrinfo()
+--------------
+	When we input an adddress in a socket client (Http://example.com) then client use
+	getaddrinfo() function to resolve it into a "struct addrinfo" structure
+	getaddrinfo() helpfull because it is IPV4/IPV6 independent.

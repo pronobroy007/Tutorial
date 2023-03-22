@@ -1,0 +1,35 @@
+create user 'kali'@'localhost' identified by 'password';
+    >> create new user
+
+select user,host from mysql.user;
+    >> show all user.
+
+mysql -u kali -p -h localhost
+    >> here we login as kali and after this command 
+    >> mysql ask for password
+
+
+
+
+Create Database DatabaseName;
+    >> Create Database.
+
+Drop Database DatabaseName;
+    >> Delete Database.
+
+Show Databases;
+    >> Show Database.
+
+grant all on blog.* to kali@localhost identified by 'kali'
+    >> Give all privilieges for blog database to a particuler user(kali)
+    >> Laravel can't connect with root user for that create a user and database
+    >> and give all privilieges for that database to new created user.
+
+
+
+Use blog;
+    >> goto a particuler database(blog).
+
+    Show Tables;
+        >> list of all tables in blog
+

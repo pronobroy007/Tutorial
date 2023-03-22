@@ -1,0 +1,6 @@
+interested in a more technical introduction to cryptography, we recommend Menezes, van Oorschot, and Vanstone's Handbook of Applied Cryptography (CRC Press).
+Interested in the protocol details, we recommend Eric Rescorla's SSL and TLS(Addison-Wesley).
+
+Hacking Tools :
+----------------
+    https://www.monkey.org/~dugsong/dsniff/

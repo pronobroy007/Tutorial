@@ -1,0 +1,89 @@
+We have Polymorphic Relations
+	posts
+	-------
+		id - integer
+		title - string
+		body - text
+
+	videos
+	--------
+		id - integer
+		title - string
+		url - string
+
+	comments
+	-------------
+		id - integer
+		body - text
+        user_id - integer
+		commentable_id - integer
+		commentable_type - string
+
+
+    
+# posts model
+------------------
+    ********************************************************************************
+    *  class posts extends Model
+    *  { 
+    *      public function user()
+    *      {
+    *          return $this->belongsTo('App\User');
+    *      } 
+    *  
+    *      public function comments()
+    *      {
+    *          return $this->morphMany('App\Comment', 'commentable');
+    *      }
+    * 
+    *       public function post()
+    *       {
+    *           return $this->belongsTo('App\Post', 'commentable_id');
+    *       }
+    *  }
+    ********************************************************************************
+
+
+# comments model
+------------------
+********************************************************************************
+*  class Comment extends Model
+*  {
+*      public function commentable()
+*      {
+*          return $this->morphTo();
+*      }
+*  
+*      public function user()
+*      {
+*          return $this->belongsTo('App\User');
+*      }
+*  }
+********************************************************************************
+
+
+
+
+
+
+Now we want to send all comments for a posts and also want to send user data 
+for eatch comment in blade.php template
+    *****************************************************************************************************
+    *  Route::get('res', function(){
+    *      $post = App\Db::find(1);
+    *      return view('pages/res')->with('comments', $post->comments()->with('user')->get());
+    *  });
+    *****************************************************************************************************
+    >> with('user') => This is simply "user" function in "comments" model
+    >> 1st "with()" will return all comments and 2nd "with()" will return 
+    >> user data for eatch comment
+
+
+in blade.php
+------------
+    ****************************************************
+    *  @foreach ($comments as $comment)
+    *      <h2>{{ $comment->body }}</h2>
+    *      <h2>{{ $comment->user->name }}</h2>
+    *  @endforeach
+    ****************************************************

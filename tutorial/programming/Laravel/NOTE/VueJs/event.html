@@ -1,0 +1,66 @@
+								<!-- v-on:click -->
+                                <!-- v-on:keyup -->
+								<!-- v-on:keyup.enter -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <title>Event</title>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <h1>{{ count }}</h1>   
+
+        <!-- This is a button click event. When we click this button -->
+        <!-- We want to call 'click()' method -->
+        <button class='btn btn-primary' v-on:click='click'>Press Button</button><br><br>
+        <!-- v-on:click.once => click() will call only one time --> 
+
+
+        <!-- When I press this button with alt key we want to call alert() method -->
+        <!-- here "@click.submit.prevent" will prevent to form action -->
+        <form action="action.php">
+            <button type="submit" @click.submit.prevent.alt='alert' class="btn btn-success">Alt + Press</button>
+        </form><br>
+
+            
+    </div>
+    
+
+    <script>
+        new Vue({
+            el: "#app",
+            data:
+            { 
+                isActive: true, 
+                count: 0,
+            },
+            methods:
+            {
+                click()
+                {
+                    this.count++;
+                }, 
+                alert()
+                {
+                    alert("Alt + button press");
+                },
+                change()
+                {
+                    this.isActive != this.isActive;
+                }
+                
+            }
+
+        });
+    </script>
+</body>
+</html>

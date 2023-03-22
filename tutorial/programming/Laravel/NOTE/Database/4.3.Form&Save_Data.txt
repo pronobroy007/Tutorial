@@ -1,0 +1,49 @@
+IN "4.Database.txt" we create "DbController" and in there we create a function called
+"create()" Url for this create() : "leravelapp/db/create"
+
+We create a "form" and in that form set a "action" to call "DbController" "store" function and 
+"method" will be "post" because we want user to full "title" and "body" and store that data
+to database
+
+create.blade.php:
+-------------------
+
+	*****************************************************************************
+	*  @extends('layout.base')
+	*  
+	*  @section('body')
+	*  <form method="post" action="{{action('DbController@store')}}">
+	*      {{csrf_field()}}
+	*      <label> Title </label> <br/><br/>
+	*      <input type="text" name="title" placeholder="Title" id="title" require/><br/><br/>
+	*      <label> Body </label> <br/><br/>
+	*      <input type="text" name="body" placeholder="Body" id="body" require/><br/><br/>
+	*      <input  type="submit" name="submit" class="btn btn-default" id="login"></input>
+	*  </form>
+	*  @endsection
+	*****************************************************************************
+	>> action="{{action('DbController@store')}}" => With this we able to call a controller 
+		 function form html form tag And for this "{{csrf_field()}}" must be define in form
+	
+
+store(Request $request):
+-------------------------------
+Request => "POST"
+Url => "leravelapp/db/"
+
+"DbController@store" function will receive data which is send by "post" method from 
+create.blade.php template and store to database.
+
+	***********************************************
+    *  public function store(Request $request)
+    *  {
+    *       $db = new Db;
+    *       $db->title = $request->input('title');
+    *       $db->body = $request->input('body');
+    *       $db->save();
+    *  
+    *       return redirect('/db/'.(string)$db->id);
+    *  }
+	***********************************************
+	>> redirect('/db/'.(string)$db->id) => This function will redirect to detail page/
+	>> (call "DbController@show" function) which is created

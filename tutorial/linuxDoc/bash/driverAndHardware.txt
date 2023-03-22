@@ -1,0 +1,66 @@
+There are two type of devices. could plug and hot plug devices.
+----------------------------------------------------------------
+	Could plug	
+	----------
+		>> could plug devices are like expension card.This thing need 
+        >> to plug in when machine turn off.
+
+		>> Pci bus is most oftern used to connect sound card, network card, video card.
+		>> To see what is attach on pci bus this is normaly our expension card
+			* lspci
+			* lspci -t		#This will gives us tree layout of devices
+
+	Hot plug
+	---------
+		>> hot plug devices are like usb.
+		>> To see usb bus or hot plug devices
+			* lsusb
+
+
+Devices Drivers
+----------------
+    To See a Network Card Module name (Could Plug devices) :
+    ---------------------------------------------------------
+        * lspci | grep Network
+            >> Output : 02:00.0 Network controller: Qualcomm Atheros QCA9377 802.11ac Wireless Network Adapter (rev 31) 
+        * lspci -vv -s 02:00.0
+            >> This will show kernel modules
+            >> Then remove and start module.
+
+	* lsmod
+		>> This command will gives all drivers or modules which currently are loaded.
+		>> This will gives us  ==>> | module name | 
+        >> size of moudle | how many devices useing it |
+		>> If we want we can unload some drivers/module which is not using any devices.
+
+	* modinfo [driver/module name]
+		>> This will gives informataion about that driver like version, path etc.
+
+	* rmmod [driver/module name]
+		>> Ex: rmmod bluetooth
+		>> This will unload bluetooth driver
+
+	* insmod [driver/module path]
+		>> To insert/load an module we need to spacify full path of that module.
+		>> We can find path using "modinfo" command.
+
+	[NOTE : We can do similer task using "modprob" command]
+	
+	* modprob --show-depends [driver/moudule name]
+		>> Show all dependendcy of this module.
+
+
+
+
+Show Hardware Temperature :
+---------------------------
+	* apt-get install lm-sensors
+		>> By default kali have this.
+
+	* sensors-detect
+		>> This will detect hardware and after complite this 
+
+		* sensors
+			>> This will show result
+
+

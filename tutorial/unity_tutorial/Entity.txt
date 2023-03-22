@@ -1,0 +1,113 @@
+#######################################################################################################
+                                        CREATE ENTITY
+#######################################################################################################
+[SerializeField] private Mesh unitMesh;
+[SerializeField] private Material unitMaterial;
+
+void createEntity()
+{
+    EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;        
+    EntityArchetype archetype = entityManager.CreateArchetype
+    (
+        typeof(Translation),
+        typeof(Rotation),
+        typeof(RenderMesh),
+        typeof(RenderBounds),
+        typeof(Testing),
+        typeof(LocalToWorld)
+    );
+
+
+    NativeArray<Entity> entities = new NativeArray<Entity>(10000, Allocator.Temp);
+    entityManager.CreateEntity(archetype, entities);
+    foreach(Entity e in entities)
+    {
+        Entity entity = e;
+        entityManager.AddComponentData(entity, new Translation{ Value = new float3(UnityEngine.Random.Range(-20, 20), 0, UnityEngine.Random.Range(-20, 20)) });
+        entityManager.AddSharedComponentData(entity, new RenderMesh{mesh = unitMesh, material = unitMaterial});
+    }
+
+    entities.Dispose();
+}
+#######################################################################################################
+
+
+
+
+
+
+#######################################################################################################
+                                CREATE ENTITY FROM PREFAB
+#######################################################################################################
+[SerializeField] private GameObject prefab;
+Entity entityPrefab;
+BlobAssetStore blob;
+
+void createEntity()
+{
+    World defaultWorld = World.DefaultGameObjectInjectionWorld;
+    EntityManager entityManager = defaultWorld.EntityManager;
+
+    //This convert normal GameObject Prefab to Entity Prefab.
+    blob = new BlobAssetStore();
+    GameObjectConversionSettings setting = GameObjectConversionSettings.FromWorld(defaultWorld, blob);
+    entityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(prefab, setting);
+
+    Entity entity = entityManager.Instantiate(entityPrefab);
+    entityManager.SetComponentData(entity, new Translation{Value = new float3(0,0,0)});
+}
+
+private void OnDestroy() 
+{
+    blob.Dispose();
+}
+#######################################################################################################
+
+
+#######################################################################################################
+                                ENTITY QUERY
+#######################################################################################################
+//Get all entity which have CollectableTag on it.
+EntityQuery eq = GetEntityQuery(typeof(CollectableTag));
+
+//Convert Entity Query to entity native array
+NativeArray<Entity> entitys = eq.ToEntityArray(Allocator.Temp);
+//Get 1st Entity form EntityQuery
+Entity entity = eq.GetSingletonEntity();
+//Check if entity is null
+if(entity == Entity.Null){}
+
+//Convert Entity Query to native array of Component Data
+NativeArray<Translation> translations = eq.ToComponentDataArray<Translation>(Allocator.Temp);
+#######################################################################################################
+
+
+
+#######################################################################################################
+//Return all entity which have playerTag archetype on it.
+ComponentDataFromEntity<PlayerTag> playerTag = GetComponentDataFromEntity<PlayerTag>(true);
+
+//Here Check if entityA has collectableTag component attach on it or not
+Entity entityA = triggerEvent.EntityA;
+if(collectableTag.HasComponent(entityA))) { }
+
+
+//Getting Component directly from Entity in a Job :
+//-------------------------------------------------
+    //We have ComponentDataFromEntity array of PlayerTag 
+    ComponentDataFromEntity<PlayerTag> playerTag = GetComponentDataFromEntity<PlayerTag>(true);
+    //we get PlayerTag Component data for entityA 
+    PlayerTag pt = playerTag[entityA];
+
+//Getting Component directly from Entity outside of Job :
+//-------------------------------------------------------
+    EntityManager em = World.DefaultGameObjectInjectionWorld.EntityManager;
+    if(em.HasComponent<CollectableTag>(entityA))
+    {
+        CollectableTag ct = em.GetComponentData<CollectableTag>(entityA);
+        Debug.Log(ct.id);
+    }
+#######################################################################################################
+
+
+

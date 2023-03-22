@@ -1,0 +1,120 @@
+# Create an auth
+-----------------
+    *  php artisan make:auth
+    >>  This commend will create two migration, "user" and "reset password" table 
+
+
+
+# Create migration for another auth
+-------------------------------------
+    * php artisan make:migration create_admin_table --create=admins
+    >> --create=admins => "admins" table name
+
+
+    *************************************************************************
+    *  public function up()
+    *  {
+    *      Schema::create('admins', function (Blueprint $table) {
+    *          $table->increments('id');
+    *          $table->string('name');
+    *          $table->string('email')->unique();
+    *          $table->string('api_token', 60)->unique();
+    *          $table->integer('address_id');
+    *          $table->string('password');
+    *          $table->rememberToken();
+    *          $table->timestamps();
+    *      });
+    *  }
+    *************************************************************************
+
+
+
+
+
+
+# Create a model for new auth
+--------------------------------
+    Duplicate existing "User" model. Name this model and class as "Admin"
+
+
+
+
+# Setup guard "Config\auth.php"
+---------------------------------
+    Define "guards" and "providers"
+
+    In "porviders"
+    --------------
+        *****************************************
+        * 'admins' => [
+        *     'driver' => 'eloquent',
+        *     'model' => App\Admin::class,
+        * ],
+        *****************************************
+        >> App\Admin => admin model.
+
+
+
+    In "guards"
+    ---------------
+    Here we create an "admin" guard and an "admin-api" gurad. If we want to use 
+    authenticate api for admin then we use admin-api.
+        *****************************************
+        *    'admin' => [
+        *        'driver' => 'session',
+        *        'provider' => 'admins',
+        *    ],
+        *
+        *    'admin-api' => [
+        *        'driver' => 'token',
+        *        'provider' => 'admins',
+        *    ],
+        *
+        *****************************************
+
+
+    In "passwords"
+    --------------
+        Add this:
+        
+        ***********************************************
+        *  'admins' => [
+        *      'provider' => 'admins',
+        *      'table' => 'password_resets',
+        *      'expire' => 10,
+        *  ],
+        ***********************************************
+
+
+
+
+
+
+
+# Creating Routes and Controller 
+---------------------------------
+    Route::get('/admin', 'AdminController@index')->name('admin.home');
+
+
+    Controller
+    -----------
+    Duplicate "HomeController" and rename it to "AdminController"
+        ******************************************************************************
+        *  public function __construct()
+        *  {
+        *      $this->middleware('auth:admin');
+        *  }
+        *  
+        *  public function index()
+        *  {
+        *      return view('admin');
+        *  }
+        ******************************************************************************
+        >> auth:admin => it mean we want to authenticate our admin not user. If we simply 
+           define nothing only "auth" then it use default authentication which is user.
+
+        >> also make sure that an "admin.blade.php" file is created for admin.
+
+
+
+

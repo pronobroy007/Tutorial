@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <title>Component Event</title>
+</head>
+<body>
+
+    <div class="container" id="app"><br>
+
+        <!-- here this <sidebar> is parrent and Vue.component('sidebar'{..}) is chield -->
+        <!-- parent can send value to chield using "props" and chield can send "event" to parrent -->
+
+        <!-- Here parent is listening for an event called "emit_event" also this function will return -->
+        <!-- an array element. When this event triger it will call  a function "event()"  -->
+        <sidebar v-on:emit_event="event($event)"></sidebar>
+        <h1>{{ message }}</h1>
+        
+    </div>
+    
+
+    <script>
+        //Here when we click "Press" button we emit an event to parent
+        Vue.component('sidebar',{
+            template:`
+                <div class="col-lg-4" >
+                    <input type="text" class="form-control" v-model='message'>            
+                    <button class="btn btn-info" v-on:click='event'>Press</button>
+                </div>
+            
+            `,
+            data()
+            {
+                return
+                {
+                    message: ""
+                }
+            },
+            methods:
+            {
+                event()
+                {
+                    this.$emit('emit_event', { message: this.message, value: 10});
+                }
+            }
+        })
+
+        new Vue({
+            el: "#app",
+            data:
+            { 
+                value: 0,
+                message: "",
+            },
+            methods:
+            {
+                event($event)
+                {
+                    this.message = $event.message;
+                    this.value = $event.value;
+                }
+
+            }
+        });
+    </script>
+</body>
+</html>

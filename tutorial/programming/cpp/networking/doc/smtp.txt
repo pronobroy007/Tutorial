@@ -1,0 +1,162 @@
+Finding an email server :
+-------------------------
+    The mail server must be identified by performing a DNS lookup for an MX record.
+
+    In Windows : 
+    -------------
+        * nslookup -type=mx gmail.com
+    In Linux :
+    ----------
+        * dig mx gmail.com
+
+
+    Gmail uses five mail servers. When multiple MX records are found,
+    mail should be delivered to the server having the lowest MX preference first.
+    If mail delivery fails to that server, then an attempt should be made 
+    to deliver to the server having the next lowest preference, and so on.
+
+
+SMTP dialog :
+-------------
+    In a typical session, the dialog goes as follows :
+    --------------------------------------------------
+        * The client first establishes a connection to the SMTP server.
+
+        * The server initiates with a greeting. This greeting indicates 
+            that the server is ready to receive commands.
+
+        * The client then issues its own greeting.
+
+        * Then the server response.
+
+        * The client sends a command indicating who the mail is from.
+
+        * The server responds to indicate that the sender is accepted.
+
+        * The client issues another command, which specifies the mail's recipient.
+
+        * The server responds indicating the recipient is accepted.
+
+        * The client then issues a DATA command.
+
+        * The server responds asking the client to proceed.
+
+       * The client transfers the email.
+
+    Example :
+    --------
+        C: Client connect
+        S: 220 mail.example.com SMTP server ready
+        C: HELO mail.example.net
+        S: 250 Hello mail.example.net [192.0.2.67]
+        C: MAIL FROM:<alice@example.net>
+        S: 250 OK
+        C: RCPT TO:<bob@example.com>
+        S: 250 Accepted
+        C: DATA
+        S: 354 Enter message, ending with "." on a line by itself
+        C: Subject: Re: The Cake
+        C: Date: Fri, 03 May 2019 02:31:20 +0000
+        C:
+        C: Do NOT forget to bring the cake!
+        C: .
+        S: 250 OK
+        C: QUIT
+        S: 221 closing connection
+
+
+
+The format of an email :
+------------------------
+/*********************************************************
+*   From: Alice Doe <alice@example.net>
+*   To: Bob Doe <bob@example.com>
+*   Subject: Re: The Cake
+*   Date: Fri, 03 May 2019 02:31:20 +0000
+*   Content-Type: text/html
+*   
+*   Hi Bob,<br>
+*   <br>
+*   Do <strong>NOT</strong> forget to bring the cake!<br>
+*   <br>
+*   Best,<br>
+*   Alice<br>
+/*********************************************************
+
+
+
+Not all email clients support HTML emails. For this reason, it may be 
+useful to encode your message as both plaintext and HTML
+
+    /*********************************************************
+    * From: Alice Doe <alice@example.net>
+    * To: Bob Doe <bob@example.com>
+    * Subject: Re: The Cake
+    * Date: Fri, 03 May 2019 02:31:20 +0000
+    * MIME-Version: 1.0
+    * Content-Type: multipart/alternative; boundary="SEPARATOR"
+    *
+    * This is a message with multiple parts in MIME format.
+    * --SEPARATOR
+    * Content-Type: text/plain
+    *
+    * Hi Bob,
+    *
+    * Do NOT forget to bring the cake!
+    *
+    * Best,
+    * Alice
+    * --SEPARATOR
+    * Content-Type: text/html
+    *
+    * Hi Bob,<br>
+    * <br>
+    * Do <strong>NOT</strong> forget to bring the cake!<br>
+    * <br>
+    * Best,<br>
+    * Alice<br>
+    * --SEPARATOR--
+    /*********************************************************
+
+
+Email file attachments :
+------------------------
+    The preceding example includes a file called my_file.txt. SMTP is 
+    a purely text-based protocol; therefore, any attachments that may 
+    include binary data need to be encoded into a text format. Base64 
+    encoding is commonly used for this purpose. In this example, the header, 
+    Content-Transfer-Encoding: base64, specifies that we are going to use Base64 encoding.
+
+    The content of my_file.txt is This is a simple text message. That sentence encodes to 
+    Base64 as VGhpcyBpcyBhIHNpbXBsZSB0ZXh0IG1lc3NhZ2Uu as seen in the preceding code.
+
+        /*********************************************************
+        *    From: Alice Doe <alice@example.net>
+        *    To: Bob Doe <bob@example.com>
+        *    Subject: Re: The Cake
+        *    Date: Fri, 03 May 2019 02:31:20 +0000
+        *    MIME-Version: 1.0
+        *    Content-Type: multipart/alternative; boundary="SEPARATOR"
+        *
+        *    This is a message with multiple parts in MIME format.
+        *    --SEPARATOR
+        *    Content-Type: text/plain
+        *
+        *    Hi Bob,
+        *
+        *    Please see the attached text file.
+        *
+        *    Best,
+        *    Alice
+        *    --SEPARATOR
+        *    Content-Disposition: attachment; filename=my_file.txt;
+        *    modification-date="Fri, 03 May 2019 02:26:51 +0000";
+        *    Content-Type: application/octet-stream
+        *    Content-Transfer-Encoding: base64
+        *
+        *    VGhpcyBpcyBhIHNpbXBsZSB0ZXh0IG1lc3NhZ2Uu
+        *    --SEPARATOR--
+        /*********************************************************
+
+
+

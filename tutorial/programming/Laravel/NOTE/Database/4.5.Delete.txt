@@ -1,0 +1,22 @@
+IN "4.Database.txt" we create "DbController" and in there we create a function called
+"destroy()" 
+
+In "5.0.FeatchData.txt" we create "show.basde.php" file and in there we create a button
+associated with this destroy() function and here we create this function. This function 
+Remove the specified resource from storage.
+
+destroy($id):
+---------------
+Request => DELETE
+Url => "leravelapp/{{$id}}"
+
+	**************************************
+    *  public function destroy($id)
+    *  {
+    *      $db = Db::find($id);
+    *      $db->delete();
+    *  
+    *      return redirect('/db');
+    *  }
+	**************************************
+	>> We redirect to index page.

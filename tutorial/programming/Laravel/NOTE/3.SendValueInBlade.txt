@@ -1,0 +1,68 @@
+In "PageController@indes" we have a value "$title" and we want to send that value to blade
+templats.there are two way to send value in blade templats
+
+1.
+			***********************************
+			*  	public function index() 
+			*		{
+			*			$title = "Wellcome to Leravel"
+			*  		return view('pages.index', compact('title'));
+			*		}
+			************************************
+			
+			>> in view() after html file name we add another agrument "compact('title')"
+			>> which will send value to blade templat.
+
+			
+2.			
+			*  return view('pages.index')->with('title', $title);
+			
+			>> "->with( )" => 1st arg = value name received by blade templat
+			>> 2nd arg => actual variable
+			
+			
+			
+			**********************************
+			*  @extends('layout.base')
+			*
+			*  @section('body')
+		    *  	<h1>{{$title}}</h1>
+		    *  	<p>This is made by laravel</p>
+			*  @endsection
+			***********************************
+			
+			>> We received value by using "{{ $title }}"
+			
+			
+
+
+
+# To send an array:
+-----------------
+	***********************************
+	*  	public function index() 
+	*		{
+	*
+	*			$data = array(
+	*			'title' => "Welcome to Leravel",
+	*			'programs' => ['C++', 'PHP', 'Python']
+	*			);
+	*
+	*  		return view('pages.index')->with($data);
+	*		}
+	************************************
+	
+	*************************************
+	*  @section('body')
+    *  <h1>{{$title}}</h1>
+    *  <ul>
+    *     @foreach ($programs as $program )
+    *      <li> {{$program}} </li>
+    *      @endforeach 
+    *  </ul>
+    * <p>This is made by laravel</p>
+	* @endsection
+	*************************************
+	
+
+	

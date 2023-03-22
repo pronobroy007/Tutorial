@@ -1,0 +1,79 @@
+NGROK :
+--------
+	# Goto ngrok websid. login into it and copy "authkey" in "Connect you account" section and also download ngrok.
+
+	* ngrok authtoken 2oREZ3oSb9K79my6tF58Q_3aQgxzj9Ug23mDLLUR4Qx
+		>> This command will allow to open port
+		>> Now we can open port using ngrok command
+
+
+	Ngrok api :
+	-----------
+		* http://127.0.0.1:4040/api/tunnels
+			>> From here we can get generat public url
+
+
+	Command :
+	---------
+		* ngrok http 80
+			>> This will open port 80 for http request
+
+		* ngrok tcp 22
+			>> This will open a port for tcp connection.
+			>> open port will not be 22 actual open port will be shown in console like blew
+
+			* tcp://0.tcp.ngrok.io:13993 -> localhost:22  
+				>> after excute ngrok command this will shown 
+				>> here open port = 13993
+				>> we can use ip by "ping 0.tcp.ngrok.io" or use "0.tcp.ngrok.io"
+
+	
+	Multiple Port open :
+	--------------------
+		# STEP 1 : Add these Lines To ngrok.yml [Location .ngrok2/ngrok.yml ]
+		***************************
+		*    tunnels:
+		*	  first-app:
+		*	  addr: 80
+		*	  proto: http
+		*	 second-app:
+		*	  addr: 3000
+		*	  proto: http         
+		****************************
+		
+		# STEP 2 : Now Start ngrok with 
+		* ngrok start --all
+
+	
+	
+
+
+Serveo :
+--------
+	HTTP :
+	------
+		* ssh -R 80:localhost:80 serveo.net
+			>> This will open port 80
+
+		* ssh -R 80:localhost:8888 -R 80:localhost:9999 serveo.net
+			>> This will open multiple prot (8888, 9999)
+
+
+	SSH :
+	-----
+		* ssh -R myalias:22:localhost:22 serveo.net
+			>> myalias = this is a alias. put here any unique alias.
+
+
+		* ssh -J serveo.net user@myalias
+			>> user = put usre name
+			>> myalias = put any alias that we spacify.
+
+
+	TCP :
+	-----
+
+
+
+
+portman.io

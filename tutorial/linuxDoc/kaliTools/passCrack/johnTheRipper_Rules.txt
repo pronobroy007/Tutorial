@@ -1,0 +1,98 @@
+John the Ripper:
+-----------------
+	Get hash password in linux:
+	---------------------------
+		# Linux seve all password in "/root/etc/shadow" open this file using vim or cat.
+
+		* ushadow /etc/passwd /etc/shadow
+			>> Unshadow command to combines the /etc/passwd and 
+            >> /etc/shadow files so John can use them. 
+			>> You might need this since if you only used your shadow fil 
+
+	In Windows:
+	------------
+		# Download pwdump7 to get windows password.
+		# To retrive password run pwdump7.exe using cmd 
+        # and save output file in a text file
+
+		* pwdump7.exe > test.txt
+			>> Then use this text file in john the ripper
+
+
+	Crack Hash :
+	------------
+		* john <hash file>
+		* john --show <hash file>
+
+		Exmaple:
+		--------
+			# We download a zip "pass.zip" file which have password on it. 
+            # To crack this file
+
+			* zip2john pass.zip > password
+				>> Here we output password hash in a file called "password"
+				>> For rar => rar2john 
+			
+			* john password		or 	john --format=zip hashfilepath	 	
+			* john --show password
+
+
+	Decript hash using a wordlist/passwordfile
+	-------------------------------------------
+		* john --wordlist=password.txt <hash file>
+			>> Here in password.txt we have create some password for check
+
+
+	Decript Raw hash
+	-----------------
+		* john --format=raw-md5 hashfilepath 
+			>> This is how we decript raw MD5 hash.
+
+
+
+
+
+
+make a custom rule for john
+----------------------------
+	>> To creae a custom rule open /etc/john/john.conf file.
+
+	Rules:
+	-------
+		* Az"[0-9]"			=>	"Az" mean last charecter and "[0-9]" mean last char will be a digit
+		* A0"[0-9]"			=> 	"A0" mean first charecture. "A3" == 4th charecter.	
+		
+		* l					=>	convert to lowercase
+		* u					=>	convert to uppercase
+		* c					=> 	capitalize
+		* l r				=>	lowercase the word and reverse it (palindrome)
+
+
+	Basic syntex to create a rule
+	-----------------------------
+		[List.Rules:<Rule Name>
+		<rule command 1>
+		... ...
+		<rule command N>
+		
+
+	Example to create a rule:
+	--------------------------
+		[List.Rules:Hello]
+		A0"[0-5]"Az"[l][o][w]"
+
+
+		Call this rule 
+		---------------
+			* john --rule:Hello --wordlist:password.txt --stdout	
+				>> Inside password.txt we have "Hel"
+
+		Output : 
+		---------
+			>> "0Hellow", "1Hellow", "2Hellow", "3Hellow", "4Hellow", "5Hellow"
+
+
+
+
+
+

@@ -1,0 +1,104 @@
+* apt-get install cyrus-*
+
+How MTA(Mail Tranfer Agent) work
+---------------------------------
+	>>	To send an email a client need an "email client". This 'eamil client' softwere call the MUA(Mail User Agent).
+		Common MUA 'Mozila Thunderbird, Microsoft Outlook, ... ...
+	
+	>> 	This MUA have no idea how to send this mail to other end. What this MUA do is to send this mail
+		to a spacific mail server using SMTP protocol.Which is known as MTA. This MTA decide what to do 
+		with this message
+
+	>> 	Then this MTA forword this massage usig SMTP protocol through the internet from MTA to MTA until it reach
+		the destination MTA for recipient organization. If recever is in same organization this this massage
+		will stay in seder MTA and wait for receiver to request. Same organization mean sending mail form
+		"@gmail.com" to "@gmail.com" thos are local domain.
+
+	>> 	This destination MTA transfer email to MDA(Message delivery Agent) usually the same system. This MDA 
+		store messages and tell recever to request.
+
+	>> 	Recever also connect to a MTA/MDA using MUA. When new message come to it's MTA it pull that message down.
+		To do this it use any of two protocol POP3(Post Office Protocol V3), IMAP(Internet Message Access Protocal)	
+
+
+
+
+
+
+
+
+Install Postfix	
+----------------
+	# Postfix is a Mail Transfer Agent(MTA)
+	* apt-get install postfix
+	
+	* /etc/init.d/postfix start
+	* service postfix start
+		>> Starting mail sevice.
+
+
+Sending Mail
+------------
+	* mail -s "subject" username@domain-name <<< "message"
+		>> username == user in this matchine such root is main user/admin
+		>> Here "@domain-name" is inside of /etc/postfix/main.cf file any one of "mydestination" variabel
+		>> In mydestination variable domain name separate by space.
+
+
+Show mail
+---------
+	# All mail save eatch user mail file which locate in "/var/spool/mail/user_name" file
+
+	# Or use this command to see mail.
+	* mail
+		>> This command will shwo mail
+
+
+
+Debugging
+-----------
+	* vim /var/log/mail.log
+	* vim /var/log/mail.err
+		>> hese two files you can point-out the problem and it will be helpful for troubleshooting the problem.
+
+
+
+
+
+
+
+To Send mail using Gmail
+--------------------------
+	# Goto postfix main.cf file which is postfix comfiguration file
+	* vim /etc/postfix/main.cf
+	
+	# Add SMTP server ip:port for gmail in realyhost parameter in postfix configuration file.
+	* relayhost = [smtp.gmail.com]:587	
+
+
+	Also add this in configuration file.
+	--------------------------------------
+		* smtp_sasl_auth_enable = yes 
+			>> enable SASL authentication 
+
+		* smtp_sasl_security_options = noanonymous
+			>> disallow methods that allow anonymous authentication. 
+
+		* smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+			>> Create this sasl_passwd file and add gmail authentication 
+			>> Format of this sasl_passwe : [relayname]:port username:password
+			>> Ex : [smtp:gmail.com]:587 pronob.roy07@gmail.com:SecrectPassword
+			>> After this use "postmap" command
+			* sudo postmap /etc/postfix/sasl_passwd
+
+		* smtp_use_tls = yes
+			>> Enable STARTTLS encryption 
+
+		* smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+			>> where to find CA certificates
+
+
+
+
+
+

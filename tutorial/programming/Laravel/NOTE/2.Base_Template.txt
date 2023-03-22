@@ -1,0 +1,49 @@
+Create Layout in "views" create a folder "layout" for our layout.
+
+This is a generic blueprint for our webside. This basic structure of every single page.
+For every page we have same header, footer, navigation bar but body will different.
+so we make a "blade" "@yield('body'). We can add as many "blade" as we want, where we want
+to change something we can add "blade" variable there.
+	
+suppose this html save in : "templats/music/base.html"
+			*********************************
+			*  <!DOCTYPE html>
+			*  <html lang="{{ app()->getLocale() }}">
+			*  <html lang="en">
+			*
+			*  <head>
+			*  	<meta charset="UTF-8">
+			*  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			*  	<meta name="viewport" content="width=device-width, initial-scale=1">
+			*
+			*  	<title>Tite<title>
+			*  </head>
+			*
+			*  <body>
+			*  <!-- Here "body" is a block variable. This block of code will change in -->
+			*  <!-- erery single page and everything except this block of code remain same-->
+			*	
+			*  @yield('body')
+			*
+			*  </body>
+			*
+			*  </html>
+			*********************************
+			
+To use this in another page: 
+
+			********************************
+			*  @extends('layout.base')
+			*
+			*  @section('body')
+			*      <p>This is made by laravel</p>
+			*  @endsection
+			********************************
+
+
+
+
+
+
+
+

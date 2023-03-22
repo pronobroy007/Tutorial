@@ -1,0 +1,26 @@
+Laravel Chat
+------------
+	>> Install npm
+	
+	"webpack.mix.js" file =>> npm run dev will compile "app.js" in "public/js" folder
+	
+	
+	>> npm install bootstrap
+	
+	incluse  >> bootstrap/scss/bootstrap.scss in app.scss
+	
+	
+For Scroll 
+----------
+	>> npm install --save vue-chat-scroll
+	
+	>> import Vue from 'vue'
+		import VueChatScroll from 'vue-chat-scroll'
+		Vue.use(VueChatScroll)
+	
+	* In app.js include this 
+		
+		
+	>> <ul class="messages" v-chat-scroll>
+			<li class="message" v-for="n in messages">{{ n }}</li>
+		</ul>

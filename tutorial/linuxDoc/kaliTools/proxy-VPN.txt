@@ -1,0 +1,74 @@
+Add user/guest 
+---------------
+	adduser username					=> This will make a guest user on kali.
+	cat /etc/passwd | cut -d: -f1		=> show all user
+	su username							=> login as different user in terminal.
+	
+	
+install tor
+-------------
+	apt-get install tor -y
+	adduser username	
+	open browser and download tor not in root user.
+
+
+setup proxy
+-------------
+	>> nano /etc/proxychains.conf
+	>> enable dynamic_chain 
+	>> enable proxy_dns				=> This is resolv dns leaks.
+	>> socks5 172.0.0.1 9050		=> end of file. This is tor default ip and port.
+	
+	
+Staying Anonymous
+------------------
+	Here we using Tor default proxy
+		>> service tor start							   => We start tor to use proxy not our own proxy.
+		>> service tor status
+		>> proxychains firefox www.duckduckgo.com			=> Here proxychains will hide your self.
+		>> serarch dns leaks and see your ip address
+	
+	Here we using our own free proxy. This is a bit slow.
+		>> Now serarch "free proxy socks5" and copy some proxy virsion, IP, port
+		>> Then open "nano /etc/proxychains.conf"
+		>> peast that proxy botton of that file.
+		>> In proxychains.config file there are some example how to add those porxy.
+	
+	
+VPN
+-----
+	Using vpn we can open a port for home server.
+	
+	
+	>> open "nano /etc/resolf.conf"
+	>> In this file we have this "nameserver ip". It mean we are using our 
+	>> ISP DNS server which can be detected.
+	>> open browser search "opendns" and copy there dns server address 
+	>> and use that ip as our dns ip
+	>> You can use more than one dns.
+	[NOTE : if we restart our network then we will get our default ISP DNS]
+	
+	
+	>> goto "vpnbook.com" and download any certificate bundle
+	>> And also see user name and password.
+	>> In terminal goto where we extract our certification file.
+	>> openvpn --config "use any certificate"
+
+	
+	For windows
+	------------
+		download "openven" then download "vpnbook"
+		Extract vpnbook in "openvpn confi folder" and create a login 
+		text file and insert username and password for "vpnbook"
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

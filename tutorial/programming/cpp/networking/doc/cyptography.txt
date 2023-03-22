@@ -1,0 +1,262 @@
+Symmetric key encryption:
+-------------------------
+    Symmetric key algorithms encrypt and decrypt data using a single key.
+    the plaintext message are passed to the encryption algorithm, producing ciphertext.
+    The result can be sent across an insecure medium,allowing only a recipient who has 
+    the original key to decrypt the message
+
+    The primary disadvantage of symmetric key algorithms is that the key must remain secret at all times.
+    In particular, exchanging secret keys can be difficult, since you'll usually want to exchange keys on 
+    the same medium that you're trying to use encryption to protect. Sending the key in the clear before 
+    you use it leaves open the possibility of an attacker recording the key before you even begin to send data.
+
+    One solution to the key distribution problem is to use a cryptographic key exchange protocol.
+    OpenSSL provides the Diffie-Hellman protocol for this purpose, which allows for key agreement 
+    without actually exposing the key on the network. However, Diffie-Hellman does not guarantee 
+    the identity of the party with whom you are exchanging keys. Some sort of authentication mechanism 
+    is necessary to ensure that you don't accidentally exchange keys with an attacker.
+
+    Only two types of symmetric ciphers exist that are well-respected and see any sort of widespread use:
+    block ciphers and stream ciphers. Block ciphers are traditionally the most popular.
+    They operate by breaking up data into fixed-size blocks, and then encrypting each block individually,
+    in which the encryption algorithm is a reversible function of the input.
+    Leftover data is traditionally padded so that the length of the plaintext is a multiple of the cipher's block size.
+    Stream ciphers are essentially just cryptographic pseudorandom number generators.
+    They use a starting seed as a key to produce a stream of random bits known as the keystream .
+    To encrypt data, one takes the plaintext and simply XORs it with the keystream.
+    Stream ciphers don't need to be padded per se, though they are usually padded to byte-boundaries,
+    since implementations usually operate on a per-byte level instead of a per-bit level.
+
+    Neither block ciphers nor stream ciphers can give us perfect security , in which an attacker can never recover a
+    message as long as the communicating parties use the algorithm properly. For each type of cipher, the security is,
+    at best, a function of the key length. It's always possible to launch a brute-force attack,
+    in which the attacker tries every possible key until the message properly decrypts. If the key length is long enough,
+    the attack will take so long on average as to be infeasible in practice.
+
+    block ciphers always encrypt a given block of data in the same way, and thus do not effectively conceal patterns 
+    in a stream of data. An attacker can keep a dictionary of known plaintext blocks to known ciphertext blocks,
+    which can often be useful in deciphering real messages. Additionally, an attacker can easily substitute one 
+    ciphertext block for another, often with great success For such purposes, we recommend message authentication codes.
+
+    Stream ciphers have the problem that a one-bit flip of the ciphertext causes a one-bit flip in the decrypted plaintext.
+    Obviously, stream ciphers need to be supplemented with data integrity checks. For such purposes, we recommend message 
+    authentication codes. Once you start encrypting using a given key, you must continue to generate new data in the 
+    keystream, or generate and exchange a new key. If you start over using the same key,
+    the security of the stream cipher is effectively lost. The solution is to never reuse keys when using a stream cipher.
+    Don't even use the same key across reboots.
+
+    The basic ciphers supported by the command-line tool are Blowfish, CAST5, DES, 3DES (Triple DES), IDEA, RC2, RC4,
+    and RC5. Version 0.9.7 of OpenSSL adds support for AES. Most of the supported symmetric ciphers support a variety
+    of different modes, including CBC, CFB, ECB, and OFB. For each cipher, the default mode is always CBC if a mode 
+    is not explicitly specified. Each of the supported symmetric ciphers and their various modes.
+    it is important to mention that you should generally never use ECB, because it is incredibly difficult to use securely
+
+    password is often used to derive a key and initialization vector that will encrypt or decrypt the data.
+    It is also possible to specify the key and initialization vector to be used explicitly, but supplying 
+    that information on your own is often prone to error. In addition, different ciphers have different key 
+    requirements, so supplying your own key requires in-depth knowledge of the particular cipher. The password 
+    can be specified with the pass option, according to the general guidelines for passwords and passphrases 
+    outlined later in this chapter. If no password or key information is specified, the tool will present a 
+    prompt to obtain it.
+
+    If you specify a password or passphrase to derive the key and initialization vector,
+    the command-line tool uses a standard OpenSSL function to perform the task. Essentially,
+    the password or passphrase that you specify is combined with a salt.
+    The salt that is used in this case is simply eight random bytes.
+
+    Example :
+    ---------
+        * openssl enc -des3 -salt -in plaintext.doc -out ciphertext.bin -pass pass:hello
+            >> Encrypts the contents of the file plaintext.doc using DES3 in CBC mode and places the 
+            >> resulting ciphertext into ciphertext.bin. Since no password or key parameters were specified,
+            >> a prompt for a password from which a key can be derived will be presented.
+
+            * openssl des3 -d -salt -in plaintext.bin -pass:hello
+                >> Decrypts
+
+        * openssl enc -des3-ede-ofb -d -in ciphertext.bin -out plaintext.doc -pass pass:trousers
+            >> Decrypts the contents of the file ciphertext.bin using DES3 operating in OFB mode and places 
+            >> the resulting plaintext into plaintext.doc. The password "trousers" will be used to decrypt the file.
+            >> Note that this example will not successfully decrypt the file from the previous example,
+            >> since we used a different mode of encryption (CBC instead of OFB).
+
+        * openssl bf-cfb -salt -in plaintext.doc -out ciphertext.bin -pass env:PASSWORD
+            >> Encrypts the contents of the file plaintext.doc using the Blowfish cipher in CFB mode and 
+            >> places the resulting ciphertext into ciphertext.bin. The contents of the environment variable 
+            >> PASSWORD will be used for the password to generate the key.
+
+        * openssl base64 -in ciphertext.bin -out base64.txt
+            >> Encodes the contents of the file ciphertext.bin in base64 and writes the result to the file base64.txt.
+
+        * openssl rc5 -in plaintext.doc -out ciphertext.bin -S C62CB1D49F158ADC -iv E9EDACA1BD7090C6 -K 89D4B1678D604FAA3DBFFD030A314B29
+            >> Encrypts the contents of the file plaintext.doc using the RC5 cipher in CBC mode and places the 
+            >> resulting ciphertext into ciphertext.bin. The specified salt, key, and initialization vector will 
+            >> be used to encrypt the plaintext. Keys are specified by their hexadecimal representation.
+
+
+Cryptographic hash functions and Message Authentication Codes:
+--------------------------------------------------------------
+    Cryptographic hash functions are essentially checksum algorithms with special properties.
+    You pass data to the hash function, and it outputs a fixed-size checksum, often called a message digest,
+    or simply digest. Passing identical data into the hash function twice will always yield identical results.
+    However, the result gives away no information about the data input to the function. Additionally,
+    it should be practically impossible to find two inputs that produce the same message digest.
+    Generally, when we discuss such functions, we are talking about one-way functions.
+    That is, it should not be possible to take the output and algorithmically reconstruct the input 
+    under any circumstances
+
+
+    MAC :
+    -----
+        In addition to computing hashes, the message digest commands can also be used for signing and verifying signatures.
+        When signing or verifying a signature, only one file should be used at a time; otherwise, the signatures will run 
+        together and end up being difficult to separate into a usable form. When signing, a signature is generated for the 
+        hash of the file to be signed. A private key is required to sign, and either RSA or DSA may be used.
+        When you use a DSA private key, you must use the DSS1 message digest (even though it is the same as the SHA1 algorithm).
+        You may use any algorithm other than DSS1 with an RSA private key. Verifying a signature is simply the reverse 
+        of signing. Normally, a public key is required to verify a signature, but a private key will work, too,
+        because a public key can be derived from the private key, but not vice versa! When verifying a signature 
+        with an RSA key, public or private, you'll also need to know which message digest algorithm was used to 
+        generate the signature.
+
+        * openssl dgst -sha1 file.txt
+            >> Computes an SHA1 hash for the file named file.txt and write it to stdout in hexadecimal form.
+
+        * openssl sha1 -out digest.txt file.txt
+            >> Computes an SHA1 hash for the file named file.txt and write it in hexadecimal form to the file named digest.
+            >> txt.
+
+        * openssl dgst -dss1 -sign dsakey.pem -out dsasign.bin file.txt
+            >> Signs the SHA1 (DSS1) hash of the file named file.txt using the DSA private key in the file dsakey.
+            >> pem and write the signature out to the file dsasign.bin. The PEM file format is a widely used format 
+            >> for storing cryptographic objects such as private keys, certificates, and so on.
+            >> The "bin" extension indicates that the output is raw binary.
+
+        * openssl dgst -dss1 -prverify dsakey.pem -signature dsasign.bin file.txt
+            >> Verifies the signature of the file named file.txt that is contained in the file dsasign.
+            >> bin using the SHA1 (DSS1) message digest algorithm and the DSA private key from the file dsakey.pem.
+
+        * openssl sha1 -sign rsaprivate.pem -out rsasign.bin file.txt
+            >> Signs the SHA1 hash of the file named file.txt using the RSA private key in the file rsaprivate.
+            >> pem and write the signature out to the file rsasign.bin.
+
+        * openssl sha1 -verify rsapublic.pem -signature rsasign.bin file.txt
+            >> Verifies the signature of the file named file.txt that is contained in the file rsasign.
+            >> bin using the SHA1 message digest algorithm and the RSA public key from the file rsapublic.pem.
+
+
+
+Public key encryption :
+-----------------------
+    Public key cryptography suggests a solution to the key distribution problem that plagues symmetric cryptography.
+    In the most popular form of public key cryptography, each party has two keys, one that must remain secret 
+    (the private key ) and one that can be freely distributed (the public key ). The two keys have a special mathematical 
+    relationship.
+
+    For Alice to send a message to Bob using public key encryption (see Figure 1-2), Alice must first have Bob's 
+    public key. She then encrypts her message using Bob's public key, and delivers it. Once encrypted,
+    only someone who has Bob's private key can successfully decrypt the message (hopefully, that's only Bob).
+
+    Public key encryption solves the problem of key distribution, assuming there is some way to find Bob's 
+    public key and ensure that the key really does belong to Bob. In practice, public keys are passed around 
+    with a bunch of supporting information called a certificate , and those certificates are validated by 
+    trusted third parties
+
+    Generally, public key encryption is used to agree on an encryption key for a symmetric algorithm,
+    and then all further encryption is done using the symmetric algorithm. Therefore, public key 
+    encryption algorithms are primarily used in key exchange protocols and when non-repudiation is required.
+
+    Diffie-Hellman:
+    ---------------
+        Diffie-Hellman works by first creating a set of parameters that are agreed upon by both parties in the conversation.
+        The parameters, consisting of a randomly chosen prime number and a generator value that is typically specified as 
+        either 2 or 5, are public and can be either agreed upon before the conversation begins or exchanged as part of the
+        conversation. Using the agreed-upon parameters, each party computes a public and private key. As its name implies,
+        the private key is never shared with anyone. The parties exchange their public keys, and then each party can compute
+        the shared secret using their private key and the peer's public key.
+
+        * openssl dhparam -out dhparam.pem -2 1024
+            >> Generates a new set of Diffie-Hellman parameters using a generator of 2 and a random 1,024-bit prime,
+            >> and writes the parameters in PEM format to the file dhparam.pem.
+
+        * openssl dhparam -in dhparam.pem -noout -C
+            >> Reads a set of Diffie-Hellman parameters from the file dhparam.pem and writes a C code representation 
+            >> of the parameters to stdout.
+
+        Digital Signature Algorithm :
+        -----------------------------
+            Just like Diffie-Hellman, DSA also requires parameters from which keys are generated.
+            There is no harm in making the parameters used to generate a key pair public,
+            but there's equally no compelling reason to do so. Only the private key that is generated must be kept private,
+            as is implied by its name. The public key is the only thing that really needs to be shared with any party that
+            wishes to verify the authenticity of anything signed with a private key.
+            
+            To Signature We need :  Message + Private Key + Random numbrm + DSA Parametter = signatures
+            To varify Signature We need :  Message + public Key + + signatures + DSA Parametter = true or false
+
+            Just like Diffie-Hellman, DSA also requires parameters from which keys are generated.
+            There is no harm in making the parameters used to generate a key pair public,
+            but there's equally no compelling reason to do so. Only the private key that is generated must be kept private,
+            as is implied by its name. The public key is the only thing that really needs to be shared with any party that 
+            wishes to verify the authenticity of anything signed with a private key.
+
+            * openssl dsaparam -out dsaparam.pem 1024
+                >> Generates a new set of DSA parameters and writes them to the file dsaparam.pem.
+                >> The length of the prime and generator parameters will be 1,024 bits.
+
+            * openssl gendsa -out dsaprivatekey.pem -des3 dsaparam.pem
+                >> Generates a new DSA private key using the parameters from the file dsaparam.pem,
+                >> encrypts the newly generated private key with the 3DES cipher, and writes the result 
+                >> out to the file dsaprivatekey.pem.
+
+            * openssl dsa -in dsaprivatekey.pem -pubout -out dsapublickey.pem
+                >> Computes the public key that corresponds to the private key contained in the file dsaprivatekey.pem 
+                >> and writes the public key out to the file dsapublickey.pem.
+
+            * openssl dsa -in dsaprivatekey.pem -out dsaprivatekey.pem -des3 -passin pass:oldpword -passout pass:newpword
+                >> Reads a private key from the file dsaprivatekey.pem, decrypts it using the password "oldpword",
+                >> re-encrypts it using the password "newpword", and writes the newly encrypted private key back 
+                >> out to the file dsaprivatekey.pem.
+
+            RSA  :
+            --------
+                RSA provides secrecy, authentication, and encryption all in one neat little package.
+
+                Unlike Diffie-Hellman and DSA, the RSA algorithm does not require parameters to be generated before 
+                keys can be generated, which simplifies the amount of work that is necessary to generate keys,
+                and authenticate and encrypt communications. The command-line tool provides three commands for generating,
+                examining, manipulating, and using RSA key
+
+                OpenSSL's genrsa command is used to generate a new RSA private key.
+                Generation of an RSA private key involves finding two large prime numbers,
+                each approximately half the length of the key.
+                A typical key size for RSA is 1,024. We don't recommend that you use smaller key lengths or
+                key lengths greater than 2,048 bits. By default, the generated private key will be unencrypted,
+                but the command does have the ability to encrypt the resultant key using DES, 3DES, or IDEA.
+
+                * openssl genrsa -out rsaprivatekey.pem -passout pass:trousers -des3 1024
+                    >> Generates a 1,024-bit RSA private key, encrypts it using 3DES and a password of "trousers",
+                    >> and writes the result to the file rsaprivatekey.pem.
+
+                * openssl rsa -in rsaprivatekey.pem -passin pass:trousers -pubout -out rsapublickey.pem
+                    >> Reads an RSA private key from the file rsaprivatekey.pem, decrypts it using the password "trousers",
+                    >> and writes the corresponding public key to the file rsapublickey.pem.
+
+                * openssl rsautl -encrypt -pubin -inkey rsapublickey.pem -in plain.txt -out cipher.txt
+                    >> Using the RSA public key from the file rsapublickey.pem, the contents of the file plain.
+                    >> txt are encrypted and written to the file cipher.txt.
+
+                * openssl rsautl -decrypt -inkey rsaprivatekey.pem -in cipher.txt -out plain.txt
+                    >> Using the RSA private key from the file rsaprivatekey.pem, the contents of the file cipher.
+                    >> txt are decrypted and written to the file plain.txt.
+
+                * openssl rsautl -sign -inkey rsaprivatekey.pem -in plain.txt -out signature.bin
+                    >> Using the RSA private key from the file rsaprivatekey.pem, the contents of the file plain.txt 
+                    >> are signed, and the signature is written to the file signature.bin.
+
+                * openssl rsautl -verify -pubin -inkey rsapublickey.pem -in signature.bin -out plain.txt
+                    >> Using the RSA public key from the file rsapublickey.pem, the signature in the file signature.
+                    >> bin is verified, and the original unsigned data is written out to the file plain.txt.
+
+
+

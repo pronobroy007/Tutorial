@@ -1,0 +1,86 @@
+TakeDown Enemy : 
+-----------------
+    Enemy hit by break
+    -------------------
+        EnemyHelth.cs
+        --------------
+            >> Decrease some helth
+            >> Set Enemy BB "Hit" true
+            >> Set Enemy BB "HitComeFrom"
+            >> Set Enemy AI variable
+            >> Set Enemy animation value "IsHit" true
+            >> Set Enemy animation value "Impact" 20. Goto Vulnerable stage ("Impact", 20)
+
+        Enemy Vulnerable animation StateMatchineBehaviour
+        --------------------------------------------------
+            >> Set animation value "IsHit" false On Exit animation
+            >> Set animation value "Vulnerable" false On Exit animation
+            >> Set animation value "Impact" 20 On Exit animation
+            InterectBehaviour.cs
+            ---------------------
+                >> OnUpdate Execute interectWithPlayer.evalute() form EnemyController.Cs
+                >> OnExit Execute interectWithPlayer.reset() form EnemyController.Cs
+
+
+    Player perform takedown
+    -----------------------
+        >> Call Event EventManager.cs takeDownEnemyEvent() call from BT_Interect.cs
+        Event subscriber MainplayerController.cs takeDownEnemy()
+        ---------------------------------------------------------
+            >> Goto player TakeDown state
+            >> set BB "TakeDownTarget"
+            >> Set player Animation "TDIndex" random 
+            >> add effect
+            EnemyController.cs interect()
+            ------------------------------
+                >> Close ui takedown message
+                >> Call EnemyHelth.cs takedown()
+                >> Set Enemy Animation "IsHit" true
+                >> Set Enemy Animation "Impact" 200
+                >> Set Enemy Animation "TakeDownIndex" Player WeaponHolser.getTakeDownIndex()
+
+        Event subscriber MainplayerController.cs playerPerformTakedown
+        ---------------------------------------------------------------
+            >> Make near by enemy Vulnerable not the one takedown by player
+            >> Hilight effect near by enemy not the one takedown by player
+
+
+
+    Player Takedown Animation StateMatchineBehaviour
+    ------------------------------------------------
+        TakeDownEnemy.cs OnEnter()
+        --------------------------
+        TakeDownEnemy.cs OnUpdate()
+        --------------------------
+        TakeDownEnemy.cs OnExit()
+        --------------------------
+
+
+
+
+Enemy Death
+-----------
+    EnemyHelth.cs 
+    --------------
+        >> Decrease some helth
+        >> Set Enemy BB "Hit" true
+        >> Set Enemy BB "HitComeFrom"
+        >> Set Enemy AI variable
+        >> Set Enemy animation value "IsHit" true
+        >> Set Enemy animation value "Impact" 
+
+        >> Add XP to player
+        >> Increase Total Takedown or TotalKill
+
+    Guard/Zombi.cs
+    ---------------
+        >> Set Enemy BB "AIModeName" DEAD
+        >> Set Enemy Animation "Dead" true
+        >> Set Enemy Animation "IsFiring" false
+
+        >> Set Enemy agent speed = 0
+        >> Set Enemy agent velocity = 0
+        >> Set Enemy agent distination = current enemy place
+        
+        >> Set Enemy layer "Enemy" to "Default"
+    

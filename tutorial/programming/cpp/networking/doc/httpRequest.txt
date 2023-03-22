@@ -1,0 +1,328 @@
+The three common HTTP request types are as follows:
+----------------------------------------------------
+	* 	GET is used when the client wants to download a resource.
+
+	* 	HEAD is just like GET, except that the client only wants 
+		information about the resource instead of the resource itself. 
+		For example, if the client only wants to know the size of 
+		a hosted file, it could send a HEAD request.
+
+	*	POST is used when the client needs to send information to the server. 
+
+
+
+
+There are few more request type :
+----------------------------------
+	*	PUT is used to send a document to the web server. PUT is not commonly used. 
+		POST is almost universally used to change the web server state.
+
+	*	DELETE is used to request that the web server should delete a document or resource. 
+		Again, in practice, DELETE is rarely used. POST is commonly used to communicate 
+		web server updates of all types.
+
+	*	TRACE is used to request diagnostic information from web proxies. 
+		Most web requests don't go through a proxy, and many web proxies 
+		don't fully support TRACE. Therefore, it's rare to need to use TRACE.
+
+	*	CONNECT is sometimes used to initiate an HTTP connection through a proxy server.
+
+	*	OPTIONS is used to ask which HTTP request types are supported by the server for 
+		a given resource. A typical web server that implements OPTIONS may respond with 
+		something similar to Allow: OPTIONS, GET, HEAD, POST. Many common web servers 
+		don't support OPTIONS.
+
+
+
+
+
+
+
+HTTP Request format :
+-----------------------
+	GET /page1.html HTTP/1.1
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+	Accept-Language: en-US
+	Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+	Accept-Encoding: gzip, deflate
+	Host: example.com
+	Connection: Keep-Alive
+	
+	HTTP request end with blank line. This is  how the web server knows that the 
+	HTTP request is finished. Without this blank line, the web server wouldn't 
+	know whether any additional header fields were still going to being sent. 
+	In C, the blank line looks like this: \r\n\r\n.
+
+
+    GET /page1.htm HTTP/1.1 :
+    --------------------------
+        A GET request consists of HTTP headers only. There is no HTTP body because the client isn't 
+        sending data to the server. The client is only requesting data from the server. 
+        In contrast, a POST request would contain an HTTP body.
+
+        The first line of an HTTP request is called the request line. The request line consists of three parts
+        We can see that the request type is GET, the document path is /page1.htm, and the protocol version is HTTP/1.1.
+
+        Each line of an HTTP message ends with a carriage return, followed by a newline character. 
+        In C, this looks like \r\n. In practice, some web servers may tolerate other line endings. 
+        You should ensure that your clients always send a proper \r\n line ending for maximum compatibility.
+
+    User-Agent  :
+    --------------
+        line is telling the web server what software is contacting it. 
+        Some web servers will serve different documents to different user agents
+
+    Host :
+    -------
+        he Host field tells the web server which web host the client is requesting the 		
+        resource from. This is important because one web server may be hosting many 
+        different websites. The request line tells the web server that the /page1.htm 
+        document is wanted, but it doesn't specify which server that page is on. 
+        The Host field fills this role.
+
+    7  Connection : Keep-Alive :
+    ------------------------------
+        The Connection: Keep-Alive line tells the web server that the HTTP client would 
+        like to issue additional requests after the current request finishes. 
+        If the client had sent Connection: Close instead, that would indicate that 
+        the client intended to close the TCP connection after the HTTP response was received.
+
+
+
+HTTP response format :
+-----------------------
+    Like the HTTP request, the HTTP response also consists of a header part and a body part. 
+    Also similar to the HTTP request, the body part is optional. Most HTTP responses do have a body part, though.
+
+    *********************************************************************************************
+    * HTTP/1.1 200 OK
+    * Cache-Control: max-age=604800
+    * Content-Type: text/html; charset=UTF-8
+    * Date: Fri, 14 Dec 2018 16:46:09 GMT
+    * Etag: "1541025663+gzip"
+    * Expires: Fri, 21 Dec 2018 16:46:09 GMT
+    * Last-Modified: Fri, 09 Aug 2013 23:54:35 GMT
+    * Server: ECS (ord/5730)
+    * Vary: Accept-Encoding
+    * X-Cache: HIT
+    * Content-Length: 1270
+    *
+    * <!doctype html>
+    * <html>
+    * <head>
+    *     <title>Example Domain</title>
+    * ...
+    *********************************************************************************************
+
+    HTTP/1.1 200 OK :
+    ------------------
+        The first line of an HTTP response is the status line. The status line consists of the protocol version, 
+        the response code, and the response code description. In the preceding example, 
+        we can see that the protocol version is HTTP/1.1, the response code is 200,
+
+        HTTP response codes :
+        ----------------------
+            If the request was successful, then the server responds with a code in the 200 range:
+            200 OK: The client's request is successful, and the server sends the requested resource
+
+            If the resource has moved, the server can respond with a code in the 300 range. 
+            These codes are commonly used to redirect traffic from an unencrypted connection to an encrypted one,
+            or to redirect traffic from a www subdomain to a bare one. They are also used if a 
+            website has undergone restructuring, but wants to keep incoming links working.
+            The common 300 range codes are as follows:
+
+            Errors are indicated by 400 or 500 range response codes. Some common ones are as follows:
+
+
+    Cache-Control :
+    -----------------
+        Many of the HTTP response headers are used to assist with caching. 
+        The Date, Etag, Expires, and Last-Modified fields can all 
+        be used by the client to cache documents.
+
+
+    Date, Etag, Expires, and Last-Modified :
+    -----------------------------------------
+        Many of the HTTP response headers are used to assist with caching. 
+        The Date, Etag, Expires, and Last-Modified fields can all be used by the client to cache documents.
+
+    Content-Type :
+    ---------------
+        The Content-Type field tells the client what type of resource it is sending. In the preceding example, 
+        it is an HTML web page, which is specified with text/html. HTTP can be used to send all types of resources,
+        such as images, software, and videos. Each resource type has a specific Content-Type,
+        which tells the client how to interpret the resource.
+
+    Content-Length :
+    ----------------
+        The Content-Length field specifies the size of the HTTP response body in bytes.
+
+    Transfer-Encoding: Chunked :
+    -----------------------------
+        The simplest is if the HTTP server includes a Content-Length header line in its response.
+        In that case, the server simply states the body length directly.
+
+        server can send a Transfer-Encoding: chunked header line. This header line indicates to the 
+        client that the response body will be sent in separate chunks. Each chunk begins with its chunk length,
+        encoded in base-16 (hexadecimal), followed by a newline, and then the chunk data.
+        The entire HTTP body ends with a zero-length chunk.
+
+        **************************************************************************************
+        * HTTP/1.1 200 OK
+        * Content-Type: text/plain; charset=ascii
+        * Transfer-Encoding: chunked
+        * 
+        * 44
+        * Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius
+        * 37
+        * mod tempor incididunt ut labore et dolore magna aliqua.
+        * 0
+        **************************************************************************************
+        In the preceding example, we see the HTTP body starts with 44 followed by a newline.
+        This 44 should be interpreted as hexadecimal. We can use the built-in C strtol()
+        function to interpret hexadecimal numbers.
+
+    Head Request :
+    --------------
+        If the client had sent a HEAD request type instead of GET, then the server would respond with exactly
+        the same HTTP headers as before, but it would not include the HTTP body.
+
+
+
+What's in a URL :
+------------------
+    Uniform Resource Locators (URL), also known as web addresses, provide a convenient way to specify 
+    particular web resources Consider the "http://www.example.com:80/res/page1.php?user=bob#account"  URL. 
+    Visually, the URL can be broken down like this:
+
+    http://: 
+    ---------
+        The part before the first :// indicates the protocol, different protocol such as ftp:// or https://
+
+    www.example.com: 
+    ----------------
+        This specifies the hostname. It is used to resolve an IP address that the HTTP client can connect to.
+        This hostname must also appear in the HTTP request Host header field. This part can also be an IP 
+        address instead of a name. IPv4 addresses are used directly (http://192.168.50.1/),
+        but IPv6 addresses should be put inside square brackets (http://[::1]/).
+
+    :80: 
+    ----
+        The port number can be specified explicitly by using a colon after the hostname.
+        If the port number is not specified, then the client uses the default port number for the given protocol.
+        The default port number for http is 80, and the default port number for https is 443.
+        Non-standard port numbers are common for testing and development.
+
+    /res/page1.php?user/bob:
+    ------------------------
+        This specifies the document path. The HTTP server usually makes a distinction between the 
+        part before and after the question mark, but the HTTP client should not assign significance to this.
+        The part after the question mark is often called the query string.
+
+   #account: 
+   ---------
+       This is called the hash. The hash specifies a position within a document,
+       and the hash is not sent to the HTTP server. It instead allows a browser to scroll 
+       to a particular part of a document after the entire document is received from the HTTP server. 
+
+
+HTTP POST requests :
+---------------------
+    The POST body format can vary, and it should be identified by a Content-Type header.
+    Many modern, web-based APIs expect a POST body to be JSON encoded.
+
+    **************************************************************************************
+    * POST /orders HTTP/1.1
+    * Host: example.com
+    * User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0)
+    * Content-Type: application/json
+    * Content-Length: 56
+    * Connection: close
+    *
+    * {"symbol":"VOO","qty":"10","side":"buy","type":"market"}
+    **************************************************************************************
+
+    If you encounter a form on a website, such as a login form, that form likely uses a POST request to 
+    transmit its data to the web server. A standard HTML form encodes the data it sends in a format called 
+    URL encoding, also called percent encoding. When URL encoded form data is submitted in an HTTP POST request,
+    it uses the Content-Type: application/x-www-form-urlencoded header.
+
+    Consider the following HTML for a submittable form:
+    **************************************************************************************
+    * <form method="post" action="/submission.php">
+    *
+    *   <label for="name">Name:</label>
+    *   <input name="name" type="text"><br>
+    *
+    *   <label for="comment">Comment:</label>
+    *   <input name="comment" type="text"><br>
+    *
+    *   <input type="submit" value="submit">
+    *
+    * </form>
+    **************************************************************************************
+
+    When this form is submitted, its data is encoded in an HTTP request such as the following:
+    **************************************************************************************
+    * POST /submission.php HTTP/1.1
+    * Host: 127.0.0.1:8080
+    * User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7)
+    * Accept-Language: en-US
+    * Accept-Encoding: gzip, deflate
+    * Content-Type: application/x-www-form-urlencoded
+    * Content-Length: 31
+    * Connection: keep-alive
+    *
+    * name=Alice&comment=Well+Done%21
+    **************************************************************************************
+    Notice that Well Done! was encoded as Well+Done%21. Spaces are encoded with plus symbols,
+    and special characters are encoded by a percent sign followed by their two digit hexadecimal 
+    value (thus, the exclamation point was encoded as %21). A percent sign itself would be encoded as %25.
+
+    Content-Type: application/x-www-form-urlencoded :
+    -------------------------------------------------
+        In this format, each form field and value is paired by an equal sign,
+        and multiple form fields are chained together by ampersands.
+
+
+
+    File uploads :
+    --------------
+        Content-Type: multipart/form-data is used, a boundary specifier is included.
+        This boundary is a special delimiter, set by the sender, which separates parts of the submitted form data.
+
+        Consider the following HTML form:
+        **************************************************************************************
+        * <form method="post" enctype="multipart/form-data" action="/submit.php">
+        *     <input name="name" type="text"><br>
+        *     <input name="comment" type="text"><br>
+        *     <input name="file" type="file"><br>
+        *     <input type="submit" value="submit">
+        * </form>
+        **************************************************************************************
+
+        If the user navigates to a web page bearing the HTML form from the preceding code,
+        and enters the name Alice, the comment Well Done!, and selects a file to upload called upload.txt,
+        then the following HTTP POST request could be sent by the browser:
+        **************************************************************************************
+        * POST /submit.php HTTP/1.1
+        * Host: example.com
+        * Content-Type: multipart/form-data; boundary=-----------233121195710604
+        * Content-Length: 1727
+        *
+        * -------------233121195710604
+        * Content-Disposition: form-data; name="name"
+        *
+        * Alice
+        * -------------233121195710604
+        * Content-Disposition: form-data; name="comment"
+        *
+        * Well Done!
+        * -------------233121195710604
+        * Content-Disposition: form-data; name="file"; filename="upload.txt"
+        * Content-Type: text/plain
+        * Hello.... <truncated>
+        **************************************************************************************
+        As you can see, when using multipart/form-data, each section of data is separated by a boundary.
+        This boundary is what allows the receiver to delineate between separate fields or uploaded files.
+        It is important that this boundary is chosen so that it does not appear in any submitted field or uploaded file

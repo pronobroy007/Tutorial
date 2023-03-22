@@ -1,0 +1,117 @@
+# Configuration:
+---------------------
+	The session configuration file is stored at "config/session.php".In that file 
+	
+	*  'driver' => env('SESSION_DRIVER', 'file'),
+	>> In 2nd argument "file", we can change any of flowing.
+	
+	>> "file" - sessions are stored in storage/framework/sessions
+	>> "cookie" - sessions are stored in secure, encrypted cookies.
+	>> "database" - sessions are stored in a relational database.
+	>> "memcached / redis" - sessions are stored in one of these fast, cache based stores.
+	>> "array" - sessions are stored in a PHP array and will not be persisted.
+	
+	
+	*  'lifetime' => env('SESSION_LIFETIME', 120),
+	>> Here 120 min life time for session
+	
+	
+	*  'expire_on_close' => true,
+	>> "ture" => when we close browser sessio will delete.
+	
+	
+	*  'encrypt' => false,
+	>> "false" => no encrypt. Use encryption when we use cookie for session.
+
+	
+	
+	
+	
+# Storing Data:
+-------------------
+	To store data in the session, you will typically use the put method or the session helper:
+	
+	*  $request->session()->put('key', 'value');
+	>> Via a request instance...
+
+	
+	*  session(['key' => 'value'])
+	>> Via the global helper...
+
+
+	
+	
+	
+# Retrieving Data:
+-----------------------
+
+	*******************************************************
+	*  $value = session('key', 'default');
+	*
+	*  $value = $request->session()->get('key', 'default');
+    *  
+	*  $value = $request->session()->get('key', function () {
+	*  	return 'default';
+	*  });
+	*******************************************************
+	>> When you retrieve an item from the session, you may also pass a default value as 
+		 the second argument to the get method. This default value will be returned if the 
+		 specified key does not exist in the session
+	
+	
+	*  $data = session()->all();
+	*  $data = $request->session()->all();
+	>> If you would like to retrieve all the data in the session, you may use the all method:
+
+	
+	
+	****************************************
+	*  if ($request->session()->has('users')) {
+	*      //
+	*  }
+	****************************************
+	>> To determine if an item is present in the session, you may use the has method. 
+		 The has method returns true if the item is present and it's value is not null:
+		 
+
+	********************************************
+	*  if ($request->session()->exists('users')) {
+	*  	//
+	*  }
+	********************************************
+	>> To determine if an item is present in the session, even if its value is null, 
+		  you may use the exists method. The exists method returns true if the item is present:
+		  
+		  
+		  
+		  
+		  
+# Retrieving & Deleting An Item:
+----------------------------------------		 
+	*  $value = $request->session()->pull('key', 'default');
+	>> The pull method will retrieve and delete an item from the session in a single statement:		  
+		  
+		  
+		  
+		  
+		  
+# Flash Data:
+------------------
+	*  $request->session()->flash('status', 'Task was successful!');
+	>>  Sometimes you may wish to store items in the session only for the next request.
+		  Flash data is primarily useful for short-lived status messages. After Retrive this 
+		  data onece it will deleted.
+		  
+		  
+		  
+		  
+		  
+# Delete session data:
+---------------------------
+	*  $request->session()->forget('key');
+	>> This method will remove a piece of data from the session. 
+	
+	*$request->session()->flush();
+	>> remove all data from the session
+	
+	

@@ -1,0 +1,17 @@
+parse() :
+---------
+	_buffer = "pronob:roy:pass:"
+
+	// parse[row][coll]
+	char parse[3][20];
+	bzero(parse, sizeof(parse));
+
+	//2nd = delemelter
+	//3rd = output 2d char array.
+	//4th = number of row in output 2d char array
+	//5th = number of coll in output 2d char array
+	_hfunction.parse(_buffer, ':', (char*)parse, 3, 20);
+
+	//print out result.
+	for (int i = 0; i < 3; i++)
+		std::cout << parse[i] << std::endl;

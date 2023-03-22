@@ -1,0 +1,191 @@
+In "setting-project.txt" file we create a virtual host name "Leravelapp"
+
+
+# Available Router Methods:
+----------------------------------
+	The router allows you to register routes that respond to any HTTP verb:
+	
+		******************************************
+		*	Route::get($uri, $callback);
+		*	Route::post($uri, $callback);
+		*	Route::put($uri, $callback);
+		*	Route::patch($uri, $callback);
+		*	Route::delete($uri, $callback);
+		*	Route::options($uri, $callback);
+		******************************************
+	
+	
+	Sometimes you may need to register a route that responds to multiple HTTP verbs. 
+	You may do so using the match method. Or, you may even register a route that responds
+	to all HTTP verbs using the any method:
+		******************************************
+		*	Route::match(['get', 'post'], '/', function () {
+		*		//
+		*	});
+		*	
+		*	Route::any('foo', function () {
+		*		//
+		*	});
+		******************************************
+
+		
+		
+		
+Routing :
+-----------
+In our project directory there is a file "routes/web.php". There is a function 
+
+	****************************
+	*  Route::get('/', function () {
+	*      return view('welcome');
+	*  });
+	****************************
+	
+	>>  "Route::get" mean its a get request. To send a post request use "Route::post"
+	
+	>>  In "('/')" mean our url for this page is "Leravelapp".
+		  If we have like ("/details") then url => "Leravelapp/details/"
+		  
+	>> Then "function() {	return view('welcome')}" it mean we return a php file which
+	      in "resources/views" folder and file name is "welcome.blade.php" we can create
+		  our own file and return that file. 
+		  
+		  "function() {	return view('page.welcome')}" => it mean "resources/views/page"
+		  folder and there is a file called "welcome.blade.php"
+		  
+
+		  
+		  
+
+# Route parameter:
+-------------------------
+  We can use parameter in this function() for dynamic route
+  
+  Example :
+  ------------
+  we wan to put spacific id in url for example "Leravelapp/user/55" so id = 55.
+  Here id can be any number we don't know. We want to received that id in route
+  function.
+  
+	  **************************************
+	  *  Route::get('/user/{key}', function($key){
+	  *  return "User id ".$key;
+	  *  });
+	  **************************************
+	 
+	Prity much every web side there are two major thing happining. One the show 
+	list of object and Secend one is to show details of one object two different page.
+	Like "youtube" we have list of videos and when we click one of that video the we 
+	have another page wich have deatils of that video. So for deatils page we can use
+	an ID to show that scpacific item details.
+		  
+		  
+		  
+		  
+		  
+# View Routes"
+--------------------
+	If your route only needs to return a view, you may use the Route::view method.  	
+	first argument and a view name as its second argument. In addition, you may
+	provide an array of data to pass to the view as an optional third argument:
+	
+		*******************************************************
+		*	Route::view('/welcome', 'welcome');
+		*	
+		*	Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
+		*******************************************************
+	
+	
+	
+	
+# Reguler Expression and Where Clause:
+-------------------------------------------------
+		*****************************************************
+		*	Route::get('user/{name}', function ($name) {
+		*		//
+		*	})->where('name', '[A-Za-z]+');
+		*	
+		*
+		*	Route::get('user/{id}', function ($id) {
+		*		//
+		*	})->where('id', '[0-9]+');
+		*
+		*
+		*	Route::get('user/{id}/{name}', function ($id, $name) {
+		*		//
+		*	})->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
+		*****************************************************
+		  
+	Global constaints:
+	----------------------
+		If you would like a route parameter to always be constrained by a given regular expression
+		like we have a url : "user/{id}" here we hava a route parameter "id", when this is 
+		the case we want automaticly check some regular expression for this we in 
+		"app/provider/RouteServiceProvider.php" in "boot()":
+	
+			*************************************
+			*  public function boot()
+			*  {
+			*  	Route::pattern('id', '[0-9]+');
+			*  
+			*  	parent::boot();
+			*  }
+			*************************************
+			>> we can add as many as we want.
+			
+			
+			
+			
+# Named Route:
+--------------------
+	*****************************************
+	*  Route::get('user/profile', function () {
+	*      //
+	*  })->name('profile');
+	*****************************************	
+	>> Here we define this route a name = "profile"
+	
+	
+	Now we can access this route like this in html file
+	*****************************************
+	* <a href="{{ route('login') }}">Login</a>
+	*****************************************
+	
+	
+	
+	
+Controller :
+---------------
+In above we return a view in "Route" instade of this we return a view by a controller.
+To create a controller in terminal :
+	
+	>>  php artisan make:controller PageController
+	Here "PageController" is controller file name 
+
+This controller is created in "app/Http/controller/PageController.php"
+Now we create a function in PageController class which will return "index" view for our 
+webside.
+			  
+	**************************************
+	*  class PageController extends Controller 
+	*  {
+	*  	public function index() 
+	*		{
+	*  		return view('pages.index');		//page.index => "resources/views/page/index.blade.php"
+	*		}
+	*  }
+	**************************************
+			  
+In Route we simply use that PageController class index() 
+
+	**************************************
+	*  Route::get('/', 'PageController@index');
+	************************************** 
+	
+	>> PageController => controller name 
+	>> @index => function name
+	
+
+
+
+

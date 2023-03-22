@@ -1,0 +1,98 @@
+In "4.Database" file we create a controller class "DbController" Now we modify that class
+
+When we goto this url => "laravelapp/db", this will call "DbController@index" function. In this 
+funtion return this
+	*  return view('Db.index');
+	>> we don't create any folder "Db" and "index.blade.php" 
+
+To make everithing organize create a folder "Db" in "resources/views/" and in here make 
+"index.blade.php" file. Edit this pase like :
+
+index.blade.php:
+-------------------
+	******************************
+	*  @extends('layout.base')
+	*
+	*  @section('body')
+    *  	<h1>This is DB page</h1>
+	*  @endsection
+	*****************************
+
+To Featch data from database in "DbController" file import "Db" model 
+
+index():
+---------
+Request => GET / HEAD
+Url => "leravelapp/db/"
+
+	**********************************************
+	*  use App/Db;
+	*  class DbController extends Controller
+	*  {
+	*  	public function index()
+	*  	    {
+	*  	        $data = Db::all();
+	*  	        return view('Db.index')->with('data', $data);
+	*  	    }
+	*  }
+	**********************************************
+	>> Db::all() => return all data from "dbs" table because "Db" model is for "dbs" table
+
+	
+index.blade.php:
+---------------------
+	******************************
+	*  @extends('layout.base')
+	*
+	*  <ul>
+    *     @foreach ($data as $language)
+    *      <li> <a href="db/{{$language->id}}">{{$language->title}}</a></li>
+    *      <small>writen on {{$language->created_at}} </small>
+    *      @endforeach 
+    *  </ul>
+	*****************************
+	
+	>> $d->created_at => gives created date
+	>> When we click any link url will be "laravelapp/db/{{$id}}", this will call
+	>> "DbController@show" function.
+	
+show($id):
+------------
+Request => GET / HEAD
+Url => "db/{{$id}}"
+
+	**************************************************
+    *  public function show($id)
+    *  {
+    *      return view('Db.show')->with('db', Db::find($id));
+    *  }
+	**************************************************
+	>> In show.blade template we send a row form table which id=$id. This $id will come 
+	>> form index.blade template => "/db/{$id}"
+	
+	
+show.blade.php:
+-------------------
+	****************************************************
+	*  @extends('layout.base')
+	*  
+	*  @section('body')
+	*      <p>{{$db->body}}</p>
+	*  
+	*  	<!-- This is for Edit button -->
+	*      <a href="/db/{{$db->id}}/edit">
+	*          <button>Edit</button>
+	*      </a>
+	*  
+	*		<!-- This is for Delete button -->
+	*      form method="post" action="{{action('DbController@destroy', $db->id)}}">
+    *  	    {{csrf_field()}}
+    *  	    {{method_field('DELETE')}}
+    *  	    <input type="submit" value="Delete" class="btn btn-danger"/>
+    *  	</form>
+	*  @endsection
+	****************************************************
+	>> Here "$db" come from "show()"
+	
+	>> {{method_field('DELETE')}} => It mean when we click "Delete" button we want to 
+		  make a "DELETE" request because in order to call "distroy()" we need this. 

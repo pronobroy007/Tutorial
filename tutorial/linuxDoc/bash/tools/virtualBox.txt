@@ -1,0 +1,8 @@
+ In Virtual Box goto Setting >> Network tab >> Attatch to : Bridge Adapter
+ 
+  Then configure firewall for client windows matchine
+  ----------------------------------------------------
+      In Windows goto firewall setting >> Advance setting >> In Action Tab select Properties
+      >> In Domain Profile tab >> click "Protected network connections : customze" >> uncheck network adepter
+      >> same for private frofile.
+

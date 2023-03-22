@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <title>Watch and computed Property</title>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <br>
+        <!-- 1st Watch Property -->
+        <!-- When i insert "1" in "Km" input field then in "m" input field "100" will shown -->
+        <!-- To do this we use "watch" in "Vue"-->
+        KM : <input type="text" v-model="km" name="km">
+        M : <input type="text" v-model="m" name="m">
+        <br><br>
+
+        <!-- 2nd Computed property --> 
+        <label >Full Name : </label>
+        <input type="text" v-model="FNFunction" name="fullname"><br><br>
+        <label >First Name : </label>
+        <input type="text" v-model="firstName" name="firstName">  
+        <label >Last Name : </label>
+        <input type="text" v-model="lastName" name="lastName"><br>
+        <!-- here fullname is a computed property -->
+        <!-- if firstName or lastName change then fullname will change autometicaly -->
+        FullName : {{FNFunction}}  <!-- {{fullName}}  -->
+
+        <br>
+
+
+
+    </div>
+    
+
+
+    <script>
+        new Vue({
+            el: "#app",
+            data:
+            {
+                massage: "This id Vue",
+
+                //1st.........................................................
+                km: 0,
+                m: 0, 
+
+                //2nd.........................................................
+                firstName: "Hello",
+                lastName: "world"
+            },
+
+            //1st............................................................
+            watch:
+            {                
+                //This function name is Km() because we want to watch "km" value in 
+                //data section and This "val" come from what ever we fill in "km" input text.
+                km(val)
+                {
+                    this.km = val;
+                    this.m = val * 1000;
+                },
+                //Thsi "val" come from what ever we fill in "m" input text.
+                m(val)
+                {
+                    this.km = val / 1000;
+                    this.m = val;
+                }
+            },
+
+            //2nd.............................................................
+            computed: 
+            {
+                fullName ()
+                { 
+                    //If we don't spacify any setter of getter then by 
+                    //default this is a getter function.
+                    return this.firstName + " " + this.lastName;
+                },
+                FNFunction:
+                {
+                    get()
+                    {
+                        return this.firstName + " " + this.lastName;
+                    },
+                    //This setter function allow us to set value using "fullname"
+                    //input field.
+                    set(value)
+                    {
+                        var name = value.split(' ');
+                        this.firstName = name[0];
+                        this.lastName = name[1];
+                    }
+
+                }
+
+            }
+
+        });
+    </script>
+</body>
+</html>

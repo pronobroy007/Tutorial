@@ -1,0 +1,84 @@
+File Path : /home/kali/GameAssets/WebApp/blog-app
+
+" Leader 
+"--------
+    \
+
+"Spell checker :
+"----------------
+    map<F6> :set spell!<cr>
+
+"Code Comment. 
+"-------------
+    gc
+
+"For Emmet :
+"-----------
+    "AutoComplite <C-Space>, 
+
+
+"For Visual Mode :
+"-----------------
+    "Copy to clipboard.
+    vmap<C-c> "+y
+
+"For Normal Mode :
+"-----------------
+    "Vim Macros 
+    "-----------
+        "Code Folding.
+        nmap cf Vj%zf  
+        "zo = open folding and zc = close Folding
+       
+
+    "For vim tab
+    "------------
+        nnoremap tn :tabnew<space>
+        nnoremap tl :tabnext<cr>
+        nnoremap th :tabprev<cr>
+        nnoremap tj :tabfirst<cr>
+        nnoremap tk :tablast<cr>
+        "Ex : tm 0 	-->  this will move current tab in first position.
+        nnoremap tm :tabm<space>
+
+
+    "For OmniSharp
+    "-------------
+        nnoremap <Leader>fu :OmniSharpFindUsages<cr>
+        
+    "For nerdtree
+    "-------------
+        nnoremap nt :NERDTree<cr>
+
+    "For FZF 
+    "--------
+        nmap <silent> <C-p> :Files<cr> 
+        nmap <silent> <Leader><C-b> :Buffers<cr> 
+
+    "For select all
+    "--------------
+        nmap<C-a> ggVG
+
+    "For vim split :
+    "---------------
+        "CTrl navigation. shift + h/l/k/l
+        "nnoremap <C-h> <C-w>h
+        nmap <C-h> <C-W>h
+        nnoremap <C-j> <C-w>j
+        nnoremap <C-k> <C-w>k
+        nnoremap <C-l> <C-w>l
+
+        "Resize split
+        noremap <silent> <C-Left> :vertical resize -2<cr>
+        noremap <silent> <C-Right> :vertical resize +2<cr>
+        noremap <silent> <C-UP> :res +2<cr>
+        noremap <silent> <C-Down> :res -2<cr>
+
+        noremap Zz <c-w>_ \| <c-w>\|
+        noremap Zo <c-w>=
+
+        "For vim terminal <Esc> bact to normal mode.
+        tnoremap <C-t> <C-\><C-n> 
+        nnoremap Tt :10sp\|:terminal<CR>
+        nnoremap TT :30vs\|:terminal<CR>
+

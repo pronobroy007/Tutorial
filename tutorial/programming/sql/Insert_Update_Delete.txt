@@ -1,0 +1,77 @@
+SQL INSERT INTO Statement:
+---------------------------
+    Syntex:
+    -------
+        INSERT INTO table_name (column1, column2, column3, ...)
+        VALUES (value1, value2, value3, ...);
+
+        OR
+
+        INSERT INTO table_name
+        VALUES (value1, value2, value3, ...);
+
+
+    Example:
+    --------
+        INSERT INTO Customers VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+        >> INSERT all column.
+
+
+        INSERT INTO Customers (CustomerName, City, Country) VALUES ('Cardinal', 'Stavanger', 'Norway');
+        >> INSERT only in spacific column.
+
+
+
+
+
+
+SQL UPDATE Statement:
+---------------------
+
+    UPDATE Syntax:
+    --------------
+        UPDATE table_name
+        SET column1 = value1, column2 = value2, ...
+        WHERE condition;
+
+
+    Example:
+    --------
+        .....................
+        UPDATE Customers
+        SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+        WHERE CustomerID = 1;
+        .....................
+
+    Update Warning!:
+    ----------------
+        Be careful when updating records. If you omit the WHERE clause, ALL records will be updated!
+        ................
+        . UPDATE Customers 
+        . SET ContactName='Juan';
+        ................
+
+
+
+
+
+SQL DELETE Statement:
+---------------------
+
+    DELETE Syntax:
+    ---------------
+        DELETE FROM table_name
+        WHERE condition;
+
+    Example:
+    --------
+        ...............................................
+        . DELETE FROM Customers 
+        . WHERE CustomerName='Alfreds Futterkiste';
+        ...............................................
+
+        DELETE FROM Customers;
+			>> This SQL statement deletes all rows in the "Customers" table, without deleting the table
+
+
+

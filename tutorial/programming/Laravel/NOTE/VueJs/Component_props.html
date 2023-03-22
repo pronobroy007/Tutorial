@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <title>Component</title>
+</head>
+<body>
+
+    <div class="container" id="app"><br>
+
+        <!-- here this <sidebar> is parrent and Vue.component('sidebar'{..}) is chield -->
+        <!-- parent can send value to chield using "props". We can send vue({ el: }) -->
+        <!-- data to component() using this "props". 1st define a props property in component() -->
+        <!-- Then bind this props property with <sidebar> -->
+        <sidebar v-bind:number="value"></sidebar>
+
+    </div>
+    
+
+    <script>
+        //In this component() we define a value "Home" and This 
+        //value must be define inside this component()
+        Vue.component('sidebar',{
+            template:`
+                <div class="col-lg-4">
+                    <ul>
+                        <li>{{Home}}</li>
+                        <li>About</li>
+                        <li>Service</li>
+                    </ul>
+                    <a class="btn btn-info">{{number}}</a>
+                </div>
+            
+            `,
+            //Here Data() is only avalable for this component 
+            data()
+            {
+                return {
+                        Home: "Home"
+                    }
+            },
+            //Using this props parrent can send data
+            props:
+            [
+                'number'
+            ]
+        })
+
+        new Vue({
+            el: "#app",
+            data:
+            { 
+                value: 10,
+            },
+        });
+    </script>
+</body>
+</html>

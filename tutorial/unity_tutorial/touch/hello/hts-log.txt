@@ -1,0 +1,15 @@
+HTTrack3.49-2+libhtsjava.so.2 launched on Wed, 10 Aug 2022 01:22:16 at https://www.gamedev-resources.com
+(winhttrack https://www.gamedev-resources.com -O "/home/kali/Documents/tutorial/unity_tutorial/touch/hello" -Y -%v )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+01:22:30	Warning: 	Moved Permanently for https://www.gamedev-resources.com/robots.txt
+01:22:30	Warning: 	Redirected link is identical because of 'URL Hack' option: https://www.gamedev-resources.com/robots.txt and https://gamedev-resources.com/robots.txt
+01:22:30	Warning: 	Warning moved treated for https://www.gamedev-resources.com/robots.txt (real one is https://gamedev-resources.com/robots.txt)
+01:22:31	Warning: 	Moved Permanently for https://www.gamedev-resources.com/
+01:22:31	Warning: 	Redirected link is identical because of 'URL Hack' option: https://www.gamedev-resources.com/ and https://gamedev-resources.com/
+01:22:31	Warning: 	File has moved from https://www.gamedev-resources.com/ to https://gamedev-resources.com/
+01:22:31	Warning: 	No data seems to have been transferred during this session! : restoring previous one!

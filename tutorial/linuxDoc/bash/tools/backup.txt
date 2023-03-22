@@ -1,0 +1,52 @@
+Backup :
+--------
+    sudo rsync -aAXv --delete --exclude={/home/*,/dev/*,/mnt/*,/media/*,/proc/*,/sys/*,/tmp/*,/run/*,"lost+found",".cache","Downloads",".ecryptfs"} /source/ /distination/
+
+        >> /source/     = This mean content of source folder
+        >> /source      = This mean source folder itself
+
+    #Single file exclude
+    sudo rsync -aAXv --delete --exclude="lost+found" /source/ /distination/
+    
+Restore :
+---------
+    # Run linux using live system
+    # Mount linux system and also mount backup linux system
+
+    sudo rsync -aAXv --delete --exclude="lost+found" /mount_point_of_backup_linux/ /mount_point_of_linux_system
+    [NOTE: Don't add any "/"(slash) end of distination directory]
+
+
+Options :
+---------
+    -AX         = to also copy user permition stuff.
+    --delete    = Delete those destination files which are not present in source folder
+
+    --dry-run   = simulate the backup, just a test run.
+
+    -r          = recursive mode
+    -a          = archive mode. If this is used don't need to add "-r" option.
+    -z,         = compress file data during the transfer
+
+    exclude Multiple file / folder :
+    --------------------------------
+        --exclude={dir1/,dir/2,"*.txt"}
+
+        --exclude-from=file_name
+            >> For Example we create a file called "exclude-list.txt" and 
+            >> Inside we write those file which we don't want to copy.
+            ***********************
+                tags
+                *.o
+                unity_tutorial/*
+                .*
+                laravel/
+                python/
+                build/
+                __pycache__/
+                dist/
+                *.log
+                *.spec
+            ***********************
+
+

@@ -1,0 +1,87 @@
+Now There is a problem if we go "/admin" it will redirect to user login page 
+but we want to redirect to admin login page. This is because of "auth" middleware
+in "app\Http\Kernel.php" file "$routeMiddleware", "$routeMiddleware" section. Now
+to customize for "Admin" open this file "app\Exceptions\Handler.php" add this functiona
+and 
+
+    ************************************************************************************************
+    *  use Illuminate\Auth\AuthenticationException;
+    *
+    *  protected function unauthenticated($request, AuthenticationException $exception)
+    *  {
+    *      if($request->expectsJson())
+    *      {
+    *          return response()->json(['message' => $exception->getMessage()], 401);
+    *      }
+    *        
+    *
+    *
+    *      $guard = array_get($exception->guards(), 0);
+    *      switch($guard)
+    *      {
+    *          case 'admin':
+    *              return redirect()->guest(route('admin.login'));
+    *          break;
+    *    
+    *          default :
+    *              return redirect()->guest(route('login'));
+    *          break;
+    *      }
+    *
+    *  
+    *  }
+    ************************************************************************************************
+    >> use Illuminate\Auth\AuthenticationException; => Use this class
+
+    >> 1st if() stetment is for check any API guards.
+
+    >> $guard = array_get($exception->guards(), 0); => This will simpley retur which guard we want
+       to access. In this case is it "admin" or "user"
+
+
+
+
+
+
+
+
+
+Another problem is  If we login as admin and again try to go "/admin/login" Then it 
+redirect to user login page, we don't want this. This is because "guest" middleware
+in "app\Http\Kernel.php" file, in "$routeMiddleware" we have "guest" which is in 
+"app\Http\Middleware\RedirectIfAuthenticated.php" file
+
+
+
+
+
+Open this RedirectIfAuthenticated.php file
+-------------------------------------------
+    **********************************************************************************
+    *  public function handle($request, Closure $next, $guard = null)
+    *  {
+    *      switch($guard)
+    *      {
+    *          case 'admin':
+    *              if (Auth::guard($guard)->check()) {
+    *                  return redirect()->route('admin.home');
+    *              }
+    *          break;
+    *          
+    *          default :
+    *              if (Auth::guard($guard)->check()) {
+    *                  return redirect('/home');
+    *              }
+    *          break;
+    *  
+    *      }
+    *  
+    *      return $next($request);
+    *  }
+    **********************************************************************************
+    >> Auth::guard($guard)->check() => This will simply check if an Admin or User is 
+       authenticate or not. If authenticate then redirect to home page depending on 
+       whether it Admin or User.
+    
+
+

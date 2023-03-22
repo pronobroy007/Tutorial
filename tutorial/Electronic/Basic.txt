@@ -1,0 +1,44 @@
+Current :
+----------
+    Number of electrons passing a given point in one second
+    1 Amp = 1 Coulum of charge flowing through a certient point par second
+
+Voltage : 
+---------
+    Differenc in electrical potencial energy, par unit of chrge, between tow points 
+    Energy is ablity to do work and it is mesure in joules
+    potencial energy = potencial ot do work.   
+    battery is electrical potencial energy
+
+    1 volt, is the force require to drive one coulum through a resister of one ohm in one second.
+    1 coulum = 6,242,000,000,000,000,000 electorns par second.
+
+    To power 1.5W lamp with 1.5V battery require one coulum per second.
+
+Watt :
+-------
+    W = V * I
+    W = V * V/R (I = V/R)
+    1W = 1J transfer par second
+
+
+
+Oms law :
+----------
+    V = I * R
+    Voltage = Current * Resistance or 
+
+    Current = Voltage / Resistance
+    Resistance = Voltage / Current
+
+
+LED :
+-----
+    Polarity :
+    -----------
+        Anode(+) and Cathode(-)
+        Anode is learger leg and Cathode is shorter leg of LED
+
+    Forward voltage :
+    -----------------
+        Every LED need creten voltage across them in right direction before any current can flow and start emiting light

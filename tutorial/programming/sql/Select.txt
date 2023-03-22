@@ -1,0 +1,77 @@
+SELECT Syntax:
+---------------
+    SELECT column1, column2, ...
+    FROM table_name;
+
+
+    Example:
+    --------
+        * SELECT * FROM table_name;
+        * SELECT City, CustomerName FROM table_name;
+
+
+
+
+
+The SQL SELECT DISTINCT Statement:
+------------------------------------
+    The SELECT DISTINCT statement is used to return only distinct (different) values.
+    Duplicate value will not shown.
+
+    SELECT DISTINCT column1, column2, ...
+    FROM table_name;
+
+
+    Example:
+    ---------
+        In myguests table we have firstname and lastname collum like this
+                firstname  lastname
+                ---------- -----------
+                    john        Doe
+                    john        roy
+                    john        Doe
+                    julie       Dooley
+                    mary        Moe
+                    julie       Dooley
+
+
+        * SELECT DISTINCT firstname FROM `myguests`
+
+        Result:
+        --------
+            john
+            julie
+            mary
+
+
+        * SELECT DISTINCT firstname, lastname FROM `myguests`
+
+        Result:
+        --------
+            john        Doe
+            john        roy
+            julie       Dooley
+            mary        Moe
+
+
+
+
+LIMIT statmeent:
+-----------------
+
+   . ..................
+   . SELECT * FROM MyGuests 
+   . LIMIT 4
+   . ..................
+    >>  This will give first 4 (1-4) data.
+
+
+    
+   . ...................
+   . SELECT * FROM MyGuests 
+   . LIMIT 3 offset 3
+   . ...................
+    >>  offset = 3 mean don't read first 3 id.
+
+
+

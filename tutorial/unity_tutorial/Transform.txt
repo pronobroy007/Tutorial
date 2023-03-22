@@ -1,0 +1,7 @@
+For Physics.RayCast :
+---------------------
+    hit.transform.name
+    hit.transform.GetCompenene<Any Script>();
+
+    //To access RigidBody of collider object 
+    hit.rigidbody
