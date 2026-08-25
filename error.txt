@@ -1,44 +1,25 @@
-***********************************************************************************
-* ERROR :
-* --------
-*
-*  nvim error 
-***********************************************************************************
+nvim error 
+=============================
     # if suddenly some error occur then delete /home/death/.local/share/nvim
 
 
-
-***********************************************************************************
-* ERROR :
-* --------
-*
-*  Time error 
-***********************************************************************************
+Time error 
+=============================
     # For reverse this operation make 1 to 0
     timedatectl set-local-rtc 1 --adjust-system-clock
 
 
 
-
-***********************************************************************************
-* ERROR :
-* --------
-*
-*  Git pull error 
-***********************************************************************************
+Git pull error 
+=============================
     * add unstage file to git using "git add"
     * Then comit again
     * Now push
 
 
 
-
-***********************************************************************************
-* ERROR :
-* --------
-*
-*  Networking Error 
-***********************************************************************************
+Networking Error 
+=============================
     service Networking restart
     systemctl restart NetworkManager
 
@@ -59,12 +40,8 @@
 
 
 
-***********************************************************************************
-* ERROR :
-* --------
-*
-*  Command not found 
-***********************************************************************************
+Command not found 
+=============================
 	* ifconfig / reboot / service / ... ... ...
 		>> bash: ifconfig: command not found.
 
@@ -78,13 +55,8 @@
 
 
 
-
-***********************************************************************************
-* ERROR :
-* --------
-*
-*  /var/lib/dpkg/lock 
-***********************************************************************************
+/var/lib/dpkg/lock 
+=============================
     * rm /var/lib/dpkg/lock
         >> If there is some problem to upgrade like  
         >> "Could not get lock /var/lib/dpkg/lock - open 
@@ -92,28 +64,13 @@
         >> Then remove those files. Do this for any kind of lock.
 
 
-
-
-
-***********************************************************************************
-* ERROR :
-* --------
-*
-*  --fix-broken Problem 
-***********************************************************************************
+--fix-broken Problem 
+=============================
     * sudo apt-get -f install
 
 
-
-
-
-
-***********************************************************************************
-* ERROR :
-* --------
-*
-*  Read Only flag enable mount problem 
-***********************************************************************************
+Read Only flag enable mount problem 
+=======================================
     * unmount if already mounted 
     * if it is mounted by /etc/fstab for 
     * running linux then use live mode
@@ -129,12 +86,62 @@
 
 
 
+
+***********************************************************************************
+* Unity :
+* --------
+***********************************************************************************
+    1 : UnityHub: Not enough Space
+    =============================
+        #Create tmp folder in home directory
+        mkdir ~/tmp
+        # Then goto UnityHub Settings >> Install >> Download Location change the tmp folder. 
+
+    2 : Failed to resolve project template: Failed to decompress
+    ==========================================================
+        # uninstall uinity editor and unity hub
+        rm -rf .local/share/unity*
+        rm -rf .config/unity*
+        # reinstall UnityHub and unity editor
+
+    3 : initializing project template stuck || Initial Asset Database refresh
+    =======================================================================
+***********************************************************************************
+
 ***********************************************************************************
 * ERROR :
 * --------
 *
-*  Unable to load Grup bootloader
+* Welcome to emergency mode! After logging in, type "journalctl -xb"... ... ...   
+* Press Enter for maintenance (or press control-D to continue)                    
 ***********************************************************************************
+    Check Everything mount properly :
+    ----------------------------------
+        df -h 
+        lsblk
+            >> This will show all mount point
+        
+        blkid
+            >> This will show UUID number is we needed
+
+        ls -l /dev/disk/by-uuid 
+            >> also show UUID number
+
+
+        mount -a
+            >> This will show if there is any mounting problem or not
+            >> If there is any mountin problem then see /etc/fstab 
+
+
+    Error might be inside filesystem :
+    ----------------------------------
+        fsck /dev/sdaN -y
+            >> Find out which partitions have file system error and fix
+
+
+
+Unable to load Grup bootloader
+==================================
     Using live system :
     --------------------
         # Find out root folder of linux OS. 
@@ -174,43 +181,14 @@
         insmod normal
         normal
 
+    Another way to fix :
+    ----------------------
+        Restart and press <F2> to open boot option.
+        boot sequence >> add boot option >> select folder >> EFI >> simx64.efi
+
     
     Dual boot Windows not showing :
     -------------------------------
         os-prober
         update-grub
-
-
-
-***********************************************************************************
-* ERROR :
-* --------
-*
-* Welcome to emergency mode! After logging in, type "journalctl -xb"... ... ...   
-* Press Enter for maintenance (or press control-D to continue)                    
-***********************************************************************************
-
-    Check Everything mount properly :
-    ----------------------------------
-        df -h 
-        lsblk
-            >> This will show all mount point
-        
-        blkid
-            >> This will show UUID number is we needed
-
-        ls -l /dev/disk/by-uuid 
-            >> also show UUID number
-
-
-        mount -a
-            >> This will show if there is any mounting problem or not
-            >> If there is any mountin problem then see /etc/fstab 
-
-
-    Error might be inside filesystem :
-    ----------------------------------
-        fsck /dev/sdaN -y
-            >> Find out which partitions have file system error and fix
-
 
