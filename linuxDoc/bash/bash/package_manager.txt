@@ -1,0 +1,139 @@
+install a package
+-----------------
+	* dpkg --install/-i [Package Name]
+		>> This will install a ".deb" package which is downloaded.
+
+
+	* apt-get install [Package Name]	equals		apt install [package Name]		
+		>> This will install a package from linux repository.
+		>> Or also install any .deb which is downloaded.
+
+
+
+list or search a install package
+---------------------------------
+	apt :
+	-----
+		* apt list --installed	packageName
+			>> list all install package.
+
+	dpkg :
+	------
+		* dpkg -l/--list
+			>> List of install package
+
+		* dpkg -l code*
+			>> list of package which have name "code" on it like "vscode", "codeblocks"
+
+
+		* dpkg --listfiles code
+			>> This will show all file within this package.
+
+		* dpkg -S/--search [filePath]
+			>> To see which package own a particulr file 
+	
+
+
+reconfiguer a package
+----------------------
+	* dpkg-reconfigure tzdata
+		>> Reconfigure time zone.
+		>> We can reconfig a install package using this command. 
+        >> For example there a package "tzdata"
+		>> which is configer when we install linux but now 
+        >> if we want to configur this now then we use
+		>> this command.
+
+
+Clean up disk useges :
+----------------------
+	* apt-cache ststs 				
+        => show statas of cache.
+
+	* apt clean 	 		
+	* apt-get clean				    
+		>> cleare cache. This will free some space.
+
+    * apt autoremove 
+        >> This will clear /tmp files.
+    
+    # NOTE : also check ".local" folder.
+
+
+
+search package in package manager :
+------------------------------------
+
+	* apt search packageName 		equals 		* apt-cache search packageName 	
+
+	* apt list code / *code*
+		>> list all package which have name "code".
+		>> This list not for installed software.
+
+	* apt show PackageName 		
+	* apt-cache show PackageName 		
+		>> chack package information.
+
+
+	* apt showsrc packageName
+	* apt-cache showpkg PackageName 	
+		>> show all information of spacific package.
+
+
+	apt-cache depends PackageName	=> show all dependencies.
+	apt-cache rdepends PackageName	=> show what other packages rely on this one.
+
+
+
+
+
+upgrade :
+---------
+	* apt list --upgradable 
+
+	* apt install pakageName --only-upgrade				
+	* apt-get install pakageName --only-upgrade 		
+		>> Upgrade only one package.
+
+	* apt upgrade 	 		
+	* apt-get upgrade firefox-est						
+		>> To upgrade only firefox
+
+	* apt update 		
+	* apt-get update 
+
+	* apt --fix-broken install
+	* apt full-upgrade / apt-get upgrade / apt-get dist-upgrade -y
+		>> full-upgrade and dist-upgrade is pretty much semiller.	
+
+	* apt autoremove
+		>> After upgrade there are some unnessery package 
+        >> remain which will not used any more
+		>> To delete those use this command.
+
+
+	upgrade problem :
+	-----------------
+		 # If there is some problem to upgrade like  
+		 # "Could not get lock /var/lib/dpkg/lock - open 
+         # (11: Resource temporarily unavailable)"
+		 # Then remove those files.]
+
+
+
+uninstall a program
+--------------------
+	* apt-get remove programName	equals	* apt remove programName
+		>> After remove use "autoremove" command.
+
+	* apt-get purge programName 	equals	* apt purge programName
+		>> If we remove a program using "purge" then it will also delete dependencies.
+
+
+	* apt-get autoremove 	equals   * apt autoremove 
+		>> After remove any package use this command To remove packages that were
+		>> automatically installed to satisfy dependencies for this packages and are
+		>> now no longer needed as dependencies.
+
+
+

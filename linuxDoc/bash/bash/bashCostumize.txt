@@ -1,0 +1,33 @@
+alias		
+-------
+	* alias hello='echo hello_World'
+		=>	Whenever we write "hello", In terminal "hello_World" will print out.
+		=>  if we want to see all alias that we creat just type "alias", 
+        =>  it will print all alias
+
+		=>  We can use alias in ".bashrc" file to create a 
+        =>  folder for quice access form terminal
+		=>  For Ex : alias kali="cd Documents/kali/"
+		=>  whenever we write "kali" it will execute that command.
+
+unalias		
+---------
+	* 	unalias hello
+		=> 	This will remove "hello" alias that we create.
+
+
+
+.bashrc		
+---------
+	=>  alias is not permanent to make it parmanent we need to write this alias
+	=>	in ".bashrc" file which is locate in /home directory. 
+    =>  Whenever we run/open terminal
+	=> 	This ".bashrc" file is first execute.
+	=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	=> 	Here we also can define path like environment variable in windows
+	=>	export PATH=$PATH:File path  	
+	=> 	And to effect this change path reboot or do 
+    =>  this "source ~/.bashrc" This will update changes
+
+
+

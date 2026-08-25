@@ -1,0 +1,132 @@
+Create new Window :
+---------------------
+	ctrl + b, c				=> Create a new window.
+	ctrl + b, w				=> List all window.
+	ctrl + b, ,				=> Change name of window. default it is "bash". 
+	exit					=> This will exit from current window.
+
+	ctrl + b, n / p			=> Switch between window n/p next/previous window
+	ctrl + b, 0/1/2			=> Switch between window using window number.
+
+	
+	.tmux.conf :
+	------------
+		# Shift arrow to switch windows
+		bind -n S-Left  previous-window
+		bind -n S-Right next-window
+
+
+
+Panes :
+-------
+    tmux list-panes -a  
+    or 
+    prefix, q
+        >> List of all panes with index.
+
+	ctrl + b "		=> Horizontal split
+	ctrl + b %		=> Vertical split
+
+	ctrl + b z 						=> zoom / unzoom a prticular pane.
+	ctrl(hold) + b arroy_key 		=> resize a pane.
+
+	.tmux.conf :
+	------------
+		# Use Alt-l/k/j/h keys without prefix key to switch panes
+		bind -n M-l select-pane -L
+		bind -n M-h select-pane -R
+		bind -n M-k select-pane -U
+		bind -n M-j select-pane -D
+
+
+    Resize :
+    --------
+        # usage: resize-pane [-DLRUZ] [-x width] [-y height] [-t target-pane] [adjustment]
+        tmux resize-pane -t 1 -y 5
+    
+
+
+
+
+
+
+sessions :
+----------
+    tmux new -s session_name    => Create a new session.
+
+	tmux list-sessions/ls		=> list all backgrounded sessions.
+	ctrl + b d					=> detach tmux session but this will run as 
+                                => background process.
+
+	tmux a						=> attach previous session.
+	tmux a -t session_name		=> attach previous session. We can use it for pair programming.
+
+	tmux new -s session_name 	=> Create new session with name.
+	tmux a -t session_name		=> attach to a session.
+
+	prefix :kill_session 		            => kill session.
+	tmux kill_session 		                => kill session, if there is only one.
+	tmux kill_session -t session_name		=> kill a particular session.
+    tmux kill-server                        => kill server and sessions.
+
+
+
+
+copy and peast : 
+-----------------
+    prefix + [ 	=> To goto copy mode and "q" to quit.
+	prefix + ] 	=> To peast somethine on tmux.
+	q 			=> To quit from copy mode.
+	ctrl + b = 	=> To see what is in copy buffer. select one and 
+                => hit enter to peast any on then.
+
+	.tmux.conf :
+	------------
+		# For make vim key in copy mode.
+		setw -g mode-keys vi
+		bind-key -T copy-mode-vi v send-keys -X begin-selection
+		bind-key -T copy-mode-vi y send-keys -X copy-selection
+		bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
+
+	>> First line will make vim kay binding in tmux copy mode.
+	>> Second line is for by presing 'v' it will go visual mode to copy.
+	>> Third line is for by presing 'y' it will copy selected line.
+
+
+Customize status bar :
+-----------------------
+    goto command mode [prefix, :]
+
+    * :set-option status-style fg:black bg:white
+        >> This will set status bar collor.
+        >> fg is color of text.
+
+
+    * :set-option status-left "#[fg=cyan] #(whoami) "
+        >> status-left = here we are customize left status bar.
+        >> fg = color of text.
+        >> #(whoami) = here we can put any linux command.
+        >> After #(command) we put space to make space on status bar.
+
+
+
+Tmux shell script :
+-------------------
+    //***************************************
+    # The basic trick is to start a tmux session detached and then send it signals. 
+    # Here’s a very basic script to start a tmux session named vim with vim running 
+    # in it and then attach
+    //***************************************
+    tmux new -s vim -d
+    tmux split-window -h -t vim
+    tmux split-window -v -t vim
+    tmux attach -t vim
+    //***************************************
+
+    * tmux send-keys -t session_name'vim' C-m
+        >> This will split window and option vim.
+
+    * tmux send-keys -t session_name 'command' C-m
+       >> this is how we can split window horizontally and execute shell command 
+       >> C-m This mean hit enter. 
+

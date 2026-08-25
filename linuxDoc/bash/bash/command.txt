@@ -1,0 +1,121 @@
+All linux command like : rm, mv, nano lives in /bin/ folder
+
+* alt + <F2> 		
+	>> Run Quick command.
+
+    * figlet .vimrc
+            >> ASCII Art 
+
+
+Linux collecting info :
+-----------------------
+    uptime          
+        >> Gives system start time.    
+
+    last user_name
+        >> list last logine date and time.
+
+    free -m 
+        >> list use and avalable memory
+
+	CPU    => free -m & cat /proc/cpuinfo
+
+
+Bash Shortcuts 
+---------------
+	* ctrl + L
+		>> Refresh bash.
+
+	* ctrl + u
+		>> clear a line.
+
+	* ctrl + K
+		>> clear a line depending on cursor
+
+	* ctrl + shift + v
+		>> peast in terminal.
+
+	* ctrl + shift + c
+		>> copy in terminal.
+	 
+
+jobs 
+-----
+    jobs        => list of all background jobs
+    bg %n 	    => Places the current or specified job in the background, where n is the job ID
+    fg %n 	    => Brings the current or specified job into the foreground, where n is the job ID
+    Control-Z 	=> Stops the foreground job and places it in the background as a stopped job
+
+
+
+linux commend
+---------------
+	uname -a		=> Gives information about operation system.
+	echo $SHELL	
+	echo $PATH
+
+
+	ctrl + r	        => This is for reverse search of history of command.
+	cd Documents; ls 	=> multiple command
+
+
+
+	mkdir    => To make a directory/folder. 
+
+	rm	=> remove a file.
+		=> rm -d directoryName  ==  To remove a directory. 
+        => This also use in "cp"/"rm" command.
+		=> rm -r directoryName  ==  To remove a directory and also inside of it.
+
+	cp	=> copy file
+		=> Example : cp -v /file path /dest path
+		=> here "-v" will print out result
+		=> -p = this optiono allow copy files along with ownership, 
+        => permitionn, mode, time.
+
+	mv	=> mv /file_path /dest_path
+		=> Example = mv command.txt /root/Downloads/command.txt.
+		=> using mv we also can rename a file
+		=> mv file.txt rename.txt
+		=> mv file1 file2 file3 /dest_path
+		=> move multiple file.
+
+
+	Redirection	:
+    --------------
+        * ls > demo		    This will save output of ls command inside of demo.
+        * ls >> demo		This will append output of ls command.
+
+
+
+
+	shutdown	=> shutdown -h +5&   		== This will shutdown after 5 min.
+				=> shutdown -h 2.30&		== This will shutdown at 2.30 am.
+				=> shutdown -r				== This will restart 
+
+
+	display     => to open an image file. Example : display img.png
+
+
+	xdg-open .	=> open current location in file manager
+
+	echo	=> This will print something on console 
+			=> echo "hello" > text  == this will echo hello on text file.
+
+	sh	   	=> sh ~/program mane
+			=> Execute a shall script.
+
+	./fileNme   => To run any executable file.
+
+	tr			=> echo "hello world" | tr h w
+				=> This 'tr' will translate "h" to "w"
+				=> tr -d "\r" < windows.py > linux.py
+				=> This will convart windows to linux.
+                => To make a new line windows use carage return "-d" use to 
+				=> delete that.
+
+
+	
+
+
+

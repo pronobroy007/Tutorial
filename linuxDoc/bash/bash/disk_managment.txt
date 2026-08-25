@@ -1,0 +1,145 @@
+Find UUID for storage device :
+------------------------------
+	# This UUID need to create mount point in "/etc/fstab". This mount point will load 
+ 	# that partition when matchine start
+
+	* ls -l /dev/disk/by-uuid
+		>> this will list the partition name (i.e. sda1, sda2) and 
+        >> their uuids are listed. 
+
+	* blkid
+		>> The filesystems that has UUID are displayed. 
+        >> A lot of loop devices are also listed 
+
+
+
+
+List disk partition :
+---------------------
+	* df -h
+		>> df = Disk Free.
+		>> List only mounted disk partition used, avallable, total space.
+
+    * du -h -d 1
+        >> This will show all file size in current folder.
+	* du -sh [folder name]
+		>> -h = Human readable format like 1K, 10M.
+		>> show total size/space of that folder.
+
+	* fdisk -l
+		>> list all disk partition table 
+
+	* lsblk
+	* blkid -o list
+		>> List all disk partition with Lable, UUID, Type, PartLable, PARTUUID
+
+
+
+
+fdisk :
+--------
+	* fdisk [device name]
+		>> "device name" == "/dev/sda" this is a disk. 
+		>> If there is more than one disk then rest 
+        >> will like "/dev/sdb", "/dev/sdc"  ... ...
+		
+		>> m = for help menu or all avallable option.
+		>> p = print partition table. same as "fdisk -l"
+		>> w = Save all changes and quite.
+		>> q = quit and don't save.
+
+		n = create new partiion :
+		-------------------------
+			>> It will ask for partition number, default will show avallable partition 
+			>> number but if we have free space more then one place then select one.
+
+			>> Then First sector is starting address of our new partition, 
+			>> default will be starting addr of selected partition.
+
+			>> Then Last sector is size of our new partition
+			>> default will take entire. we can spacify our own size using +(K,M,G,T)
+			>> +10G = 10gibe, +10T = 10tera
+			
+			>> write and save using "w"
+			
+			>> This will create an new entry in partition tablel but not assaign 
+			>> any file system(NTFS, EXT4) on it
+			
+
+		d = delete partiion :
+		---------------------
+			>> select partition number to delete. 
+            >> It mean which partition need to delete.
+			>> save and quite using "w"
+
+        t = to Change partition type :
+        ------------------------------
+            >> sesect partition number to change partition type
+            >> such as for linux filesystem to linux swap or UFI
+
+
+
+Assigning FileSystemm :
+-----------------------
+	* mkfs -f [type] [partition]
+		>> -f = Spacify the type of filesystem to be built.
+		>> type = ext*, ntfs, fat ... ... ...
+		>> partition = select which partition like "/dev/sda1" or "/dev/sda2". 
+		>> "fdisk -l" list all avallabel partition
+    
+    Another way :
+    -------------
+        * mkfs.exe* /dev/sda*
+        * mkswap /dev/sda*
+            >> For swap file type.
+            >> "swapon" to on swap partition.
+
+
+Name/Rename Partition lable :
+-----------------------------
+	* ls -l /dev/disk/by-level
+		>> List all partition which have level on it.
+
+
+	* sudo fatlabel /dev/sdxN my_label
+		 >> for FAT 
+	 
+	* sudo ntfslabel /dev/sdxN my_label
+		 >> for NTFS
+	 
+	* sudo exfatlabel /dev/sdxN my_label
+		 >> for exFAT
+	 
+	* sudo e2label /dev/sdxN my_label
+		>> for ext2/3/4
+	 
+	* sudo btrfs filesystem label /dev/sdxN my_label
+		 >> for BTRFS
+
+
+
+
+
+Disk Repaire :
+--------------
+	* fsck /dev/sdxN 
+		>> fsck(file system check) is similler to "chkdisk" command in windows 
+		>> This is use to repaire a disk. If any disk partition have any problem 
+		>> to mount then fsck will try to repaire that parition fsck removes 
+		>> those corrupted bits of data from the file system and places 
+		>> them in the lost+found folder.
+
+		>> To make "fsck" in boot time create "forcefsck" file in root folder ("/")
+		[NOTE : Don't use this command on any mounted partition]
+
+
+
+Defragment :
+------------
+	* e4defrag [partiion name/folder path]
+	
+	* e4defrag /
+		>> This will defrag root directory
+
+	* e4defrag /home/linux
+		>> This will defrag a particular user directory

@@ -1,0 +1,37 @@
+Configure Minidlan : 
+---------------------
+    Open /etc/minidlna.conf file
+    Add share folder so that clint cna access those folder 
+    
+    For exampler here we share Music, Picture, Videos folder
+    #.......................................................................................
+    # If you want to restrict a media_dir to a specific content type, you can
+    # prepend the directory name with a letter representing the type (A, P or V),
+    # followed by a comma, as so:
+    #   * "A" for audio    (eg. media_dir=A,/var/lib/minidlna/music)
+    #   * "P" for pictures (eg. media_dir=P,/var/lib/minidlna/pictures)
+    #   * "V" for video    (eg. media_dir=V,/var/lib/minidlna/videos)
+    #   * "PV" for pictures and video (eg. media_dir=PV,/var/lib/minidlna/digital_camera)
+    media_dir=/var/lib/minidlna
+    media_dir=A,/home/linux/Music
+    media_dir=P,/home/linux/Picture
+    media_dir=V,/home/linux/Videos
+    #.......................................................................................
+
+    Also enable this
+    #.......................................................................................
+    # Path to the directory that should hold the database and album art cache.
+    db_dir=/var/cache/minidlna
+    #.......................................................................................
+
+
+
+* service minidlan force-restart
+    >> Uptade minidlan server database so that clint can access all containt
+
+* service minidlan restart
+
+
+[Note : Server may not recognize .mkv format so convert it .mp4 using ffmpeg]
+
+

@@ -1,0 +1,57 @@
+chage :
+--------
+	# This is use to customize password related setting.
+	
+	* chage -l [user name]
+		>> This will show all password related setting for a particular user.
+		>> To configur all thos setting see "chage -?"
+	
+	* chage -E year-month-day [user name]
+		>> Set an expire date for password for a user.
+		>> EX : chage -E 2020-03-21 root
+
+
+
+
+Limiting User can login :
+-------------------------
+	# Limiting number user can login in linux matchine. Open limit file.
+	* vim /etc/security/limits.conf
+
+
+
+
+Disable user ot Login :
+-----------------------
+	* passwd -l [user name]
+		>> Lock an user to login.
+		>> If now we see /etc/shadow file we can see an "!" charecter before password. 
+		>> It mean user is lock.
+
+	* passwd -u [user name]
+		>> Unlock an user for login.
+
+	.....................................................................
+	# Another way to prevent an user to login is to make shell inactive.
+
+	* grep /bin/false /etc/passwd
+		>> This will show all account which set shell to false.
+
+	* usermod -s bin/false [user name]
+		>> This will set shell false. To check use "grep /bin/false /etc/passwd"
+
+	* usermod -s bin/sh [user name]
+		>> This will set shell on.
+
+
+	...............................................................................
+	# Another way to prevent all user to login except root is to make nologin file
+
+	* vim /etc/nologin
+		>> "nologin" dosen't exist we need to create it.
+		>> After create it what ever we write on it will display to usre when they try
+		>> to login. We don't need to write any code on it only message.
+
+	* rm /etc/nologin
+		>> This will enable all user to login.
+

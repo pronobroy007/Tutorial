@@ -1,0 +1,40 @@
+FTP :
+-----
+	* apt-get install vsftpd
+		>> install fpt server
+
+	* vim /etc/vsftpd.conf
+		>> configuration file for ftp server.
+
+		* anonymous_enable=YES	
+			>> This will not allow anyone connect to ftp server.
+
+		* local_enable=YES 
+			>> This will allow connect in localhost.
+
+		* write_enable=YES 
+			>> By default this is commented. Uncomment and give appropiet permition.
+			>> This will allow to give write permition to client.
+
+	* delete
+		>> Delete a file
+
+	* put [fileName]
+		>> To upload a file
+
+	* get [fileName] 
+		>> To download a file
+
+	* mput *
+		>> This will upload all file from current cline folder to server.
+
+	* mget *
+		>> This will download all file from current server folder to client.
+
+	* exit
+		>> close connection
+
+
+
+
+

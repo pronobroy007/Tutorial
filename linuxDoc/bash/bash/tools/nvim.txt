@@ -1,0 +1,14 @@
+ln -s ~/.vimrc ~/.config/nvim/init.vim
+    >> As neovim is mostly compatible with standard vim, 
+    >> you can symlink nvim/init.vim to your old .vimrc to 
+    >> keep old configuration options: 
+
+
+
+if has('nvim')
+    " Neovim specific commands
+else
+    " Standard vim specific commands
+endif
+    >> if you want some lines to specific to each version, 
+    >> you can use an if block in your .vimrc file:

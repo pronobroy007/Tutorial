@@ -1,0 +1,36 @@
+testdisk :
+----------
+	>> "create"
+		>> Then select disk/flash drive  
+		>> Then "process"
+		>> Then select partation table "GPT/Intel/etc" 
+        >> By default it will select apropiat partition table
+
+        >> "Analyse" option will select hole disk and recover
+
+        >> "Advance"  
+            >> "list" option will allow select particular partition/directory.
+                >> If Partition is shown unknown then "list" option will not shown. 
+                >> In thisq case goto "type" 
+                >> and select apropiat partitioin for this. 
+                >> Ex : for "ext*" >> type >> Mac Raid >> ext*
+                >> Then "list" option will appear
+            >> All option's are avelable botton side.
+
+            >> "image creatioin" option will use to select a partition 
+                >> and then select destination folder.	
+				
+
+
+photorec :
+----------
+    >> Goto to destination path
+    >> Then type "c" to start recovery process.
+    >> All recovery files will store in "./recup_dir" directory.
+
+    Recover particular files :
+    ----------------------------
+        >> Before select partition goto "File Opt" 
+        >> Here we can select particular files to recover.
+
+
